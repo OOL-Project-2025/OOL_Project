@@ -1,0 +1,28 @@
+server:
+  port: ${datasource.dev-server-port}
+
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    driver-class-name: ${datasource.dev-driver-class-name}
+    url: ${datasource.dev-url}
+    username: ${datasource.dev-username}
+    password: ${datasource.dev-password}
+
+  h2:
+    console:
+      enabled: true
+      path: ${datasource.dev-h2-console-url}
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+        show_sql: true

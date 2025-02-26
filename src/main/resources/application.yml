@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: OOLFinance
+  profiles:
+    active: local
+    group:
+      local:
+        - dev
+        - config
+      prod:
+        - config
