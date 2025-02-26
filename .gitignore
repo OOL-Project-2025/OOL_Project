@@ -2,8 +2,9 @@ HELP.md
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/test/**/build/
+application-config.yml
 
+!**/src/test/**/build/
 ### STS ###
 .apt_generated
 .classpath
