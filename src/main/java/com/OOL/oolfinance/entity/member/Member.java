@@ -37,7 +37,7 @@ public class Member {
     private String nickname;
 
     @Column
-    private String profilePhoto;
+    private String profileImage;
 
     @Column
     private MemberStatus status;
