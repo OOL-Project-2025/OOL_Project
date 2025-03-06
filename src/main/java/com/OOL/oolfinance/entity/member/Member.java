@@ -1,6 +1,7 @@
 package com.OOL.oolfinance.entity.member;
 
 import com.OOL.oolfinance.entity.wishlist.Wishlist;
+import com.OOL.oolfinance.enums.MemberStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,9 @@ public class Member {
 
     @Column
     private String profilePhoto;
+
+    @Column
+    private MemberStatus status;
 
     @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Wishlist> category = new ArrayList<>();
