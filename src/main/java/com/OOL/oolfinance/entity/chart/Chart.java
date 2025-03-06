@@ -21,7 +21,8 @@ import lombok.NoArgsConstructor;
 public class Chart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String chartName;
+//	private String chartName;
+	private Long id;
 	
 	@Column
 	private Double chartOpeningPrice; //시가
@@ -49,6 +50,6 @@ public class Chart {
 	
 	@ManyToOne
    	@JoinColumn(name = "stockCode", referencedColumnName = "stockCode")
-    	private Stock stock;
+	private Stock stock;
 	
 }
