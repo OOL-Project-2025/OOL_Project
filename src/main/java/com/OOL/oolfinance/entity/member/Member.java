@@ -44,4 +44,16 @@ public class Member {
 
     @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Wishlist> category = new ArrayList<>();
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updateProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public void updateMemberStatus(MemberStatus status) {
+        this.status = status;
+    }
 }
