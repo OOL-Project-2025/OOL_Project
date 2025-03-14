@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,11 +16,15 @@ import org.springframework.security.web.SecurityFilterChain;
 
 
 public class SecurityConfig {
+	//private final UserDetailsServiceImpl userDetailsService;
+	//private final ObjectMapper objectMapper;
 
-	//패스워드 암호화 관련 메소드
+	  //스프링 시큐리티 기능 비활성화 (H2 DB 접근을 위해)
 	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
+	public WebSecurityCustomizer configure() {
+		return (web -> web.ignoring()
+				.requestMatchers("/h2-console/**")
+		);
 	}
 	
 	//특정 HTTP 요청에 대한 웹 기반 보안 구성
@@ -30,19 +35,17 @@ public class SecurityConfig {
 			.csrf(AbstractHttpConfigurer::disable)
 			.httpBasic(AbstractHttpConfigurer::disable)
 			.authorizeHttpRequests((authorize) -> authorize
-				.requestMatchers("/signup", "/", "/login").permitAll()
-				.anyRequest().authenticated()
+			.requestMatchers("/**","/signup", "/","/index.html", "/login").permitAll()
+			.anyRequest().authenticated()
 			)
 			// Form 로그인을 활용하는경우 (JWT에는 필요없음)
-			.formLogin(form -> form
-	    		.loginPage("/loginform") 
-	    		.loginProcessingUrl("/login") 
-	  			.defaultSuccessUrl("/")
-	  			.permitAll()
-			)
+//			.formLogin(formLogin -> formLogin
+//	    		.loginPage("/login") 
+//	  			.defaultSuccessUrl("/home")
+//			)
 			.logout((logout) -> logout
 				.logoutUrl("/logout")
-	 			.logoutSuccessUrl("/")
+	 			.logoutSuccessUrl("/login")
 				.invalidateHttpSession(true)
 			)
 			.sessionManagement(session -> session
@@ -52,5 +55,11 @@ public class SecurityConfig {
 	            );
 		
 		return http.build();
+	}
+	
+	//패스워드 암호화 관련 메소드
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }
