@@ -1,12 +1,21 @@
 package com.OOL.oolfinance.entity.member;
 
-import com.OOL.oolfinance.entity.wishlist.Wishlist;
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.OOL.oolfinance.dto.MemberDTO;
+import com.OOL.oolfinance.entity.wishlist.Wishlist;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author : yongjukim
@@ -19,6 +28,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Member {
 
@@ -40,4 +50,13 @@ public class Member {
 
     @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Wishlist> category = new ArrayList<>();
+    
+    
+    public static Member toMember(MemberDTO memberDTO) {
+    	Member member = new Member();
+    	member.setMemberId(memberDTO.getMemberId());
+    	member.setPassword(memberDTO.getMemberPassword());
+    	member.setNickname(memberDTO.getMemberNickname());
+    	return member;
+    }
 }
