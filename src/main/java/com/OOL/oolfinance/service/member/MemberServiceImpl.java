@@ -1,5 +1,6 @@
 package com.OOL.oolfinance.service.member;
 
+import com.OOL.oolfinance.dto.MemberDTO;
 import com.OOL.oolfinance.entity.member.Member;
 import com.OOL.oolfinance.enums.MemberStatus;
 import com.OOL.oolfinance.repository.member.MemberRepository;
@@ -112,4 +113,16 @@ public class MemberServiceImpl implements MemberService{
         member.updateMemberStatus(MemberStatus.DEACTIVATED);
     }
 
+    @Override
+    public void signup(MemberDTO memberDTO) {
+        //1. dto -> entity 변환
+        //2. repository의 save 메서드 호출
+        Member member = Member.builder()
+                        .memberId(memberDTO.getMemberId())
+                        .password(memberDTO.getMemberPassword())
+                        .nickname(memberDTO.getMemberNickname())
+                        .build();
+        memberRepository.save(member);
+        //repository의 save 메서드 호출 (조건. entity 객체를 넘겨줘야 함.)
+    }
 }

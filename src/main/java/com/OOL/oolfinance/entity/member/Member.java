@@ -7,9 +7,7 @@ import com.OOL.oolfinance.dto.MemberDTO;
 import com.OOL.oolfinance.entity.wishlist.Wishlist;
 import com.OOL.oolfinance.enums.MemberStatus;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * @author : yongjukim
@@ -22,8 +20,9 @@ import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Member {
 
     @Id
@@ -58,12 +57,5 @@ public class Member {
 
     public void updateMemberStatus(MemberStatus status) {
         this.status = status;
-    
-    public static Member toMember(MemberDTO memberDTO) {
-    	Member member = new Member();
-    	member.setMemberId(memberDTO.getMemberId());
-    	member.setPassword(memberDTO.getMemberPassword());
-    	member.setNickname(memberDTO.getMemberNickname());
-    	return member;
     }
 }
