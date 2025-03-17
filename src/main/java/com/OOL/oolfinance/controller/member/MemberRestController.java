@@ -1,4 +1,4 @@
-package com.OOL.oolfinance.controller;
+package com.OOL.oolfinance.controller.member;
 
 import com.OOL.oolfinance.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
