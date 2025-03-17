@@ -1,13 +1,15 @@
 package com.OOL.oolfinance.entity.member;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.OOL.oolfinance.dto.MemberDTO;
 import com.OOL.oolfinance.entity.wishlist.Wishlist;
 import com.OOL.oolfinance.enums.MemberStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Setter;
 
 /**
  * @author : yongjukim
@@ -20,6 +22,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor
 public class Member {
 
@@ -27,7 +30,7 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 40, nullable = false)
+    @Column(length = 40, nullable = false, unique = true)
     private String memberId;
 
     @Column(length = 40, nullable = false)
@@ -55,5 +58,12 @@ public class Member {
 
     public void updateMemberStatus(MemberStatus status) {
         this.status = status;
+    
+    public static Member toMember(MemberDTO memberDTO) {
+    	Member member = new Member();
+    	member.setMemberId(memberDTO.getMemberId());
+    	member.setPassword(memberDTO.getMemberPassword());
+    	member.setNickname(memberDTO.getMemberNickname());
+    	return member;
     }
 }
