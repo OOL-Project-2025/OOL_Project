@@ -5,14 +5,8 @@ import java.util.List;
 
 import com.OOL.oolfinance.dto.MemberDTO;
 import com.OOL.oolfinance.entity.wishlist.Wishlist;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import com.OOL.oolfinance.enums.MemberStatus;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -46,11 +40,24 @@ public class Member {
     private String nickname;
 
     @Column
-    private String profilePhoto;
+    private String profileImage;
+
+    @Column
+    private MemberStatus status;
 
     @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Wishlist> category = new ArrayList<>();
-    
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updateProfileImage(String profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public void updateMemberStatus(MemberStatus status) {
+        this.status = status;
     
     public static Member toMember(MemberDTO memberDTO) {
     	Member member = new Member();
