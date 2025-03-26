@@ -1,6 +1,7 @@
 package com.OOL.oolfinance.entity.stock;
 
 //import jakarta.persistence.*;
+import com.OOL.oolfinance.enums.CountryStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -42,4 +43,7 @@ public class Stock {
 
     @Column
     private long stockVolume;
+
+    @Column
+    private CountryStatus countryStatus;
 }
