@@ -42,7 +42,7 @@ public class Stock {
     private BigDecimal tradingValue;
 
     @Column
-    private long stockVolume;
+    private long tradingVolume;
 
     @Column
     private CountryStatus countryStatus;
