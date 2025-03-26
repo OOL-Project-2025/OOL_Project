@@ -48,8 +48,11 @@ public class Chart {
 	@Column
 	private LocalDateTime chartDateTime; //날짜 + 시간까지 저장
 	
-	@ManyToOne
-   	@JoinColumn(name = "stockCode", referencedColumnName = "stockCode")
-	private Stock stock;
+//	@ManyToOne
+//   	@JoinColumn(name = "stockCode", referencedColumnName = "stockCode")
+//	private Stock stock;
+
+	@Column
+	private String stockCode;
 	
 }
