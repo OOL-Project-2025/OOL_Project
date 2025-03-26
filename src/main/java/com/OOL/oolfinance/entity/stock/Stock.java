@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 /**
  * @author : yongjukim
  * @version : 1.0.0
@@ -30,8 +32,14 @@ public class Stock {
     private String stockName;
 
     @Column
-    private String previousClose;
+    private BigDecimal previousClose;
 
     @Column
-    private String currentClose;
+    private BigDecimal currentClose;
+
+    @Column
+    private BigDecimal tradingValue;
+
+    @Column
+    private long stockVolume;
 }
