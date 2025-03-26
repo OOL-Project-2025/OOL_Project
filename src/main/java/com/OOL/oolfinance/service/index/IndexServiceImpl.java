@@ -1,13 +1,11 @@
 package com.OOL.oolfinance.service.index;
 
-import com.OOL.oolfinance.dto.index.IndexResponse;
+import com.OOL.oolfinance.dto.main.IndexDTO;
 import com.OOL.oolfinance.enums.IndexStatus;
 import com.OOL.oolfinance.repository.index.IndexRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,8 +24,8 @@ public class IndexServiceImpl implements IndexService {
     private final IndexRepository indexRepository;
 
     @Override
-    public List<IndexResponse> fetchIndexList(IndexStatus requestStatus) {
-        List<IndexResponse> indices = indexRepository.findAllIndicesByIndexStatus(requestStatus);
+    public List<IndexDTO> fetchIndexList(IndexStatus requestStatus) {
+        List<IndexDTO> indices = indexRepository.findAllIndicesByIndexStatus(requestStatus);
 
         return indices;
     }

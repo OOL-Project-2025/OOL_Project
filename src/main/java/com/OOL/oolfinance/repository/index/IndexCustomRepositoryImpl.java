@@ -1,6 +1,6 @@
 package com.OOL.oolfinance.repository.index;
 
-import com.OOL.oolfinance.dto.index.IndexResponse;
+import com.OOL.oolfinance.dto.main.IndexDTO;
 import static com.OOL.oolfinance.entity.stock.QIndex.index;
 import com.OOL.oolfinance.enums.IndexStatus;
 import com.querydsl.core.types.Projections;
@@ -26,10 +26,10 @@ public class IndexCustomRepositoryImpl implements IndexCustomRepository {
     private final JPAQueryFactory jpaQueryFactory;
 
     @Override
-    public List<IndexResponse> findAllIndicesByIndexStatus(IndexStatus requestStatus) {
+    public List<IndexDTO> findAllIndicesByIndexStatus(IndexStatus requestStatus) {
 
-        List<IndexResponse> indexResponseList = jpaQueryFactory
-                .select(Projections.constructor(IndexResponse.class,
+        List<IndexDTO> indexDTOList = jpaQueryFactory
+                .select(Projections.constructor(IndexDTO.class,
                         index.indexSymbol,
                         index.indexName,
                         index.previousClose,
@@ -39,6 +39,6 @@ public class IndexCustomRepositoryImpl implements IndexCustomRepository {
                 .orderBy(index.indexName.desc())
                 .fetch();
 
-        return indexResponseList;
+        return indexDTOList;
     }
 }

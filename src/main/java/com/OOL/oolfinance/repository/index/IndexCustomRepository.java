@@ -1,6 +1,6 @@
 package com.OOL.oolfinance.repository.index;
 
-import com.OOL.oolfinance.dto.index.IndexResponse;
+import com.OOL.oolfinance.dto.main.IndexDTO;
 import com.OOL.oolfinance.enums.IndexStatus;
 
 import java.util.List;
@@ -14,5 +14,5 @@ import java.util.List;
  * @modifyed : $
  **/
 public interface IndexCustomRepository {
-    List<IndexResponse> findAllIndicesByIndexStatus(IndexStatus requestStatus);
+    List<IndexDTO> findAllIndicesByIndexStatus(IndexStatus requestStatus);
 }

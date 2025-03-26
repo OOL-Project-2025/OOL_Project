@@ -1,6 +1,6 @@
 package com.OOL.oolfinance.service.index;
 
-import com.OOL.oolfinance.dto.index.IndexResponse;
+import com.OOL.oolfinance.dto.main.IndexDTO;
 import com.OOL.oolfinance.enums.IndexStatus;
 
 import java.util.List;
@@ -14,5 +14,5 @@ import java.util.List;
  * @modifyed : $
  **/
 public interface IndexService {
-    List<IndexResponse> fetchIndexList(IndexStatus requestStatus);
+    List<IndexDTO> fetchIndexList(IndexStatus requestStatus);
 }
