@@ -29,5 +29,5 @@ public class StockTableDTO {
 
     BigDecimal tradingValue;
 
-    long stockVolume;
+    long tradingVolume;
 }
