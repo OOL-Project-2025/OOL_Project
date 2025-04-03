@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>위시리스트 카테고리</title>
+	</head>
+	<body>
+		<h1>카테고리 추가하기</h1>
+		<a href="/wishlist/category/list">카테고리 추가</a>
+		<a href="/wishlist/category/2">카테고리 삭제</a>
+		
+		<div class="wishlist">
+			<div>
+				<form method="post" action="/wishlist/category/do">
+					<input type="text" name="categoryName" required placeholder="카테고리명 입력"/>
+					<button type="submit">추가</button>
+				</form>
+			</div>
+		<table>
+			<thead>
+				<th> ID </th>
+				<th> 카테고리명 </th>
+				<th> 순서 </th>
+			</thead>
+			<tbody>
+			
+			</tbody>
+		</table>
+		
+		</div>
+	</body>
+</html>
