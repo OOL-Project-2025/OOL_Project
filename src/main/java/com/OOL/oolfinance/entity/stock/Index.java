@@ -1,12 +1,9 @@
 package com.OOL.oolfinance.entity.stock;
 
-//import jakarta.persistence.*;
-import com.OOL.oolfinance.enums.CountryStatus;
+import com.OOL.oolfinance.enums.IndexStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -16,25 +13,24 @@ import java.math.BigDecimal;
  * @author : yongjukim
  * @version : 1.0.0
  * @package : oolfinance
- * @name : StockValuation
- * @date : 2/20/25 / 2:41 PM
+ * @name : Index
+ * @date : 3/24/25 / 9:58 PM
  * @modifyed : $
  **/
 
 @Entity
 @Getter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
-public class Stock {
+public class Index {
+
     @Id
-    private String stockCode;
+    private String indexCode;
 
     @Column
-    private String stockSymbol;
+    private String indexSymbol;
 
     @Column
-    private String stockName;
+    private String indexName;
 
     @Column
     private BigDecimal previousClose;
@@ -43,11 +39,5 @@ public class Stock {
     private BigDecimal currentClose;
 
     @Column
-    private BigDecimal tradingValue;
-
-    @Column
-    private long tradingVolume;
-
-    @Column
-    private CountryStatus countryStatus;
+    private IndexStatus status;
 }
