@@ -27,4 +27,8 @@ public interface MemberService {
     void updateMemberStatus(Long id);
 
     void signup(MemberDTO memberDTO);
+
+	MemberDTO login(MemberDTO memberDTO);
+
+
 }
