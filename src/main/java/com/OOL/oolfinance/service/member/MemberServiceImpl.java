@@ -151,7 +151,24 @@ public class MemberServiceImpl implements MemberService{
     		//조회 결과 없음.
     		return null;
     	}
-		return memberDTO;
+		return null;
     }
     
+    public MemberDTO updateForm(String myId) {
+    	Optional<Member> optionalMemberEntity = memberRepository.findByMemberId(myId);
+    	if(optionalMemberEntity.isPresent()) {
+    		return MemberDTO.toMemberDTO(optionalMemberEntity.get());
+    	} else {
+    		return null;
+    	}
+    }
+    
+    @Transactional
+    public void memberUpdate(MemberDTO memberDTO) {
+        Member member = memberRepository.findByMemberId(memberDTO.getMemberId())
+            .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+
+        member.updatePassword(memberDTO.getMemberPassword());
+        member.updateNickname(memberDTO.getMemberNickname());
+    }
 }
