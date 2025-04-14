@@ -12,9 +12,22 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class MemberDTO {
+	
 	private String memberId;
 	private String memberPassword;
 	private String memberNickname;
+	
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
+	public void setMemberPassword(String memberPassword) {
+		this.memberPassword = memberPassword;
+	}
+
+	public void setMemberNickname(String memberNickname) {
+		this.memberNickname = memberNickname;
+	}
 	
 	public static MemberDTO toMemberDTO(Member member) {
 		return new MemberDTO(
