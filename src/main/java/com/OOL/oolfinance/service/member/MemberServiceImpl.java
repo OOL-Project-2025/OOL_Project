@@ -171,4 +171,12 @@ public class MemberServiceImpl implements MemberService{
         member.updatePassword(memberDTO.getMemberPassword());
         member.updateNickname(memberDTO.getMemberNickname());
     }
+    
+    @Transactional
+    public void deleteMember(String memberId) {
+        Member member = memberRepository.findByMemberId(memberId)
+            .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+
+        memberRepository.delete(member);
+    }
 }
