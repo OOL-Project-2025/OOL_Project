@@ -30,5 +30,9 @@ public interface MemberService {
 
 	MemberDTO login(MemberDTO memberDTO);
 
+	MemberDTO updateForm(String myId);
+
+	void memberUpdate(MemberDTO memberDTO);
+
 
 }
