@@ -1,11 +1,14 @@
 package com.OOL.oolfinance.service.wishlist;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import com.OOL.oolfinance.dto.WishlistDTO;
+import com.OOL.oolfinance.entity.member.Member;
 import com.OOL.oolfinance.entity.wishlist.Wishlist;
+import com.OOL.oolfinance.repository.member.MemberRepository;
 import com.OOL.oolfinance.repository.wishlist.WishlistCategoryRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -15,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class WishlistCategoryServiceImpl implements WishlistCategoryService {
 	
 	private final WishlistCategoryRepository wishlistCategoryRepository;
+	private final MemberRepository memberRepository;
 	
 	@Override
 	public List<WishlistDTO> Categorylist() {
@@ -50,8 +54,18 @@ public class WishlistCategoryServiceImpl implements WishlistCategoryService {
 	}
 
 	@Override
-	public boolean categoryAdd(String categoryName) {
-		
-		return wishlistAdd(categoryName);
+	public boolean categoryAdd(String memberId, String categoryName) {
+	    Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
+	    if (optionalMember.isEmpty()) {
+	        return false;
+	    }
+
+	    Member member = optionalMember.get();
+	    Wishlist wishlist = new Wishlist(categoryName);
+	    wishlist.setMember(member);
+
+	    wishlistCategoryRepository.save(wishlist);
+	    return true;
 	}
+
 }
