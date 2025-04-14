@@ -34,5 +34,7 @@ public interface MemberService {
 
 	void memberUpdate(MemberDTO memberDTO);
 
+	void deleteMember(String memberId);
+
 
 }
