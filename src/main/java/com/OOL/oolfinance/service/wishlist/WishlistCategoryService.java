@@ -20,7 +20,7 @@ public interface WishlistCategoryService {
 
 	List<WishlistDTO> Categorylist();
 
-	boolean categoryAdd(String categoryName);
+	boolean categoryAdd(String memberId, String categoryName);
 	
 	
 }
