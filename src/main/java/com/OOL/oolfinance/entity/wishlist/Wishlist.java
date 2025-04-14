@@ -56,4 +56,8 @@ public class Wishlist {
     public String getWishlistName() {
         return wishlistName;
     }
+    
+    public void setMember(Member member) {
+        this.member = member;
+    }
 }
