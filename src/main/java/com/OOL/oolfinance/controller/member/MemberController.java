@@ -1,9 +1,12 @@
 package com.OOL.oolfinance.controller.member;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.OOL.oolfinance.dto.MemberDTO;
 import com.OOL.oolfinance.service.member.MemberService;
@@ -58,4 +61,20 @@ public class MemberController {
 			return "redirect:/member/login?error=true";
 		}
 	}
+		
+	@GetMapping ("/member/update")
+	@ResponseBody
+	public MemberDTO getUpdateMember(HttpSession session) {
+	    String myId = (String) session.getAttribute("loginId");
+	    return memberService.updateForm(myId);
+	}	
+	
+	@PostMapping ("/member/update")
+	public ResponseEntity<String> memberUpdate(@RequestBody MemberDTO memberDTO, HttpSession session) {
+		String loginId = (String) session.getAttribute("loginId");
+	    memberDTO.setMemberId(loginId);
+	    memberService.memberUpdate(memberDTO);
+	    return ResponseEntity.ok("업데이트 성공");
+	}
 }
+
