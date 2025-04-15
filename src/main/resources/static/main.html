@@ -9,6 +9,7 @@
     <p id="loginId">세션 확인 중...</p>
 	<a href="/wishlistCategory.html">카테고리 관리</a>
 	<a href="/memberUpdate.html">내 정보 수정하기</a>
+	<button onclick="logout()">로그아웃</button>
 	<button id="deleteMemberBtn">회원 탈퇴</button>
 	
     <script>
@@ -27,7 +28,18 @@
 	        console.error('세션 조회 실패:', error);
 	        document.getElementById('loginId').innerText = '오류 발생';
 	    });
-	
+		
+	    function logout() {
+	        fetch('/api/logout', { method: 'POST' })
+	          .then(() => {
+	            alert('로그아웃 되었습니다.');
+	            window.location.href = '/login.html'; // 로그인 페이지로 이동
+	          })
+	          .catch(err => {
+	            console.error('로그아웃 오류', err);
+	          });
+	      }
+	    
 		// 회원 탈퇴 버튼 클릭 시
 		document.getElementById('deleteMemberBtn').addEventListener('click', () => {
 		    if (!loginId) {
