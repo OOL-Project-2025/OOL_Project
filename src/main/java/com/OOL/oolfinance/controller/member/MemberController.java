@@ -79,6 +79,12 @@ public class MemberController {
 	    return ResponseEntity.ok("업데이트 성공");
 	}
 	
+	@PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpSession session) {
+        session.invalidate(); // 세션 삭제
+        return ResponseEntity.ok().build();
+    }
+	
 	@DeleteMapping("/member/delete/{memberId}")
 	public ResponseEntity<?> deleteMember(@PathVariable("memberId") String memberId) {
 	    memberService.deleteMember(memberId);
