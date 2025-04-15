@@ -4,5 +4,6 @@ import lombok.Data;
 
 @Data
 public class CategoryInput {
+	String memberId;
 	String categoryName;
 }
