@@ -27,4 +27,14 @@ public interface MemberService {
     void updateMemberStatus(Long id);
 
     void signup(MemberDTO memberDTO);
+
+	MemberDTO login(MemberDTO memberDTO);
+
+	MemberDTO updateForm(String myId);
+
+	void memberUpdate(MemberDTO memberDTO);
+
+	void deleteMember(String memberId);
+
+
 }
