@@ -1,7 +1,7 @@
 package com.OOL.oolfinance.repository.index;
 
 import com.OOL.oolfinance.dto.main.IndexDTO;
-import static com.OOL.oolfinance.entity.stock.QIndex.index;
+import static com.OOL.oolfinance.entity.stock.QIndex.*;
 import com.OOL.oolfinance.enums.IndexStatus;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;

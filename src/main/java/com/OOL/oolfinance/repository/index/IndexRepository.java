@@ -14,5 +14,5 @@ import org.springframework.stereotype.Repository;
  **/
 
 @Repository
-public interface IndexRepository extends JpaRepository<Index, Long>, IndexCustomRepository {
+public interface IndexRepository extends JpaRepository<Index, String>, IndexCustomRepository {
 }
