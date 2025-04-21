@@ -1,6 +1,8 @@
 package com.OOL.oolfinance.entity.chart;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +20,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class IndexChart {
 
@@ -38,10 +42,7 @@ public class IndexChart {
     private BigDecimal closingPrice; //종가
 
     @Column
-    private LocalDateTime timeStamp; //해당 캔들에서 마지막 틱이 저장된 시각
-
-    @Column
-    private LocalDateTime DateTime; //날짜 + 시간까지 저장
+    private LocalDateTime dateTime; //날짜 + 시간까지 저장
 
     @Column
     private String indexCode;

@@ -1,5 +1,6 @@
 package com.OOL.oolfinance.entity.chart;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import com.OOL.oolfinance.entity.stock.Stock;
@@ -11,13 +12,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
-
+@Builder
+@AllArgsConstructor
 public class Chart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,25 +29,25 @@ public class Chart {
 	private Long id;
 	
 	@Column
-	private Double chartOpeningPrice; //시가
+	private BigDecimal chartOpeningPrice; //시가
 	
 	@Column
-	private Double chartHighPrice; //고가
+	private BigDecimal chartHighPrice; //고가
 	
 	@Column
-	private Double chartLowPrice; //저가
+	private BigDecimal chartLowPrice; //저가
 	
 	@Column
-	private Double chartTradePrice; //종가
+	private BigDecimal chartClosingPrice; //종가
+	
+//	@Column
+//	private Long chartTimeStamp; //해당 캔들에서 마지막 틱이 저장된 시각
 	
 	@Column
-	private Long chartTimeStamp; //해당 캔들에서 마지막 틱이 저장된 시각
+	private BigDecimal chartStockVolume; //해당 종목의 거래량
 	
 	@Column
-	private String chartStockVolume; //해당 종목의 거래량
-	
-	@Column
-	private String chartStockPrice; // 해당 종목의 거래금액
+	private BigDecimal chartStockPrice; // 해당 종목의 거래금액
 	
 	@Column
 	private LocalDateTime chartDateTime; //날짜 + 시간까지 저장
