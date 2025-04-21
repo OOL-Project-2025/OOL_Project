@@ -1,6 +1,8 @@
 package com.OOL.oolfinance.entity.stock;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,8 +19,10 @@ import java.time.LocalDate;
  **/
 
 @Entity
+@Builder
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class StockInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,39 +39,51 @@ public class StockInfo {
 
     @Column
     private BigDecimal debtToEquityRatio;
+    // 부채비율
 
     @Column
     private BigDecimal currentRatio;
+    // 유동비율
 
     @Column
     private BigDecimal interestCoverageRatio;
+    // 이자보상비율
 
     @Column
     private BigDecimal totalDebt;
+    // 총 부채
 
     @Column
     private BigDecimal totalEquity;
+    // 총 자본
 
     @Column
     private BigDecimal operatingIncome;
+    // 영업 이익
 
     @Column
     private BigDecimal revenue;
+    // 매출액
 
     @Column
     private BigDecimal netIncome;
+    // 당기순이익
 
     @Column
     private LocalDate dividendDate;
+    // 배당일자
 
     @Column
     private BigDecimal dividendPerShare;
+    // 주당배당금
 
     @Column
     private BigDecimal dividendYield;
+    // 배당수익률
 
     @Column
     private LocalDate date;
+    // 데이터 기준일
 
     @ManyToOne
     @JoinColumn(name = "stockCode", referencedColumnName = "stockCode")
