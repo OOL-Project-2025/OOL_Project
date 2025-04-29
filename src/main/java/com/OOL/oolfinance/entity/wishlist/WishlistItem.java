@@ -29,4 +29,22 @@ public class WishlistItem {
     @ManyToOne
     @JoinColumn(name = "stockCode")
     private Stock stockInfo;
+    
+    public WishlistItem(Wishlist wishlist, Stock stockInfo) {
+        this.wishlist = wishlist;
+        this.stockInfo = stockInfo;
+    }
+    
+    public Stock getStockInfo() {
+        return stockInfo;
+    }
+
+	public void setWishlist(Wishlist wishlist) {
+		 this.wishlist = wishlist;
+	}
+
+	public void setStockInfo(Stock stock) {
+		this.stockInfo = stock;
+	}
+
 }
