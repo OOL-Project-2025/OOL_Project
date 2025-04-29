@@ -16,8 +16,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.OOL.oolfinance.dto.MemberDTO;
 import com.OOL.oolfinance.entity.member.Member;
+import com.OOL.oolfinance.entity.wishlist.Wishlist;
 import com.OOL.oolfinance.enums.MemberStatus;
 import com.OOL.oolfinance.repository.member.MemberRepository;
+import com.OOL.oolfinance.repository.wishlist.WishlistCategoryRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,6 +40,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
+    private final WishlistCategoryRepository wishlistCategoryRepository;
 
     @Value("${custom.path}")
     private String fileDir;
@@ -125,8 +128,10 @@ public class MemberServiceImpl implements MemberService{
                         .password(memberDTO.getMemberPassword())
                         .nickname(memberDTO.getMemberNickname())
                         .build();
-        memberRepository.save(member);
-        //repository의 save 메서드 호출 (조건. entity 객체를 넘겨줘야 함.)
+        Member Member = memberRepository.save(member);
+        
+        Wishlist defaultWishlist = new Wishlist("기본", Member);
+        wishlistCategoryRepository.save(defaultWishlist);
     }
     
     @Override
