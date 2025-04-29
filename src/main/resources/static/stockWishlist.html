@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>찜 종목</title>
+</head>
+<body>
+    <h2>📈 종목 목록</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>종목 코드</th>
+                <th>종목명</th>
+                <td>찜하기</td>
+            </tr>
+        </thead>
+        <tbody id="stock-table-body"></tbody>
+    </table>
+
+    <h3>위시리스트 선택</h3>
+    <select id="wishlist-select">
+        <!-- 위시리스트 목록이 여기 추가됩니다 -->
+    </select>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // 주식 목록 가져오기
+        fetch('/api/stocks')
+            .then(response => response.json()) 
+            .then(data => {
+                const tbody = document.getElementById('stock-table-body');
+                data.forEach(stock => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${stock.stockCode}</td>
+                        <td>${stock.stockName}</td>
+                        <td><button onclick="addToWishlist('${stock.stockCode}')">찜하기</button></td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error:', error)); 
+
+        // 위시리스트 목록 가져오기
+        fetch('/api/wishlist')
+            .then(response => response.json())
+            .then(data => {
+                const wishlistSelect = document.getElementById('wishlist-select');
+                data.forEach(wishlist => {
+                    const option = document.createElement('option');
+                    option.value = wishlist.id; // 위시리스트 ID 설정
+                    option.textContent = wishlist.wishlistName;
+                    wishlistSelect.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error:', error)); 
+    });
+
+    // 위시리스트에 주식 추가
+    function addToWishlist(stockCode) {
+        const wishlistId = document.getElementById('wishlist-select').value;
+
+        if (!wishlistId) {
+            alert('위시리스트를 선택해주세요.');
+            return;
+        }
+
+        fetch('/api/wishlist/items/add', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ stockCode: stockCode, wishlistId: wishlistId }) 
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('위시리스트에 추가되었습니다!');
+            } else {
+                alert('추가 실패!');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+    </script>
+</body>
+</html>
