@@ -80,4 +80,8 @@ public class Member {
                 .nickname(memberDTO.getMemberNickname())
                 .build();
     }
+
+	public void setMemberId(String memberId) {
+		
+	}
 }
