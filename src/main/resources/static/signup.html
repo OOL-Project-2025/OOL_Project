@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="../css/signup.css" />
+        <title>회원가입</title>
+    </head>
+    <body>
+        <header>
+            <div class="header_logo">
+                <img src="../img/header_logo.png" alt="Header Logo Image" />
+            </div>
+            <div class="header_search">
+                <input type="text" placeholder="검색어를 입력해주세요" />
+            </div>
+            <div class="header_logbtn">
+                <button type="button">로그인/회원가입</button>
+            </div>
+        </header>
+        <main>
+            <div class="main_warp">
+                <div class="title">
+                    <img src="../img/main_logo.png" alt="Main Title Logo Image" class="title_logo" />
+                    <div class="title_txt">회원가입</div>
+                </div>
+                <div class="social">
+                    <div class="social_txt">소셜 로그인/회원가입</div>
+                    <div class="social_icons">
+                        <div class="social_icon naver">
+                            <img src="../img/social_naver.png" alt="naver sign up button " />
+                        </div>
+                        <div class="social_icon kakao">
+                            <img src="../img/social_kakao.png" alt="kakao sign up button " />
+                        </div>
+                        <div class="social_icon google">
+                            <img src="../img/social_google.png" alt="google sign up button " />
+                        </div>
+                    </div>
+                </div>
+                <div class="form">
+                    <div class="form_wrap">
+                        <div class="form_txt">아이디</div>
+                        <input type="text" class="form_input" placeholder="아이디를 입력하세요." />
+                        <div class="wrong_txt">중복되는 아이디 입니다.</div>
+                    </div>
+                    <div class="form_wrap">
+                        <div class="form_txt">비밀번호</div>
+                        <input type="password" class="form_input password" placeholder="비밀번호를 입력하세요." />
+                        <span class="pw_toggle_btn"></span>
+                    </div>
+                    <div class="form_wrap">
+                        <div class="form_txt">비밀번호 확인</div>
+                        <input type="password" class="form_input password_confirm" placeholder="비밀번호를 힌반 더 입력하세요." />
+                        <span class="pw_toggle_btn"></span>
+                        <div class="wrong_txt">비밀번호가 일치하지 않습니다.</div>
+                    </div>
+                    <div class="form_wrap">
+                        <div class="form_txt">닉네임</div>
+                        <input type="text" class="form_input" placeholder="닉네임을 입력하세요." />
+                    </div>
+                </div>
+                <div class="terms">
+                    <div class="terms_item main">
+                        <input type="checkbox" id="check_all" />
+                        <label for="check_all"><span>전체동의</span></label>
+                    </div>
+                    <div class="terms_item">
+                        <input type="checkbox" id="check_use" />
+                        <label for="check_use"><span>이용약관</span></label>
+                        <a href="signup.html" class="gotopagelink"><img src="../img/r_arrow.png" alt="이용약관 페이지 이동 버튼" /></a>
+                    </div>
+                    <div class="terms_item">
+                        <input type="checkbox" id="check_inform" />
+                        <label for="check_inform"><span>개인정보활용동의</span></label>
+                        <a href="signup.html" class="gotopagelink"><img src="../img/r_arrow.png" alt="개인정보활용동의 페이지 이동 버튼" /></a>
+                    </div>
+                </div>
+                <div class="signin_btn">회원가입</div>
+            </div>
+        </main>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // 아이디 중복확인
+                const input = document.querySelector(".form_input");
+
+                input.addEventListener("input", function () {
+                    if (input.value === "ss") {
+                        input.classList.add("wrong");
+                    } else {
+                        input.classList.remove("wrong");
+                    }
+                });
+
+                // 비밀번호 - 비밀번호확인 일치 체크
+                const pwInput = document.querySelector(".form_input.password");
+                const pwConfirmInput = document.querySelector(".form_input.password_confirm");
+
+                function validatePassword() {
+                    if (pwInput.value !== pwConfirmInput.value) {
+                        pwConfirmInput.classList.add("wrong");
+                    } else {
+                        pwConfirmInput.classList.remove("wrong");
+                    }
+                    checkFormValid();
+                }
+
+                pwInput.addEventListener("input", validatePassword);
+                pwConfirmInput.addEventListener("input", validatePassword);
+                document.querySelectorAll(".form_input").forEach((input) => {
+                    input.addEventListener("input", checkFormValid);
+                });
+                // 비밀번호 - 보이게/안보이게
+                const toggleBtns = document.querySelectorAll(".pw_toggle_btn");
+
+                toggleBtns.forEach((btn) => {
+                    btn.addEventListener("click", function () {
+                        const input = btn.previousElementSibling;
+                        const isPassword = input.type === "password";
+
+                        input.type = isPassword ? "text" : "password";
+
+                        // 명시적으로 처리
+                        if (isPassword) {
+                            btn.classList.add("viewing");
+                        } else {
+                            btn.classList.remove("viewing");
+                        }
+                    });
+                });
+
+                // 약관동의 체크박스
+                const checkAll = document.getElementById("check_all");
+                const checkAllLabel = document.querySelector("label[for='check_all']");
+                const checkboxes = document.querySelectorAll(".terms_item input[type='checkbox']:not(#check_all)");
+
+                // 1. 전체동의 영역 클릭 시만 전체 체크
+                checkAllLabel.addEventListener("click", function (e) {
+                    e.preventDefault(); // 기본 동작 방지
+                    const shouldCheck = !checkAll.checked;
+                    checkAll.checked = shouldCheck;
+                    checkboxes.forEach((cb) => (cb.checked = shouldCheck));
+                    checkFormValid(); // ★ 추가!
+                });
+
+                // 2. 개별 체크 상태에 따라 전체동의 상태 업데이트
+                checkboxes.forEach((cb) => {
+                    cb.addEventListener("change", function () {
+                        const allChecked = [...checkboxes].every((c) => c.checked);
+                        checkAll.checked = allChecked;
+                    });
+                });
+                checkAll.addEventListener("change", function () {
+                    const shouldCheck = checkAll.checked;
+                    checkboxes.forEach((cb) => (cb.checked = shouldCheck));
+                    checkFormValid(); // ★ 버튼 상태 갱신도 같이
+                });
+                document.querySelectorAll(".terms_item input[type='checkbox']").forEach((cb) => {
+                    cb.addEventListener("change", checkFormValid);
+                });
+                // 작성 완료시 회원가입 버튼 활성화
+                function checkFormValid() {
+                    const allInputsFilled = [...document.querySelectorAll(".form_input")].every((input) => input.value.trim() !== "");
+                    const requiredCheckboxesChecked = document.getElementById("check_use").checked && document.getElementById("check_inform").checked;
+                    const noWrongClassExists = document.querySelectorAll(".wrong").length === 0;
+
+                    const signUpBtn = document.querySelector(".signin_btn");
+                    console.log("Ssss", allInputsFilled, requiredCheckboxesChecked, noWrongClassExists);
+                    if (allInputsFilled && requiredCheckboxesChecked && noWrongClassExists) {
+                        signUpBtn.classList.add("available");
+                    } else {
+                        signUpBtn.classList.remove("available");
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>
