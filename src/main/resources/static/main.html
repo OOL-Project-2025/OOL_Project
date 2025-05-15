@@ -1,72 +1,301 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-	<title>main</title>
-</head>
-<body>
-	<h2>로그인한 아이디 확인:</h2>
-    <p id="loginId">세션 확인 중...</p>
-	<a href="/wishlistCategory.html">카테고리 관리</a>
-	<a href="/memberUpdate.html">내 정보 수정하기</a>
-	<button onclick="logout()">로그아웃</button>
-	<button id="deleteMemberBtn">회원 탈퇴</button>
-	
-    <script>
-	    fetch('/api/session/login-id')
-	    .then(response => response.text())
-	    .then(data => {
-	        const loginIdElement = document.getElementById('loginId');
-	        if (data === 'NO_SESSION') {
-	            loginIdElement.innerText = '로그인되지 않았습니다.';
-	        } else {
-	            loginId = data;
-	            loginIdElement.innerText = `로그인 아이디: ${data}`;
-	        }
-	    })
-	    .catch(error => {
-	        console.error('세션 조회 실패:', error);
-	        document.getElementById('loginId').innerText = '오류 발생';
-	    });
-		
-	    function logout() {
-	        fetch('/api/logout', { method: 'POST' })
-	          .then(() => {
-	            alert('로그아웃 되었습니다.');
-	            window.location.href = '/login.html'; // 로그인 페이지로 이동
-	          })
-	          .catch(err => {
-	            console.error('로그아웃 오류', err);
-	          });
-	      }
-	    
-		// 회원 탈퇴 버튼 클릭 시
-		document.getElementById('deleteMemberBtn').addEventListener('click', () => {
-		    if (!loginId) {
-		        alert('로그인 정보가 없습니다.');
-		        return;
-		    }
-	
-	    const confirmed = confirm('정말로 회원 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.');
-	
-	    if (confirmed) {
-	        fetch(`/member/delete/${loginId}`, {
-	            method: 'DELETE'
-	        })
-	        .then(response => {
-	            if (response.ok) {
-	                alert('회원 탈퇴가 완료되었습니다.');
-	                window.location.href = '/login.html'; // 로그인 페이지로 이동
-	            } else {
-	                alert('회원 탈퇴에 실패했습니다.');
-	            }
-	        })
-	        .catch(error => {
-	            console.error('삭제 요청 중 오류 발생:', error);
-	            alert('오류가 발생했습니다.');
-	        });
-	    }
-	});
-    </script>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <script src="https://kit.fontawesome.com/c5e0b36bfd.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="../css/main.css" />
+        <title>main</title>
+    </head>
+    <body>
+        <header>
+            <div class="header_logo">
+                <img src="../img/header_logo.png" alt="Header Logo Image" />
+            </div>
+            <div class="header_search">
+                <input type="text" placeholder="검색어를 입력해주세요" />
+            </div>
+            <div class="header_logbtn">
+                <a href="../static/login.html">
+                    <button type="button">로그인/회원가입</button>
+                </a>
+            </div>
+        </header>
+        <main>
+            <div class="main_top_wrap">
+                <div class="main_top_tap_wrap">
+                    <div class="main_top_tap on">주가지수</div>
+                    <div class="main_top_tap">채권</div>
+                    <div class="main_top_tap">원자재</div>
+                </div>
+                <div class="main_top_block_wrap">
+                    <div class="main_top_block">
+                        <div class="main_top_block_market">
+                            <div class="main_top_block_market_name">나스닥</div>
+                            <div class="main_top_block_market_img">
+                                <img src="../img/flag_us.png" alt="미국 국기" />
+                            </div>
+                        </div>
+                        <div class="main_top_block_cost">17,928.92</div>
+                        <div class="main_top_block_fluc up">
+                            <div class="main_top_block_fluc_cost">+0.78</div>
+                            <div class="main_top_block_fluc_rate">(0.0043%)</div>
+                        </div>
+                    </div>
+                    <div class="main_top_block">
+                        <div class="main_top_block_market">
+                            <div class="main_top_block_market_name">나스닥</div>
+                            <div class="main_top_block_market_img">
+                                <img src="../img/flag_us.png" alt="미국 국기" />
+                            </div>
+                        </div>
+                        <div class="main_top_block_cost">17,928.92</div>
+                        <div class="main_top_block_fluc up">
+                            <div class="main_top_block_fluc_cost">+0.78</div>
+                            <div class="main_top_block_fluc_rate">(0.0043%)</div>
+                        </div>
+                    </div>
+                    <div class="main_top_block">
+                        <div class="main_top_block_market">
+                            <div class="main_top_block_market_name">나스닥</div>
+                            <div class="main_top_block_market_img">
+                                <img src="../img/flag_us.png" alt="미국 국기" />
+                            </div>
+                        </div>
+                        <div class="main_top_block_cost">17,928.92</div>
+                        <div class="main_top_block_fluc up">
+                            <div class="main_top_block_fluc_cost">+0.78</div>
+                            <div class="main_top_block_fluc_rate">(0.0043%)</div>
+                        </div>
+                    </div>
+                    <div class="main_top_block">
+                        <div class="main_top_block_market">
+                            <div class="main_top_block_market_name">나스닥</div>
+                            <div class="main_top_block_market_img">
+                                <img src="../img/flag_us.png" alt="미국 국기" />
+                            </div>
+                        </div>
+                        <div class="main_top_block_cost">17,928.92</div>
+                        <div class="main_top_block_fluc up">
+                            <div class="main_top_block_fluc_cost">+0.78</div>
+                            <div class="main_top_block_fluc_rate">(0.0043%)</div>
+                        </div>
+                    </div>
+                    <div class="main_top_block">
+                        <div class="main_top_block_market">
+                            <div class="main_top_block_market_name">나스닥</div>
+                            <div class="main_top_block_market_img">
+                                <img src="../img/flag_us.png" alt="미국 국기" />
+                            </div>
+                        </div>
+                        <div class="main_top_block_cost">17,928.92</div>
+                        <div class="main_top_block_fluc up">
+                            <div class="main_top_block_fluc_cost">+0.78</div>
+                            <div class="main_top_block_fluc_rate">(0.0043%)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main_list_wrap">
+                <div class="main_list_menu">
+                    <div class="main_list_filter">
+                        <div class="main_list_filter_block on">전체</div>
+                        <div class="main_list_filter_block">국내</div>
+                        <div class="main_list_filter_block">해외</div>
+                    </div>
+                    <div class="main_list_sort_wrap">
+                        <div class="main_list_sort_rate">
+                            <div class="main_list_sort_rate_block on">거래대금</div>
+                            <div class="main_list_sort_rate_block">거래량</div>
+                            <div class="main_list_sort_rate_block">급상승</div>
+                            <div class="main_list_sort_rate_block">급하락</div>
+                            <div class="main_list_sort_rate_block">인기</div>
+                        </div>
+                        <div class="main_list_sort_date">
+                            <div class="main_list_sort_date_block on">실시간</div>
+                            <div class="main_list_sort_date_block">1일</div>
+                            <div class="main_list_sort_date_block">1주</div>
+                            <div class="main_list_sort_date_block">1개월</div>
+                            <div class="main_list_sort_date_block">1년</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main_list">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>종목</th>
+                                <th>현재가</th>
+                                <th>등락률</th>
+                                <th>거래대금</th>
+                                <th>거래량</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="list_down">
+                                <td>1</td>
+                                <td>
+                                    <div class="stock_img us"><img src="../img/stock_tesla.png" alt="테슬라 로고 이미지" /></div>
+                                    <div class="stock_name">테슬라</div>
+                                </td>
+                                <td>$298.26</td>
+                                <td>-13.44 (-4.72%)</td>
+                                <td>9,071억원</td>
+                                <td>131,000,000주</td>
+                            </tr>
+                            <tr class="list_up">
+                                <td>2</td>
+                                <td>
+                                    <div class="stock_img kr"><img src="../img/stock_samsung.png" alt="삼성전자 로고 이미지" /></div>
+                                    <div class="stock_name">삼성전자</div>
+                                </td>
+                                <td>$298.26</td>
+                                <td>+13.44 (+4.72%)</td>
+                                <td>9,071억원</td>
+                                <td>131,000,000주</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="main_list_pagenation">
+                    <div class="page_prev"><i class="fa-solid fa-chevron-left"></i></div>
+                    <div class="page_number on">1</div>
+                    <div class="page_number">2</div>
+                    <div class="page_number">3</div>
+                    <div class="page_next">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="main_chat"></div>
+        </main>
+        <footer>
+            <div class="footer_logo">
+                <img src="../img/header_logo.png" alt="Footer Logo Image" />
+            </div>
+            <div class="footer_pj">
+                <div class="footer_pj_name">오올</div>
+                <div class="footer_pj_people">김용주, 김태은, 안지영, 장유석, 김예리</div>
+            </div>
+            <div class="footer_pj_link">
+                <a href="https://github.com/OOL-Project-2025/OOL_Project" target="_blank"><img src="../img/footer_github.png" alt="github logo" class="footer_pjimg" /></a>
+                <a href="http://"><img src="../img/footer_notion.png" alt="notion logo" class="footer_pjimg" /></a>
+                <a href="https://www.figma.com/design/qZRKhlqrbYXMHYN8e7us0p/%EC%A6%9D%EA%B6%8C-%EC%9B%B9?node-id=120-15448&t=olCoN2OVm52y5p2D-0" target="_blank">
+                    <img src="../img/footer_figma.png" alt="figma logo" class="footer_pjimg"
+                /></a>
+            </div>
+        </footer>
+
+        <script>
+            // *** 필터/솔트 기능
+            const top_block = document.querySelectorAll(".main_top_tap");
+            const filter_block = document.querySelectorAll(".main_list_filter_block");
+            const rate_block = document.querySelectorAll(".main_list_sort_rate_block");
+            const date_block = document.querySelectorAll(".main_list_sort_date_block");
+            const page_number = document.querySelectorAll(".page_number");
+
+            // 주가지수, 채권, 원자재 탭
+            top_block.forEach(function (block) {
+                block.addEventListener("click", function () {
+                    top_block.forEach((el) => el.classList.remove("on"));
+                    this.classList.add("on");
+                });
+            });
+
+            // 전체, 국내, 해외 탭
+            filter_block.forEach(function (block) {
+                block.addEventListener("click", function () {
+                    filter_block.forEach((el) => el.classList.remove("on"));
+                    this.classList.add("on");
+                });
+            });
+
+            // 거래대금, 거래량, 급상승, 급하락, 인기 탭
+            rate_block.forEach(function (block) {
+                block.addEventListener("click", function () {
+                    rate_block.forEach((el) => el.classList.remove("on"));
+                    this.classList.add("on");
+                });
+            });
+
+            // 실시간, 1일, 1주, 1개월, 1년 탭
+            date_block.forEach(function (block) {
+                block.addEventListener("click", function () {
+                    date_block.forEach((el) => el.classList.remove("on"));
+                    this.classList.add("on");
+                });
+            });
+
+            // 페이지네이션
+            page_number.forEach(function (block) {
+                block.addEventListener("click", function () {
+                    page_number.forEach((el) => el.classList.remove("on"));
+                    this.classList.add("on");
+                });
+            });
+        </script>
+        <!-- <h2>로그인한 아이디 확인:</h2>
+        <p id="loginId">세션 확인 중...</p>
+        <a href="/wishlistCategory.html">카테고리 관리</a>
+        <a href="/memberUpdate.html">내 정보 수정하기</a>
+        <button onclick="logout()">로그아웃</button>
+        <button id="deleteMemberBtn">회원 탈퇴</button> -->
+        <!-- 
+        <script>
+            fetch("/api/session/login-id")
+                .then((response) => response.text())
+                .then((data) => {
+                    const loginIdElement = document.getElementById("loginId");
+                    if (data === "NO_SESSION") {
+                        loginIdElement.innerText = "로그인되지 않았습니다.";
+                    } else {
+                        loginId = data;
+                        loginIdElement.innerText = `로그인 아이디: ${data}`;
+                    }
+                })
+                .catch((error) => {
+                    console.error("세션 조회 실패:", error);
+                    document.getElementById("loginId").innerText = "오류 발생";
+                });
+
+            function logout() {
+                fetch("/api/logout", { method: "POST" })
+                    .then(() => {
+                        alert("로그아웃 되었습니다.");
+                        window.location.href = "/login.html"; // 로그인 페이지로 이동
+                    })
+                    .catch((err) => {
+                        console.error("로그아웃 오류", err);
+                    });
+            }
+
+            // 회원 탈퇴 버튼 클릭 시
+            document.getElementById("deleteMemberBtn").addEventListener("click", () => {
+                if (!loginId) {
+                    alert("로그인 정보가 없습니다.");
+                    return;
+                }
+
+                const confirmed = confirm("정말로 회원 탈퇴하시겠습니까? 이 작업은 되돌릴 수 없습니다.");
+
+                if (confirmed) {
+                    fetch(`/member/delete/${loginId}`, {
+                        method: "DELETE",
+                    })
+                        .then((response) => {
+                            if (response.ok) {
+                                alert("회원 탈퇴가 완료되었습니다.");
+                                window.location.href = "/login.html"; // 로그인 페이지로 이동
+                            } else {
+                                alert("회원 탈퇴에 실패했습니다.");
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("삭제 요청 중 오류 발생:", error);
+                            alert("오류가 발생했습니다.");
+                        });
+                }
+            });
+        </script> -->
+    </body>
 </html>
