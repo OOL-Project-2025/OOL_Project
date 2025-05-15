@@ -1,0 +1,160 @@
+/* 기본 설정 */
+body {
+  margin: 0;
+  background: #1f2329;
+  color: white;
+  font-family: sans-serif;
+}
+
+/* 헤더 영역 */
+header {
+  width: calc(100% - 80px);
+  height: 40px;
+  padding: 12px 40px;
+  background: #23272d;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  z-index: 100;
+}
+
+/* 로고 */
+header .header_logo {
+  width: 43.6px;
+  height: 14.6px;
+  cursor: pointer;
+}
+header .header_logo img {
+  width: 100%;
+}
+
+/* 검색 박스 */
+header .search_box {
+  position: relative;
+  width: 715px;
+  height: 40px;
+}
+header .search_box input {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #272b31;
+  padding-left: 43px;
+  border-radius: 8px;
+  outline: none;
+  color: #fff;
+}
+header .search_box::before {
+  content: "";
+  position: absolute;
+  background-image: url(../img/search_icon.png);
+  background-size: cover;
+  width: 18px;
+  height: 18px;
+  top: 11px;
+  left: 13px;
+}
+
+/* 로그인 버튼 */
+header .header_logbtn {
+  background: #ff5d343a;
+  border-radius: 8px;
+}
+header .header_logbtn button {
+  background: none;
+  border: none;
+  color: #ff5d34;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+/* 메인 영역 */
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+main .main_logo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 60px;
+}
+main .main_logo img {
+  width: 200px;
+  height: auto;
+}
+
+/* 로그인 영역 */
+main .login_wrap {
+  width: 360px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 로그인 폼 */
+.loginform .id,
+.loginform .password {
+  margin-bottom: 16px;
+}
+.loginform input {
+  width: 100%;
+  height: 56px;
+  border: none;
+  border-radius: 12px;
+  padding-left: 16px;
+  font-size: 16px;
+  background: #272b31;
+  color: white;
+  outline: none;
+}
+
+/* 로그인 버튼 */
+.main_login_btn {
+  width: 100%;
+  height: 56px;
+  background-color: #ff5d34;
+  color: white;
+  border: none;
+  padding-left: 16px;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.sub_fuc {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  font-size: 14px;
+}
+.sub_fuc a {
+  color: #81878d;
+  text-decoration: none;
+}
+.sub_fuc a:hover {
+  text-decoration: underline;
+}
+
+/* 소셜 아이콘 */
+.social_icons {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+.social_icon {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+.social_icon img {
+  width: 100%;
+  height: 100%;
+}
