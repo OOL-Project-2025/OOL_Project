@@ -23,7 +23,7 @@ public class ChatRestController {
     private final ChatService chatService;
 
     @MessageMapping("/chat")
-    @SendTo("/sub/chat")
+    @SendTo("/api/sub/chat")
     public ChatDTO sendMessage(ChatDTO request) {
 
         chatService.chatSave(request);
