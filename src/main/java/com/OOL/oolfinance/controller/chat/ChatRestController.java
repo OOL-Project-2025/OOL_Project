@@ -1,11 +1,16 @@
 package com.OOL.oolfinance.controller.chat;
 
 import com.OOL.oolfinance.dto.chat.ChatDTO;
+import com.OOL.oolfinance.dto.chat.ChatHistoryDTO;
 import com.OOL.oolfinance.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author : yongjukim
@@ -29,5 +34,11 @@ public class ChatRestController {
         chatService.chatSave(request);
 
         return new ChatDTO(request.getMemberId(), request.getNickname(), request.getMessage(), request.getSendTime());
+    }
+
+    @GetMapping("/api/chat/all")
+    public List<ChatHistoryDTO> getPreviousChat(@RequestParam(required = false, defaultValue = "-1", value = "chatId") long chatId) {
+
+        return chatService.getPreviousChat(chatId);
     }
 }
