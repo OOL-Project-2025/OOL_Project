@@ -35,7 +35,7 @@ public class MainRestController {
     }
 
     @GetMapping(value = "/api/main/stocks")
-    public List<StockTableDTO> getStockList(@RequestParam(defaultValue = "0") int page,
+    public List<StockTableDTO> getStockList(@RequestParam(defaultValue = "0", value = "page") int page,
                                             @RequestParam(value = "countryStatus") CountryStatus countryStatus,
                                             @RequestParam(value = "sort") StockSortType sortType) {
         return stockService.getStockTable(page, countryStatus, sortType);
