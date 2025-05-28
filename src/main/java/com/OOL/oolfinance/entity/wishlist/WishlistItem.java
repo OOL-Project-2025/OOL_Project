@@ -39,12 +39,12 @@ public class WishlistItem {
         return stockInfo;
     }
 
-	public void setWishlist(Wishlist wishlist) {
-		 this.wishlist = wishlist;
-	}
-
-	public void setStockInfo(Stock stock) {
-		this.stockInfo = stock;
-	}
+    public void setWishlist(Wishlist wishlist) {
+	this.wishlist = wishlist;
+    }
+	
+    public void setStockInfo(Stock stock) {
+	this.stockInfo = stock;
+    }
 
 }
