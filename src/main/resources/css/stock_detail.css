@@ -218,14 +218,25 @@ main .stock_info_wrap .stock_info .stock_info_block_wrap .stock_info_block .stoc
     font-size: 20px;
     font-weight: 600;
     color: #646b72;
+    margin-bottom: 20px;
 }
 main .stock_info_wrap .stock_info .stock_info_block_wrap .stock_info_block .stock_info_con .stock_info_con_value {
     font-size: 28px;
     font-weight: 400;
 }
+main .stock_info_wrap .stock_info_graph_wrap {
+    display: none;
+}
 main .stock_info_wrap .stock_info_graph_wrap .infogragh {
     width: 1200px;
     height: 444px;
+    background-color: #2a2e34;
+    border-radius: 20px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+main .stock_info_wrap .stock_info_graph_wrap#growth1 .infogragh {
+    padding-bottom: 0;
 }
 main .stock_info_wrap .stock_info .stock_info_graph_wrap .stock_info_graph_title {
     font-size: 20px;

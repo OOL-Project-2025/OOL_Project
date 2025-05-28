@@ -78,7 +78,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="stock_info_graph_wrap">
+                        <div class="stock_info_graph_wrap" id="finance">
                             <div class="stock_info_graph_head">
                                 <div class="stock_info_graph_title">안정성</div>
                                 <div class="stock_info_graph_filter">
@@ -86,13 +86,27 @@
                                     <div class="stock_info_graph_filter_block">연간</div>
                                 </div>
                             </div>
-                            <div id="stock_finance_graph" class="infogragh"></div>
+                            <div class="infogragh"></div>
                         </div>
-                        <div class="stock_info_graph_wrap">
-                            <div id="stock_performance_graph_1" class="infogragh"></div>
+                        <div class="stock_info_graph_wrap" id="growth1">
+                            <div class="stock_info_graph_head">
+                                <div class="stock_info_graph_title">영업이익과 성장률</div>
+                                <div class="stock_info_graph_filter">
+                                    <div class="stock_info_graph_filter_block on">분기</div>
+                                    <div class="stock_info_graph_filter_block">연간</div>
+                                </div>
+                            </div>
+                            <div class="infogragh"></div>
                         </div>
-                        <div class="stock_info_graph_wrap">
-                            <div id="stock_performance_graph_2" class="infogragh"></div>
+                        <div class="stock_info_graph_wrap" id="growth2">
+                            <div class="stock_info_graph_head">
+                                <div class="stock_info_graph_title">매출과 순이익 성장률</div>
+                                <div class="stock_info_graph_filter">
+                                    <div class="stock_info_graph_filter_block on">분기</div>
+                                    <div class="stock_info_graph_filter_block">연간</div>
+                                </div>
+                            </div>
+                            <div class="infogragh"></div>
                         </div>
                     </div>
                 </div>
@@ -142,10 +156,14 @@
                     this.classList.toggle("on");
                 });
             });
+
             //*** 안정성 - 분기,연간
-            info_graph_filter_block.forEach(function (block) {
+            info_graph_filter_block.forEach((block) => {
                 block.addEventListener("click", function () {
-                    info_graph_filter_block.forEach((el) => el.classList.remove("on"));
+                    const parentFilter = this.closest(".stock_info_graph_filter");
+                    const siblings = parentFilter.querySelectorAll(".stock_info_graph_filter_block");
+
+                    siblings.forEach((el) => el.classList.remove("on"));
                     this.classList.add("on");
                 });
             });
@@ -277,7 +295,9 @@
             const infoBlockTitle = document.querySelector(".stock_info_block_title");
             const infoContent = document.querySelector(".stock_info_block");
             const blockWrap = document.querySelector(".stock_info_block_wrap");
-            const stock_info_graph_wrap = document.querySelectorAll(".stock_info_graph_wrap");
+            const stock_finance_graph = document.querySelector(".stock_info_graph_wrap#finance");
+            const stock_performance_graph_1 = document.querySelector(".stock_info_graph_wrap#growth1");
+            const stock_performance_graph_2 = document.querySelector(".stock_info_graph_wrap#growth2");
 
             filterBlocks.forEach((block) => {
                 block.addEventListener("click", () => {
@@ -287,60 +307,62 @@
 
                     const key = block.id;
                     const data = stockInfoData[key];
-
                     if (!data) return;
 
-                    // 성장 #growth일 땐 블록 전체 숨김
+                    // 기본적으로 모두 숨김
+                    blockWrap.style.display = "none";
+                    stock_finance_graph.style.display = "none";
+                    stock_performance_graph_1.style.display = "none";
+                    stock_performance_graph_2.style.display = "none";
+
+                    // 조건별 분기
                     if (key === "growth") {
-                        blockWrap.style.display = "none";
-                        stock_info_graph_wrap.style.display = "block";
-                        return;
+                        // graph만 보임
+                        stock_performance_graph_1.style.display = "block";
+                        stock_performance_graph_2.style.display = "block";
+                    } else if (key === "finance") {
+                        // 둘 다 보임
+                        blockWrap.style.display = "block";
+                        stock_finance_graph.style.display = "block";
                     } else {
+                        // blockWrap만 보임
                         blockWrap.style.display = "block";
                     }
-                    if (key === "finance") {
-                        stock_info_graph_wrap.style.display = "block";
-                        return;
-                    } else {
-                        stock_info_graph_wrap.style.display = "none";
-                    }
 
-                    // 타이틀 갱신
+                    // 타이틀 및 내용 갱신 (return 없이 실행)
                     infoBlockTitle.textContent = data.title;
-
-                    // 기존 내용 비우기
                     infoContent.innerHTML = "";
 
-                    // 새 항목 채우기
                     data.items.forEach((item) => {
                         const div = document.createElement("div");
                         div.className = "stock_info_con";
                         div.innerHTML = `
-                            <div class="stock_info_con_class">${item.label}</div>
-                            <div class="stock_info_con_value">${item.value}</div>
-                            `;
+                <div class="stock_info_con_class">${item.label}</div>
+                <div class="stock_info_con_value">${item.value}</div>
+            `;
                         infoContent.appendChild(div);
                     });
                 });
             });
 
-            // *** stockInfo 그래프 (재무, 성장)
-            const financeChart = echarts.init(document.getElementById("stock_finance_graph"));
+            // *** stockInfo 그래프 : 재무
+            const financeChart = echarts.init(document.querySelector(".stock_info_graph_wrap#finance .infogragh"));
 
-            const xData = ["24년 9월", "24년 10월", "24년 11월", "24년 12월"];
-            const debt = [58.4, 35.0, 22.5, 32.6];
-            const capital = [13.2, 30.4, 38.5, 70.7];
-            const profit = [8.28, 6.5, 5.3, 6.2];
+            const f_xData = ["24년 9월", "24년 10월", "24년 11월", "24년 12월"];
+            const f_debt = [58.4, 35.0, 22.5, 32.6];
+            const f_capital = [13.2, 30.4, 38.5, 70.7];
+            const f_profit = [8.28, 6.5, 5.3, 6.2];
 
-            // ⬇️ 이 함수가 핵심: hover된 index를 받아서 series data에 opacity 넣어줌
             function makeSeries(highlightIndex = null) {
                 return [
                     {
-                        name: "Debt",
+                        name: "총 부채",
                         type: "bar",
                         barGap: 0.1,
-                        itemStyle: { color: "#00B7B4" },
-                        data: debt.map((val, i) => ({
+                        itemStyle: {
+                            color: "#00B7B4",
+                        },
+                        data: f_debt.map((val, i) => ({
                             value: val,
                             itemStyle: {
                                 borderRadius: [8, 8, 0, 0],
@@ -365,11 +387,11 @@
                         })),
                     },
                     {
-                        name: "Capital",
+                        name: "총 자본",
                         type: "bar",
 
                         itemStyle: { color: "#AFE9E8" },
-                        data: capital.map((val, i) => ({
+                        data: f_capital.map((val, i) => ({
                             value: val,
                             itemStyle: {
                                 borderRadius: [8, 8, 0, 0],
@@ -394,7 +416,7 @@
                         })),
                     },
                     {
-                        name: "Profit",
+                        name: "영업이익률",
                         type: "line",
                         symbol: "circle",
                         lineStyle: {
@@ -407,7 +429,7 @@
                         label: {
                             show: false,
                         },
-                        data: profit,
+                        data: f_profit,
                     },
                 ];
             }
@@ -418,16 +440,16 @@
                     axisPointer: {
                         type: "shadow",
                         shadowStyle: {
-                            color: "rgba(0, 0, 0, 0)", // ← 완전 투명으로 처리
+                            color: "rgba(0, 0, 0, 0)",
                         },
                     },
-                    formatter: () => "", // ✅ 박스 내용 자체를 없앰
-                    backgroundColor: "rgba(0,0,0,0)", // ✅ 박스 배경도 투명
-                    borderWidth: 0, // ✅ 테두리도 없앰
+                    formatter: () => "",
+                    backgroundColor: "rgba(0,0,0,0)",
+                    borderWidth: 0,
                 },
                 legend: {
-                    bottom: 10,
-                    left: "left",
+                    bottom: 0,
+                    left: 32,
                     textStyle: { color: "#fff" },
                 },
                 grid: {
@@ -438,7 +460,7 @@
                 },
                 xAxis: {
                     type: "category",
-                    data: xData,
+                    data: f_xData,
                     axisLabel: { color: "#fff" },
                     axisLine: { lineStyle: { color: "#FFFFFF0D" } },
                 },
@@ -452,20 +474,244 @@
                     axisLine: { lineStyle: { color: "#FFFFFF0D" } },
                     splitLine: { lineStyle: { color: "#FFFFFF0D" } },
                 },
-                series: makeSeries(null), // 초기에는 강조 없음
+                series: makeSeries(null),
             };
 
             financeChart.setOption(baseOption);
 
-            // ⬇️ 마우스 올렸을 때 해당 index 강조
             financeChart.on("updateAxisPointer", function (params) {
                 const index = params?.axesInfo?.[0]?.value;
                 financeChart.setOption({ series: makeSeries(index) });
             });
 
-            // ⬇️ 마우스 빠졌을 때 전체 다시 밝게
             financeChart.getZr().on("globalout", function () {
                 financeChart.setOption({ series: makeSeries(null) });
+            });
+
+            // *** stockInfo 그래프 : 성장 #1
+            const growth1Chart = echarts.init(document.querySelector(".stock_info_graph_wrap#growth1 .infogragh"));
+
+            const g1_xData = ["24년 1월", "24년 2월", "24년 3월", "24년 4월", "24년 5월", "24년 6월", "24년 7월", "24년 8월", "24년 9월", "24년 10월", "24년 11월", "24년 12월"];
+
+            const g1_profit = [39.0, 15.0, 73.0, 23.2, 67.4, 92.5, 52.2, 71.9, 82.8, 65.0, 53.2, 58.9];
+
+            function makeG1Series(highlightIndex = null) {
+                return [
+                    {
+                        name: "영업이익",
+                        type: "bar",
+                        data: g1_profit.map((val, i) => ({
+                            value: val,
+                            itemStyle: {
+                                color: "#00B7B4",
+                                borderRadius: [8, 8, 0, 0],
+                                opacity: highlightIndex === null || highlightIndex === i ? 1 : 0.2,
+                            },
+                            label: {
+                                show: highlightIndex === i,
+                                position: "top",
+                                formatter: "{c} 조",
+                                formatter: () => `{box|${val} 조}`,
+                                rich: {
+                                    box: {
+                                        padding: [6, 8],
+                                        backgroundColor: "#576578",
+                                        borderRadius: 4,
+                                        align: "center",
+                                        verticalAlign: "middle",
+                                        color: "#fff",
+                                        fontSize: 12,
+                                    },
+                                },
+                            },
+                        })),
+                        barWidth: 55,
+                    },
+                ];
+            }
+
+            const g1Option = {
+                tooltip: {
+                    trigger: "axis",
+                    axisPointer: {
+                        type: "shadow",
+                        shadowStyle: {
+                            color: "rgba(0, 0, 0, 0)",
+                        },
+                    },
+                    formatter: () => "",
+                    backgroundColor: "rgba(0,0,0,0)",
+                    borderWidth: 0,
+                },
+                legend: {
+                    show: false,
+                },
+                grid: {
+                    left: "3%",
+                    right: "4%",
+                    bottom: "15%",
+                    containLabel: true,
+                },
+                xAxis: {
+                    type: "category",
+                    data: g1_xData,
+                    axisLabel: { color: "#fff" },
+                    axisLine: { lineStyle: { color: "#FFFFFF0D" } },
+                },
+                yAxis: {
+                    type: "value",
+                    position: "right",
+                    axisLabel: {
+                        formatter: "{value} 조",
+                        color: "#fff",
+                    },
+                    axisLine: { lineStyle: { color: "#FFFFFF0D" } },
+                    splitLine: { lineStyle: { color: "#FFFFFF0D" } },
+                },
+                series: makeG1Series(null),
+            };
+
+            growth1Chart.setOption(g1Option);
+
+            growth1Chart.on("updateAxisPointer", (params) => {
+                const index = params?.axesInfo?.[0]?.value;
+                growth1Chart.setOption({ series: makeG1Series(index) });
+            });
+
+            growth1Chart.getZr().on("globalout", () => {
+                growth1Chart.setOption({ series: makeG1Series(null) });
+            });
+
+            // *** stockInfo 그래프 : 성장 #2
+            const growth2Chart = echarts.init(document.querySelector(".stock_info_graph_wrap#growth2 .infogragh"));
+
+            const g2_xData = ["24년 1월", "24년 2월", "24년 3월", "24년 4월", "24년 5월", "24년 6월", "24년 7월", "24년 8월", "24년 9월", "24년 10월", "24년 11월", "24년 12월"];
+
+            const g2_revenue = [52.3, 21.3, 12.6, 84.3, 23.6, 66.7, 52.3, 21.3, 12.6, 84.3, 23.6, 66.7];
+            const g2_profit = [39.0, 15.0, 73.0, 23.2, 67.4, 92.5, 52.2, 71.9, 82.8, 65.0, 53.2, 58.9];
+
+            function makeG2Series(highlightIndex = null) {
+                return [
+                    {
+                        name: "매출",
+                        type: "bar",
+                        barGap: 0.3,
+                        itemStyle: {
+                            color: "#00B7B4",
+                        },
+                        data: g2_revenue.map((val, i) => ({
+                            value: val,
+                            itemStyle: {
+                                borderRadius: [8, 8, 0, 0],
+                                opacity: highlightIndex === null || highlightIndex === i ? 1 : 0.2,
+                            },
+                            label: {
+                                show: highlightIndex === i,
+                                position: "top",
+                                formatter: "{c} 조",
+                                formatter: () => `{box|${val} 조}`,
+                                rich: {
+                                    box: {
+                                        padding: [6, 8],
+                                        backgroundColor: "#576578",
+                                        borderRadius: 4,
+                                        align: "center",
+                                        verticalAlign: "middle",
+                                        color: "#fff",
+                                        fontSize: 12,
+                                    },
+                                },
+                            },
+                        })),
+                        barWidth: 23.5,
+                    },
+                    {
+                        name: "순이익",
+                        type: "bar",
+                        itemStyle: {
+                            color: "#AFE9E8",
+                        },
+                        data: g2_profit.map((val, i) => ({
+                            value: val,
+                            itemStyle: {
+                                borderRadius: [8, 8, 0, 0],
+                                opacity: highlightIndex === null || highlightIndex === i ? 1 : 0.2,
+                            },
+                            label: {
+                                show: highlightIndex === i,
+                                position: "top",
+                                formatter: "{c} 조",
+                                formatter: () => `{box|${val} 조}`,
+                                rich: {
+                                    box: {
+                                        padding: [6, 8],
+                                        backgroundColor: "#576578",
+                                        borderRadius: 4,
+                                        align: "center",
+                                        verticalAlign: "middle",
+                                        color: "#fff",
+                                        fontSize: 12,
+                                    },
+                                },
+                            },
+                        })),
+                        barWidth: 23.5,
+                    },
+                ];
+            }
+
+            const g2Option = {
+                tooltip: {
+                    trigger: "axis",
+                    axisPointer: {
+                        type: "shadow",
+                        shadowStyle: {
+                            color: "rgba(0, 0, 0, 0)",
+                        },
+                    },
+                    formatter: () => "",
+                    backgroundColor: "rgba(0,0,0,0)",
+                    borderWidth: 0,
+                },
+                legend: {
+                    bottom: 0,
+                    left: 32,
+                    textStyle: { color: "#fff" },
+                },
+                grid: {
+                    left: "3%",
+                    right: "4%",
+                    bottom: "15%",
+                    containLabel: true,
+                },
+                xAxis: {
+                    type: "category",
+                    data: g2_xData,
+                    axisLabel: { color: "#fff" },
+                    axisLine: { lineStyle: { color: "#FFFFFF0D" } },
+                },
+                yAxis: {
+                    type: "value",
+                    position: "right",
+                    axisLabel: {
+                        formatter: "{value} 조",
+                        color: "#fff",
+                    },
+                    axisLine: { lineStyle: { color: "#FFFFFF0D" } },
+                    splitLine: { lineStyle: { color: "#FFFFFF0D" } },
+                },
+                series: makeG2Series(null),
+            };
+
+            growth2Chart.setOption(g2Option);
+
+            growth2Chart.on("updateAxisPointer", (params) => {
+                const index = params?.axesInfo?.[0]?.value;
+                growth2Chart.setOption({ series: makeG2Series(index) });
+            });
+
+            growth2Chart.getZr().on("globalout", () => {
+                growth2Chart.setOption({ series: makeG2Series(null) });
             });
         </script>
     </body>
