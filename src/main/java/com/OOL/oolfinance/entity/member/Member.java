@@ -81,7 +81,4 @@ public class Member {
                 .build();
     }
 
-	public void setMemberId(String memberId) {
-		
-	}
 }
