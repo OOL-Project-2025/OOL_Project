@@ -60,4 +60,9 @@ public class Wishlist {
     public void setMember(Member member) {
         this.member = member;
     }
+    
+    public Wishlist(String wishlistName, Member member) {
+        this.wishlistName = wishlistName;
+        this.member = member;
+    }
 }
