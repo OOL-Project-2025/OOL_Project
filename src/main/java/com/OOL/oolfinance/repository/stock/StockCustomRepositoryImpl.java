@@ -1,6 +1,7 @@
 package com.OOL.oolfinance.repository.stock;
 
 import com.OOL.oolfinance.dto.main.StockTableDTO;
+import com.OOL.oolfinance.dto.stock.StockDTO;
 import com.OOL.oolfinance.enums.CountryStatus;
 import com.OOL.oolfinance.enums.StockSortType;
 import com.querydsl.core.types.Order;
@@ -69,6 +70,21 @@ public class StockCustomRepositoryImpl implements StockCustomRepository{
                 .orderBy(orderSpecifier)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
+                .fetch();
+    }
+
+    @Override
+    public List<StockDTO> findAllStock() {
+        return jpaQueryFactory.select(Projections.constructor(StockDTO.class,
+                stock.stockCode,
+                stock.stockSymbol,
+                stock.stockName,
+                stock.previousClose,
+                stock.currentClose,
+                stock.tradingValue,
+                stock.tradingVolume,
+                stock.countryStatus))
+                .from(stock)
                 .fetch();
     }
 }
