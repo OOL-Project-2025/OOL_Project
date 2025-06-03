@@ -74,7 +74,8 @@ main {
     color: white;
 }
 /* 메인영역 - 상단영역 */
-main .main_top_wrap {
+main .main_top_wrap,
+main .allIndex_wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -86,7 +87,14 @@ main .main_top_wrap {
     height: 420px;
     padding-top: 64px;
 }
-main .main_top_wrap .main_top_tap_wrap {
+main .allIndex_wrap {
+    background: none;
+    height: 268px;
+    padding-top: 0;
+    padding-bottom: 40px;
+}
+main .main_top_wrap .main_top_tap_wrap,
+main .allIndex_wrap .allIndex_tap_wrap {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -100,7 +108,8 @@ main .main_top_wrap .main_top_tap_wrap {
     border-radius: 12px;
     margin-bottom: 40px;
 }
-main .main_top_wrap .main_top_tap_wrap .main_top_tap {
+main .main_top_wrap .main_top_tap_wrap .main_top_tap,
+main .allIndex_wrap .allIndex_tap_wrap .allIndex_tap {
     width: 134.67px;
     height: 40px;
     line-height: 40px;
@@ -110,18 +119,21 @@ main .main_top_wrap .main_top_tap_wrap .main_top_tap {
     cursor: pointer;
     transition-duration: 0.2s;
 }
-main .main_top_wrap .main_top_tap_wrap .main_top_tap.on {
+main .main_top_wrap .main_top_tap_wrap .main_top_tap.on,
+main .allIndex_wrap .allIndex_tap_wrap .allIndex_tap.on {
     background: #ffffff20;
     color: white;
 }
-main .main_top_wrap .main_top_block_wrap {
+main .main_top_wrap .main_top_block_wrap,
+main .allIndex_wrap .allIndex_block_wrap {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: row;
     gap: 12px;
 }
-main .main_top_wrap .main_top_block_wrap .main_top_block {
+main .main_top_wrap .main_top_block_wrap .main_top_block,
+main .allIndex_wrap .allIndex_block_wrap .allIndex_block {
     width: 142px;
     height: 104px;
     display: flex;
@@ -136,39 +148,47 @@ main .main_top_wrap .main_top_block_wrap .main_top_block {
     cursor: pointer;
     transition-duration: 0.3s;
 }
-main .main_top_wrap .main_top_block_wrap .main_top_block:hover {
+main .main_top_wrap .main_top_block_wrap .main_top_block:hover,
+main .allIndex_wrap .allIndex_block_wrap .allIndex_block:hover {
     background: rgba(255, 255, 255, 0.1);
 }
-main .main_top_wrap .main_top_block_market {
+main .main_top_wrap .main_top_block_market,
+main .allIndex_wrap .allIndex_block_market {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-bottom: 8px;
     font-weight: 600;
 }
-main .main_top_wrap .main_top_block_market .main_top_block_market_img {
+main .main_top_wrap .main_top_block_market .main_top_block_market_img,
+main .allIndex_wrap .allIndex_block_market .allIndex_block_market_img {
     width: 23px;
     height: 12px;
     margin: 0 0 4px 8px;
 }
-main .main_top_wrap .main_top_block_market .main_top_block_market_img img {
+main .main_top_wrap .main_top_block_market .main_top_block_market_img img,
+main .allIndex_wrap .allIndex_block_market .allIndex_block_market_img img {
     width: 100%;
     margin-bottom: 1.5px;
 }
-main .main_top_wrap .main_top_block_cost {
+main .main_top_wrap .main_top_block_cost,
+main .allIndex_wrap .allIndex_block_cost {
     font-size: 28px;
     font-weight: 500;
 }
-main .main_top_wrap .main_top_block_fluc {
+main .main_top_wrap .main_top_block_fluc,
+main .allIndex_wrap .allIndex_block_fluc {
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 5px;
 }
-main .main_top_wrap .main_top_block_fluc.up {
+main .main_top_wrap .main_top_block_fluc.up,
+main .allIndex_wrap .allIndex_block_fluc.up {
     color: #ff5e5e;
 }
-main .main_top_wrap .main_top_block_fluc.down {
+main .main_top_wrap .main_top_block_fluc.down,
+main .allIndex_wrap .allIndex_block_fluc.down {
     color: #168aff;
 }
 

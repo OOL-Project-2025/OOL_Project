@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <script src="https://kit.fontawesome.com/c5e0b36bfd.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../css/main.css" />
-        <link rel="stylesheet" href="../css/stock_detail.css" />
+        <link rel="stylesheet" href="../css/detail.css" />
         <script src="../js/echarts.js"></script>
         <title>stock detail</title>
     </head>
@@ -134,7 +134,7 @@
             const graph_filter_block = document.querySelectorAll(".stock_graph_filter_block");
             const info_filter_block = document.querySelectorAll(".stock_info_filter_block");
             const info_graph_filter_block = document.querySelectorAll(".stock_info_graph_filter_block");
-            // 전체, 국내, 해외 탭
+            // 차트 실시간, 1일, 1주, 1개월, 1년
             graph_filter_block.forEach(function (block) {
                 block.addEventListener("click", function () {
                     graph_filter_block.forEach((el) => el.classList.remove("on"));
@@ -168,7 +168,7 @@
                 });
             });
 
-            // *** 지수 차트
+            // *** 종목 차트
             var myChart = echarts.init(document.getElementById("stock_graph"));
 
             option = {
@@ -200,16 +200,16 @@
                 xAxis: {
                     type: "category",
                     data: ["", "2025-04-25", "2025-04-26", "2025-04-27", "2025-04-28", "2025-04-29", "2025-04-30", "2025-04-31", "2025-05-01", "2025-05-02", "2025-05-03", "2025-05-04", ""],
-                    boundaryGap: false, // <-- 이게 핵심!
+                    boundaryGap: false,
                     axisTick: {
-                        alignWithLabel: true, // 여기가 포인트!
+                        alignWithLabel: true,
                     },
                     axisLine: { lineStyle: { color: "#FFFFFF0D" } },
                     axisLabel: { color: "#fff" },
                     splitLine: { show: true, lineStyle: { color: "#FFFFFF0D" } },
                 },
                 yAxis: {
-                    position: "right", // Y축 오른쪽으로
+                    position: "right",
                     axisLine: { lineStyle: { color: "#FFFFFF0D" } },
                     axisLabel: { color: "#fff" },
                     splitLine: { show: true, lineStyle: { color: "#FFFFFF0D" } },
@@ -240,8 +240,8 @@
                             [],
                         ],
                         itemStyle: {
-                            color: "#ff4d4f", // 하락(종가 < 시가)
-                            color0: "#409eff", // 상승(종가 > 시가)
+                            color: "#ff4d4f",
+                            color0: "#409eff",
                             borderColor: "#ff4d4f",
                             borderColor0: "#409eff",
                         },

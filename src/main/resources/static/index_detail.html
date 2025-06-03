@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>index detail</title>
+        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="../css/detail.css" />
+        <script src="../js/echarts.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="header_logo">
+                <img src="../img/header_logo.png" alt="Header Logo Image" />
+            </div>
+            <div class="header_search">
+                <input type="text" placeholder="검색어를 입력해주세요" />
+            </div>
+            <div class="header_logbtn">
+                <a href="../static/login.html">
+                    <button type="button">로그인/회원가입</button>
+                </a>
+            </div>
+        </header>
+        <main>
+            <div class="stock_wrap">
+                <div class="stock_name_wrap">
+                    <div class="company_img">
+                        <img src="../img/index_us.png" alt="테슬라 이미지" />
+                    </div>
+                    <div class="company_info">
+                        <div class="company_name">나스닥</div>
+                        <div class="company_price_wrap">
+                            <div class="company_price">20,102.13</div>
+                            <div class="company_rate up">+30.78(0.1%)</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stock_graph_wrap">
+                    <div class="stock_graph_head">
+                        <div class="stock_graph_title">차트</div>
+                        <div class="stock_graph_filter">
+                            <div class="stock_graph_filter_block on">실시간</div>
+                            <div class="stock_graph_filter_block">1일</div>
+                            <div class="stock_graph_filter_block">1주</div>
+                            <div class="stock_graph_filter_block">1개월</div>
+                            <div class="stock_graph_filter_block">1년</div>
+                        </div>
+                    </div>
+                    <div id="stock_graph"></div>
+                </div>
+            </div>
+            <div class="allIndex_wrap">
+                <div class="allIndex_top_wrap">
+                    <div class="allIndex_title">주요 지수 더보기</div>
+                    <div class="allIndex_tap_wrap">
+                        <div class="allIndex_tap on">주가지수</div>
+                        <div class="allIndex_tap">채권</div>
+                        <div class="allIndex_tap">원자재</div>
+                    </div>
+                </div>
+                <div class="allIndex_block_wrap">
+                    <div class="allIndex_block">
+                        <div class="allIndex_block_market">
+                            <div class="allIndex_block_market_name">나스닥</div>
+                            <div class="allIndex_block_market_img">
+                                <img src="../img/flag_us.png" alt="미국 국기" />
+                            </div>
+                        </div>
+                        <div class="allIndex_block_cost">17,928.92</div>
+                        <div class="allIndex_block_fluc up">
+                            <div class="allIndex_block_fluc_cost">+0.78</div>
+                            <div class="allIndex_block_fluc_rate">(0.0043%)</div>
+                        </div>
+                    </div>
+                    <div class="allIndex_block">
+                        <div class="allIndex_block_market">
+                            <div class="allIndex_block_market_name">나스닥</div>
+                            <div class="allIndex_block_market_img">
+                                <img src="../img/flag_us.png" alt="미국 국기" />
+                            </div>
+                        </div>
+                        <div class="allIndex_block_cost">17,928.92</div>
+                        <div class="allIndex_block_fluc up">
+                            <div class="allIndex_block_fluc_cost">+0.78</div>
+                            <div class="allIndex_block_fluc_rate">(0.0043%)</div>
+                        </div>
+                    </div>
+                    <div class="allIndex_block">
+                        <div class="allIndex_block_market">
+                            <div class="allIndex_block_market_name">나스닥</div>
+                            <div class="allIndex_block_market_img">
+                                <img src="../img/flag_us.png" alt="미국 국기" />
+                            </div>
+                        </div>
+                        <div class="allIndex_block_cost">17,928.92</div>
+                        <div class="allIndex_block_fluc up">
+                            <div class="allIndex_block_fluc_cost">+0.78</div>
+                            <div class="allIndex_block_fluc_rate">(0.0043%)</div>
+                        </div>
+                    </div>
+                    <div class="allIndex_block">
+                        <div class="allIndex_block_market">
+                            <div class="allIndex_block_market_name">나스닥</div>
+                            <div class="allIndex_block_market_img">
+                                <img src="../img/flag_us.png" alt="미국 국기" />
+                            </div>
+                        </div>
+                        <div class="allIndex_block_cost">17,928.92</div>
+                        <div class="allIndex_block_fluc up">
+                            <div class="allIndex_block_fluc_cost">+0.78</div>
+                            <div class="allIndex_block_fluc_rate">(0.0043%)</div>
+                        </div>
+                    </div>
+                    <div class="allIndex_block">
+                        <div class="allIndex_block_market">
+                            <div class="allIndex_block_market_name">나스닥</div>
+                            <div class="allIndex_block_market_img">
+                                <img src="../img/flag_us.png" alt="미국 국기" />
+                            </div>
+                        </div>
+                        <div class="allIndex_block_cost">17,928.92</div>
+                        <div class="allIndex_block_fluc up">
+                            <div class="allIndex_block_fluc_cost">+0.78</div>
+                            <div class="allIndex_block_fluc_rate">(0.0043%)</div>
+                        </div>
+                    </div>
+                    <div class="allIndex_block">
+                        <div class="allIndex_block_market">
+                            <div class="allIndex_block_market_name">나스닥</div>
+                            <div class="allIndex_block_market_img">
+                                <img src="../img/flag_us.png" alt="미국 국기" />
+                            </div>
+                        </div>
+                        <div class="allIndex_block_cost">17,928.92</div>
+                        <div class="allIndex_block_fluc up">
+                            <div class="allIndex_block_fluc_cost">+0.78</div>
+                            <div class="allIndex_block_fluc_rate">(0.0043%)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <div class="footer_logo">
+                <img src="../img/header_logo.png" alt="Footer Logo Image" />
+            </div>
+            <div class="footer_pj">
+                <div class="footer_pj_name">오올</div>
+                <div class="footer_pj_people">김용주, 김태은, 안지영, 장유석, 김예리</div>
+            </div>
+            <div class="footer_pj_link">
+                <a href="https://github.com/OOL-Project-2025/OOL_Project" target="_blank"><img src="../img/footer_github.png" alt="github logo" class="footer_pjimg" /></a>
+                <a href="http://"><img src="../img/footer_notion.png" alt="notion logo" class="footer_pjimg" /></a>
+                <a href="https://www.figma.com/design/qZRKhlqrbYXMHYN8e7us0p/%EC%A6%9D%EA%B6%8C-%EC%9B%B9?node-id=120-15448&t=olCoN2OVm52y5p2D-0" target="_blank">
+                    <img src="../img/footer_figma.png" alt="figma logo" class="footer_pjimg"
+                /></a>
+            </div>
+        </footer>
+        <script>
+            // *** 필터/솔트 기능
+            const graph_filter_block = document.querySelectorAll(".stock_graph_filter_block");
+            // 차트 실시간, 1일, 1주, 1개월, 1년
+            graph_filter_block.forEach(function (block) {
+                block.addEventListener("click", function () {
+                    graph_filter_block.forEach((el) => el.classList.remove("on"));
+                    this.classList.add("on");
+                });
+            });
+
+            // *** 지수 차트
+            let myChart = echarts.init(document.getElementById("stock_graph"));
+            let yMin = 0;
+            let yMax = 0;
+            option = {
+                tooltip: {
+                    trigger: "axis",
+                    axisPointer: {
+                        label: {
+                            backgroundColor: "#6a7985",
+                        },
+                    },
+                },
+                xAxis: {
+                    type: "category",
+                    data: ["2024.04", "2024.05", "2024.06", "2024.07", "2024.08", "2024.09", "2024.10", "2024.11", "2024.12", "2025.01", "2025.02"],
+                    boundaryGap: false,
+                    axisTick: {
+                        alignWithLabel: true,
+                    },
+                    axisLine: { lineStyle: { color: "#FFFFFF0D" } },
+                    axisLabel: { color: "#fff" },
+                    splitLine: { show: true, lineStyle: { color: "#FFFFFF0D" } },
+                },
+                yAxis: {
+                    type: "value",
+                    min: function (val) {
+                        const range = val.max - val.min;
+                        yMin = Math.floor(val.min - range * 0.125);
+                        return yMin;
+                    },
+                    max: function (val) {
+                        const range = val.max - val.min;
+                        yMax = Math.ceil(val.max + range * 0.125);
+                        return yMax;
+                    },
+                    splitNumber: 6,
+                    position: "right",
+                    axisLabel: {
+                        color: "#fff",
+                        formatter: function (val) {
+                            if (val === yMin || val === yMax) return "";
+                            return val.toLocaleString();
+                        },
+                    },
+                    axisLine: { lineStyle: { color: "#FFFFFF0D" } },
+                    splitLine: { lineStyle: { color: "#FFFFFF0D" } },
+                },
+                grid: {
+                    left: "3%",
+                    right: "4%",
+                    bottom: "10%",
+                    containLabel: true,
+                },
+                series: [
+                    {
+                        type: "line",
+                        symbol: "none",
+                        data: [20423, 20429, 20500, 20423, 20329, 20290, 20325, 20208, 20408, 20358, 20102],
+                        lineStyle: {
+                            color: "#FF5D5D",
+                        },
+                        itemStyle: {
+                            color: "#FF5D5D",
+                        },
+                        areaStyle: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                { offset: 0, color: "rgba(255, 94, 94, 0.1)" },
+                                { offset: 1, color: "rgba(255, 94, 94, 0)" },
+                            ]),
+                        },
+                    },
+                ],
+            };
+
+            myChart.setOption(option);
+
+            // *** 주가지수, 채권, 원자재 탭
+            const top_block = document.querySelectorAll(".allIndex_tap");
+            top_block.forEach(function (block) {
+                block.addEventListener("click", function () {
+                    top_block.forEach((el) => el.classList.remove("on"));
+                    this.classList.add("on");
+                });
+            });
+        </script>
+    </body>
+</html>

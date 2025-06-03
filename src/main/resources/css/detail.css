@@ -242,3 +242,15 @@ main .stock_info_wrap .stock_info .stock_info_graph_wrap .stock_info_graph_title
     font-size: 20px;
     font-weight: 600;
 }
+main .allIndex_wrap .allIndex_top_wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 1200px;
+}
+main .allIndex_wrap .allIndex_top_wrap .allIndex_title {
+    margin-bottom: 40px;
+    font-size: 20px;
+    font-weight: 600;
+}
