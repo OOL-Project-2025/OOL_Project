@@ -1,7 +1,7 @@
-package com.OOL.oolfinance.repository.index;
+package com.OOL.oolfinance.repository.marketIndex;
 
 import com.OOL.oolfinance.dto.main.IndexDTO;
-import static com.OOL.oolfinance.entity.stock.QIndex.*;
+import static com.OOL.oolfinance.entity.stock.QMarketIndex.*;
 import com.OOL.oolfinance.enums.IndexStatus;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class IndexCustomRepositoryImpl implements IndexCustomRepository {
+public class MarketIndexCustomRepositoryImpl implements MarketIndexCustomRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
 
@@ -30,13 +30,13 @@ public class IndexCustomRepositoryImpl implements IndexCustomRepository {
 
         List<IndexDTO> indexDTOList = jpaQueryFactory
                 .select(Projections.constructor(IndexDTO.class,
-                        index.indexSymbol,
-                        index.indexName,
-                        index.previousClose,
-                        index.currentClose))
-                .from(index)
-                .where(index.status.eq(requestStatus))
-                .orderBy(index.indexName.desc())
+                        marketIndex.indexSymbol,
+                        marketIndex.indexName,
+                        marketIndex.previousClose,
+                        marketIndex.currentClose))
+                .from(marketIndex)
+                .where(marketIndex.status.eq(requestStatus))
+                .orderBy(marketIndex.indexName.desc())
                 .fetch();
 
         return indexDTOList;

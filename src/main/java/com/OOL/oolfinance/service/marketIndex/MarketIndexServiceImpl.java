@@ -1,8 +1,8 @@
-package com.OOL.oolfinance.service.index;
+package com.OOL.oolfinance.service.marketIndex;
 
 import com.OOL.oolfinance.dto.main.IndexDTO;
 import com.OOL.oolfinance.enums.IndexStatus;
-import com.OOL.oolfinance.repository.index.IndexRepository;
+import com.OOL.oolfinance.repository.marketIndex.MarketIndexRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,13 +19,13 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class IndexServiceImpl implements IndexService {
+public class MarketIndexServiceImpl implements MarketIndexService {
 
-    private final IndexRepository indexRepository;
+    private final MarketIndexRepository marketIndexRepository;
 
     @Override
     public List<IndexDTO> fetchIndexList(IndexStatus requestStatus) {
-        List<IndexDTO> indices = indexRepository.findAllIndicesByIndexStatus(requestStatus);
+        List<IndexDTO> indices = marketIndexRepository.findAllIndicesByIndexStatus(requestStatus);
 
         return indices;
     }

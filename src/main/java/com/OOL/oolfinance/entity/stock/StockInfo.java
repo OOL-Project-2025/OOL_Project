@@ -82,10 +82,10 @@ public class StockInfo {
     // 배당수익률
 
     @Column
-    private LocalDate date;
+    private LocalDate earningsDate;
     // 데이터 기준일
 
     @ManyToOne
-    @JoinColumn(name = "stockCode", referencedColumnName = "stockCode")
+    @JoinColumn(name = "stock_code", referencedColumnName = "stockCode")
     private Stock stock;  // 종목 정보 참조
 }

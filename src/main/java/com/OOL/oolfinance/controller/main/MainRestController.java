@@ -8,7 +8,7 @@ import com.OOL.oolfinance.enums.CountryStatus;
 import com.OOL.oolfinance.enums.IndexStatus;
 import com.OOL.oolfinance.enums.StatusEnum;
 import com.OOL.oolfinance.enums.StockSortType;
-import com.OOL.oolfinance.service.index.IndexService;
+import com.OOL.oolfinance.service.marketIndex.MarketIndexService;
 import com.OOL.oolfinance.service.stock.StockService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,14 +32,14 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class MainRestController {
-    private final IndexService indexService;
+    private final MarketIndexService marketIndexService;
     private final StockService stockService;
 
     @GetMapping(value = "/api/main/indices")
     public ResponseEntity<IndexResponse> getIndicesList(@RequestParam(value = "type") IndexStatus type) {
         log.info(type + "리스트 요청");
 
-        List<IndexDTO> data = indexService.fetchIndexList(type);
+        List<IndexDTO> data = marketIndexService.fetchIndexList(type);
         IndexResponse response;
 
         if (data.isEmpty()) {
