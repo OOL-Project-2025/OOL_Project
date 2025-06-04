@@ -4,6 +4,9 @@ spring:
       ddl-auto: update
 
     properties:
+      hibernate.query.mutation_strategy.global_temporary.create_tables: false
+      hibernate.query.mutation_strategy.global_temporary.drop_tables: false
+
       hibernate:
         format_sql: true
-        show_sql: true
+#        show_sql: true
