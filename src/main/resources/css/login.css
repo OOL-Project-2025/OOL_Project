@@ -100,16 +100,17 @@ main .login_wrap {
 main .login_wrap .error-msg {
   color: #ff5d34;
   font-size: 13px;
-  margin-top: -10px;
-  margin-bottom: 10px;
+  margin-top: -9px;
+  margin-bottom: 12px;
 }
 
 /* 로그인 폼 */
 .loginform .id,
 .loginform .password {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   position: relative;
 }
+
 .loginform input {
   width: 326px;
   height: 54px;
@@ -121,6 +122,10 @@ main .login_wrap .error-msg {
   font-size: 16px;
   background: #272b31;
   color: white;
+}
+.loginform .password input {
+  padding-right: 40px;
+  width: 302px;
 }
 .loginform input:focus {
   outline: 1px solid white;
@@ -154,7 +159,7 @@ main .loginform .password .eye_toggle_but.viewing {
   background-image: url(../img/pw_view.png);
 }
 .sub_fuc {
-  margin-top: 24px;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
   gap: 24px;
