@@ -1,14 +1,166 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>로그인</title>
-</head>
-<body>
-	<form action="/member/login" method="post">
-	아이디 : <input type="text" name="memberId"> <br>
-	비밀번호 : <input type="password" name="memberPassword"> <br>
-	<input type="submit" value="로그인">
-	</form>
-</body>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인</title>
+    <link rel="stylesheet" href="../css/login.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header_logo">
+        <img src="../img/header_logo.png" alt="로고" />
+      </div>
+
+      <div class="search_box">
+        <input type="text" placeholder="검색어를 입력하세요" />
+      </div>
+
+      <div class="header_logbtn">
+        <button type="button">로그인/회원가입</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="main_logo">
+        <img src="../img/main_logo.png" alt="로고" />
+      </div>
+      <div class="login_wrap">
+        <div class="loginform">
+          <div class="id">
+            <input
+              type="text"
+              placeholder="아이디를 입력하세요"
+              class="id-input"
+            />
+          </div>
+          <div class="password">
+            <input
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+              class="pw-input"
+            />
+            <span class="eye_toggle_but"></span>
+          </div>
+          <div class="error-msg" id="login-error-msg"></div>
+        </div>
+        <button class="main_login_btn">로그인</button>
+      </div>
+
+      <div class="sub_fuc">
+        <a href="" class="find_id" target="_blank">아이디 찾기</a>
+        <div class="line">|</div>
+        <a href="" class="find_pw" target="_blank">비밀번호 찾기</a>
+        <div class="line">|</div>
+        <a href="" class="signup" target="_blank">회원가입</a>
+      </div>
+
+      <div class="social_icons">
+        <div class="social_icon naver">
+          <img src="../img/social_naver.png" alt="네이버 로고" />
+        </div>
+        <div class="social_icon kakao">
+          <img src="../img/social_kakao.png" alt="카카오 로고" />
+        </div>
+        <div class="social_icon google">
+          <img src="../img/social_google.png" alt="구글 로고" />
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const db = {
+        id: "jjjj",
+        pass: "1234",
+      };
+
+      const errorMsg = document.getElementById("login-error-msg");
+
+      const loginBtn = document.querySelector(".main_login_btn");
+      const idInput = document.querySelector(".id-input");
+      const pwInput = document.querySelector(".pw-input");
+
+      loginBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        // 입력값 읽기
+        const enteredId = idInput.value;
+        const enteredPw = pwInput.value;
+        errorMsg.classList.remove("show");
+        errorMsg.textContent = "";
+
+        // 에러 스타일 초기화
+        idInput.classList.remove("input-error");
+        pwInput.classList.remove("input-error");
+
+        let idCorrect = enteredId === db.id;
+        let pwCorrect = enteredPw === db.pass;
+
+        // 각각 조건에 맞게 처리
+        if (!idCorrect && !pwCorrect) {
+          idInput.classList.add("input-error");
+          pwInput.classList.add("input-error");
+          errorMsg.textContent = "아이디와 비밀번호가 모두 올바르지 않습니다.";
+          errorMsg.classList.add("show");
+          // 여기다 잘못된 입력입니다 디브 스타일 컨트롤 코드 넣기
+        } else if (!idCorrect) {
+          idInput.classList.add("input-error");
+          errorMsg.textContent = "아이디가 올바르지 않습니다.";
+          errorMsg.classList.add("show");
+          // 여기다 잘못된 입력입니다 디브 스타일 컨트롤 코드 넣기
+        } else if (!pwCorrect) {
+          pwInput.classList.add("input-error");
+          errorMsg.textContent = "비밀번호가 올바르지 않습니다.";
+          errorMsg.classList.add("show");
+
+          // 여기다 잘못된 입력입니다 디브 스타일 컨트롤 코드 넣기
+        }
+
+        // 성공 시 처리
+        if (idCorrect && pwCorrect) {
+          alert("로그인 성공!");
+          // 성공 후 리디렉션 등 추가 작업 가능
+        }
+        if (idInput.classList.contains("input-error")) {
+          const removeIdError = function () {
+            if (idInput.value.trim() !== "") {
+              idInput.classList.remove("input-error");
+              idInput.removeEventListener("input", removeIdError); // 🔄 중복 방지
+            }
+          };
+          idInput.addEventListener("input", removeIdError);
+        }
+
+        if (pwInput.classList.contains("input-error")) {
+          const removePwError = function () {
+            if (pwInput.value.trim() !== "") {
+              pwInput.classList.remove("input-error");
+              pwInput.removeEventListener("input", removePwError); // 🔄 중복 방지
+            }
+          };
+          pwInput.addEventListener("input", removePwError);
+        }
+      });
+
+      const toggleBut = document.querySelector(".eye_toggle_but");
+
+      toggleBut.addEventListener("click", function (e) {
+        const input = toggleBut.previousElementSibling;
+        const isPassword = input.type === "password";
+
+        if (isPassword) {
+          input.type = "text";
+        } else {
+          input.type = "password";
+        }
+
+        if (isPassword) {
+          toggleBut.classList.add("viewing");
+        } else {
+          toggleBut.classList.remove("viewing");
+        }
+        console.log("토글버튼 작동됨");
+      });
+    </script>
+  </body>
 </html>
