@@ -7,5 +7,14 @@ spring:
       local:
         - dev
         - config
+        - db
       prod:
+        - prod
         - config
+        - db
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.schema: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace

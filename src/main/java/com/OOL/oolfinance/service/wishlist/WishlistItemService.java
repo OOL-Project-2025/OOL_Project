@@ -3,6 +3,7 @@ package com.OOL.oolfinance.service.wishlist;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.OOL.oolfinance.dto.stock.StockDTO;
 import org.springframework.stereotype.Service;
 
 import com.OOL.oolfinance.entity.member.Member;
@@ -35,6 +36,19 @@ public class WishlistItemService {
 
         return items.stream()
                 .map(WishlistItem::getStockInfo)
+                .distinct()
+                .collect(Collectors.toList());
+    }
+
+    public List<StockDTO> getStockDTOsInUserWishlist(String memberId) {
+        if (memberId == null) {
+            throw new RuntimeException("로그인이 필요합니다.");
+        }
+
+        List<WishlistItem> items = wishlistItemRepository.findByWishlist_Member_MemberId(memberId);
+
+        return items.stream()
+                .map(WishlistItem::transferStockInfoToStockDTO)
                 .distinct()
                 .collect(Collectors.toList());
     }

@@ -1,6 +1,7 @@
 package com.OOL.oolfinance.service.stock;
 
 import com.OOL.oolfinance.dto.main.StockTableDTO;
+import com.OOL.oolfinance.dto.stock.StockDTO;
 import com.OOL.oolfinance.entity.stock.Stock;
 import com.OOL.oolfinance.enums.CountryStatus;
 import com.OOL.oolfinance.enums.StockSortType;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author : yongjukim
@@ -34,6 +36,27 @@ public class StockServiceImpl implements StockService{
 
         return stockRepository.findByCountryStatus(pageable, countryStatus, sortType);
 
+    }
+
+    @Override
+    public List<StockDTO> getAllStock() {
+        return stockRepository.findAllStock();
+    }
+
+    @Override
+    public StockDTO getOneStock(String stockCode) {
+        Stock stock = stockRepository.findByStockCode(stockCode).orElseThrow(() -> new IllegalArgumentException("해당 주식을 찾을 수 없습니다."));
+
+        return StockDTO.builder()
+                .stockCode(stock.getStockCode())
+                .stockSymbol(stock.getStockSymbol())
+                .stockName(stock.getStockName())
+                .previousClose(stock.getPreviousClose())
+                .currentClose(stock.getCurrentClose())
+                .tradingValue(stock.getTradingValue())
+                .tradingVolume(stock.getTradingVolume())
+                .countryStatus(stock.getCountryStatus())
+                .build();
     }
 
 }

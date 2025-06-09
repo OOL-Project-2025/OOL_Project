@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Index {
+public class MarketIndex {
 
     @Id
     private String indexCode;

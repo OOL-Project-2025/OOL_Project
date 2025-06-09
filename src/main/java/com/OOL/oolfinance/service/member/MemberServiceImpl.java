@@ -48,7 +48,9 @@ public class MemberServiceImpl implements MemberService{
     @Override
     @Transactional
     public void setProfile(Long id, MultipartFile profilePhoto, String nickname) {
-        Member member = memberRepository.findById(id).orElseThrow(() -> {return new IllegalArgumentException("찾을 수 없는 id입니다.");});
+        Member member = memberRepository.findById(id).orElseThrow(() -> {
+            return new IllegalArgumentException("찾을 수 없는 id입니다.");
+        });
 
         String photoName = null;
 
@@ -129,28 +131,28 @@ public class MemberServiceImpl implements MemberService{
                         .nickname(memberDTO.getMemberNickname())
                         .build();
         Member Member = memberRepository.save(member);
-        
+
         Wishlist defaultWishlist = new Wishlist("기본", Member);
         wishlistCategoryRepository.save(defaultWishlist);
     }
-    
+
     @Override
     public MemberDTO login(MemberDTO memberDTO) {
     	/*
     	 * 1. 회원 아이디 DB 조회
     	 * 2. DB 조회 비밀번호와 사용자 입력 비밀번호가 일치하는지 판단 */
-    	
+
     	Optional<Member> byMemberId = memberRepository.findByMemberId(memberDTO.getMemberId());
     	if(byMemberId.isPresent()) {
     		//조회 결과 존재
     		Member member = byMemberId.get();
-    		
+
     		if (member.getPassword().equals(memberDTO.getMemberPassword())) {
     			//비밀번호 일치
     			//entity -> dto 변환 후 리턴
     			MemberDTO memDTO = MemberDTO.toMemberDTO(member);
     			return memDTO;
-    			
+
     		}
     	} else {
     		//조회 결과 없음.
@@ -158,7 +160,7 @@ public class MemberServiceImpl implements MemberService{
     	}
 		return null;
     }
-    
+
     public MemberDTO updateForm(String myId) {
     	Optional<Member> optionalMemberEntity = memberRepository.findByMemberId(myId);
     	if(optionalMemberEntity.isPresent()) {
@@ -167,7 +169,7 @@ public class MemberServiceImpl implements MemberService{
     		return null;
     	}
     }
-    
+
     @Transactional
     public void memberUpdate(MemberDTO memberDTO) {
         Member member = memberRepository.findByMemberId(memberDTO.getMemberId())
@@ -176,7 +178,7 @@ public class MemberServiceImpl implements MemberService{
         member.updatePassword(memberDTO.getMemberPassword());
         member.updateNickname(memberDTO.getMemberNickname());
     }
-    
+
     @Transactional
     public void deleteMember(String memberId) {
         Member member = memberRepository.findByMemberId(memberId)

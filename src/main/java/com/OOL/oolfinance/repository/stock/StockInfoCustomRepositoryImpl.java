@@ -41,9 +41,9 @@ public class StockInfoCustomRepositoryImpl implements StockInfoCustomRepository{
                 stockInfo.dividendDate,
                 stockInfo.dividendPerShare,
                 stockInfo.dividendYield,
-                stockInfo.date))
+                stockInfo.earningsDate))
                 .from(stockInfo)
-                .orderBy(stockInfo.date.asc())
+                .orderBy(stockInfo.earningsDate.asc())
                 .where(stockInfo.stock.stockCode.eq(stockCode))
                 .fetch();
     }

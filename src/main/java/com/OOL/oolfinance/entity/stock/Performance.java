@@ -25,7 +25,7 @@ public class Performance {
     private Long id;
 
     @Column
-    private LocalDate date;
+    private LocalDate earningsDate;
 
     @Column
     private BigDecimal estimatedEps;
@@ -34,6 +34,6 @@ public class Performance {
     private BigDecimal estimatedNetRevenue;
 
     @ManyToOne
-    @JoinColumn(name = "stockCode", referencedColumnName = "stockCode")
+    @JoinColumn(name = "stock_code", referencedColumnName = "stockCode")
     private Stock stock;  // 종목 정보 참조
 }

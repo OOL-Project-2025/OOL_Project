@@ -1,6 +1,7 @@
 package com.OOL.oolfinance.repository.stock;
 
 import com.OOL.oolfinance.dto.main.StockTableDTO;
+import com.OOL.oolfinance.dto.stock.StockDTO;
 import com.OOL.oolfinance.enums.CountryStatus;
 import com.OOL.oolfinance.enums.StockSortType;
 import org.springframework.data.domain.Pageable;
@@ -17,4 +18,6 @@ import java.util.List;
  **/
 public interface StockCustomRepository {
     List<StockTableDTO> findByCountryStatus(Pageable pageable, CountryStatus countryStatus, StockSortType sortType);
+
+    List<StockDTO> findAllStock();
 }

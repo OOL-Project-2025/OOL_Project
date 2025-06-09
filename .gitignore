@@ -1,8 +1,11 @@
 HELP.md
 .gradle
 build/
+
+/src/main/resources/connection/
+/src/main/resources/application-config.yml
 !gradle/wrapper/gradle-wrapper.jar
-application-config.yml
+#application-config.yml
 
 !**/src/test/**/build/
 ### STS ###
