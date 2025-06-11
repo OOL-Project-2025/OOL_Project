@@ -53,6 +53,9 @@ dependencies {
 
 	// JSON
 	implementation group: 'org.json', name: 'json', version: '20231013'
+	
+	//OAuth2
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
 
 tasks.named('test') {
@@ -77,4 +80,3 @@ tasks.withType(JavaCompile).configureEach {
 //clean {
 //	delete file('src/main/generated')
 //}
-
