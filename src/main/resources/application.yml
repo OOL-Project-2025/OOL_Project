@@ -8,10 +8,12 @@ spring:
         - dev
         - config
         - db
+        - common
       prod:
         - prod
         - config
         - db
+        - common
 
 logging:
   level:
