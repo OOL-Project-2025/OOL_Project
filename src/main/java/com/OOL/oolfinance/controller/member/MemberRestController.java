@@ -24,8 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class MemberRestController {
     private final MemberService memberService;
 
-    @PutMapping(value = "/api/mypage/profile")
-    public ResponseEntity<GeneralResponse> setMemberProfile(@RequestPart(value = "id") Long id,
+    @PutMapping(value = "/api/mypage/profile/{id}")
+    public ResponseEntity<GeneralResponse> setMemberProfile(@RequestParam(value = "id") Long id,
                                                             @RequestPart(value = "profilePhoto") MultipartFile profilePhoto,
                                                             @RequestPart(value = "nickname") String nickname) {
         memberService.setProfile(id, profilePhoto, nickname);
