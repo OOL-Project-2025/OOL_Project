@@ -2,7 +2,7 @@ spring:
   application:
     name: OOLFinance
   profiles:
-    active: local
+    active: prod
     group:
       local:
         - dev
