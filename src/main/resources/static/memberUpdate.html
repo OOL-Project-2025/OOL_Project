@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>정보 수정</title>
+</head>
+<body>
+  <h2>회원 정보 수정</h2>
+  <form id="updateForm" method="post">
+    <input type="hidden" id="id" name="id"><br>
+    아이디 : <input type="text" id="memberId" name="memberId" readonly><br>
+    비밀번호 : <input type="text" id="memberPassword" name="memberPassword"><br>
+    닉네임 : <input type="text" id="memberNickname" name="memberNickname"><br>
+    <button type="submit">정보수정</button>
+  </form>
+
+  <script>
+    // 페이지 로딩 시 사용자 정보 조회
+    window.addEventListener('DOMContentLoaded', () => {
+      fetch('/member/update') // REST API 호출
+        .then(response => response.json())
+        .then(data => {
+          console.log("받아온 데이터:", data);
+          //document.getElementById('id').value = data.id;
+          document.getElementById('memberId').value = data.memberId;
+          document.getElementById('memberPassword').value = data.memberPassword;
+          document.getElementById('memberNickname').value = data.memberNickname;
+        })
+        .catch(error => {
+          console.error('회원 정보를 불러오지 못했습니다.', error);
+        });
+    });
+
+    // 폼 제출 시 API로 POST 요청
+    document.getElementById('updateForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const formData = {
+        memberId: document.getElementById('memberId').value,
+        memberPassword: document.getElementById('memberPassword').value,
+        memberNickname: document.getElementById('memberNickname').value
+      };
+
+      fetch('/member/update', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+      .then(response => {
+        if (response.ok) {
+          alert('정보가 성공적으로 수정되었습니다.');
+          window.location.href = '/main.html'; // 수정 후 이동할 페이지
+        } else {
+          alert('수정에 실패했습니다.');
+        }
+      })
+      .catch(error => {
+        console.error('수정 중 오류 발생:', error);
+        alert('오류가 발생했습니다.');
+      });
+    });
+  </script>
+</body>
+</html>

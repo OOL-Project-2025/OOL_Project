@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: OOLFinance
+  profiles:
+    active: local
+    group:
+      local:
+        - dev
+        - config
+        - db
+        - common
+      prod:
+        - prod
+        - config
+        - db
+        - common
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.schema: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
