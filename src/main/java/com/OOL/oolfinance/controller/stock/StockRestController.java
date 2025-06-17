@@ -9,6 +9,13 @@ import com.OOL.oolfinance.dto.stock.StockResponse;
 import com.OOL.oolfinance.enums.StatusEnum;
 import com.OOL.oolfinance.service.stock.StockService;
 import com.OOL.oolfinance.service.wishlist.WishlistItemService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/stocks")
+@Tag(name = "Stock", description = "주식 종목 관련 API")
 public class StockRestController {
 
     private final StockService stockService;
@@ -33,6 +41,11 @@ public class StockRestController {
 
     // 전체 주식 정보 리스트 반환
     @GetMapping
+    @Operation(summary = "주식 리스트 조회", description = "주식 정보를 반환하기 위한 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "fail", content = @Content(mediaType = "application/json"))
+    })
     public ResponseEntity<StockResponse> getAllStocks() {
         List<StockDTO> data = stockService.getAllStock();
 
@@ -56,6 +69,14 @@ public class StockRestController {
 
     // 특정 주식 코드로 개별 조회
     @GetMapping("/{stockCode}")
+    @Operation(summary = "주식 개별 조회", description = "주식 정보를 반환하기 위한 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "fail", content = @Content(mediaType = "application/json"))
+    })
+    @Parameters(value = {
+            @Parameter(name = "stockCode", description = "종목 코드", example = "11111"),
+    })
     public ResponseEntity<GeneralResponse<StockDTO>> getStockByCode(@PathVariable String stockCode) {
         return ResponseEntity.ok(GeneralResponse.<StockDTO>builder()
                         .status(StatusEnum.OK)
@@ -82,6 +103,11 @@ public class StockRestController {
 //    }
 
     @GetMapping("/wishlist")
+    @Operation(summary = "주식 개별 조회", description = "주식 정보를 반환하기 위한 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "fail", content = @Content(mediaType = "application/json"))
+    })
     public ResponseEntity<StockResponse> getStocksInUserWishlist(HttpSession session) {
         String memberId = (String) session.getAttribute("loginId");
 
