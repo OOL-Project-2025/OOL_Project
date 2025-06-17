@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="../css/wishlist.css" />
+        <script src="../js/echarts.js"></script>
+    </head>
+    <body>
+        <header>
+            <div class="header_logo">
+                <img src="../img/header_logo.png" alt="Header Logo Image" />
+            </div>
+            <div class="header_search">
+                <input type="text" placeholder="검색어를 입력해주세요" />
+            </div>
+            <div class="header_logbtn">
+                <a href="../static/login.html">
+                    <button type="button">로그인/회원가입</button>
+                </a>
+            </div>
+        </header>
+        <main>
+            <div class="wishlist_wrap">
+                <div class="wishlist_head">
+                    <div class="wishlist_title">찜 목록</div>
+                    <div class="wishlist_filter_wrap">
+                        <div class="wishlist_category">
+                            <div class="wishlist_category_block on">전체</div>
+                            <div class="wishlist_category_block">국내</div>
+                            <div class="wishlist_category_block">해외</div>
+                            <div class="wishlist_category_set">카테고리 설정</div>
+                        </div>
+                        <div class="wishlist_filter">
+                            <div class="wishlist_filter_block on">$</div>
+                            <div class="wishlist_filter_block">원</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wishlist_content_wrap">
+                    <div class="wishlist_content">
+                        <div class="wishlist_empty_box">
+                            <img src="../img/noheart.png" alt="no wish icon" />
+                            <div class="empty_txt">아직 찜 목록이 없습니다.</div>
+                        </div>
+                        <div class="wishlist_content_box">
+                            <div class="wishlist_content_likebtn">
+                                <img src="../img/heart.png" alt="like button image" />
+                            </div>
+                            <div class="wishlist_content_name_block">
+                                <div class="wishlist_content_img kr">
+                                    <img src="../img/stock_samsung.png" alt="삼성 로고" />
+                                </div>
+                                <div class="wishlist_content_name">삼성전자</div>
+                            </div>
+                            <div class="wishlist_content_price_block">
+                                <div class="wishlist_content_price">45,678원</div>
+                                <div class="wishlist_content_rate down">-30.78(0.1%)</div>
+                            </div>
+                            <div class="wishlist_content_graph"></div>
+                        </div>
+                        <div class="wishlist_content_box">
+                            <div class="wishlist_content_likebtn">
+                                <img src="../img/heart.png" alt="like button image" />
+                            </div>
+                            <div class="wishlist_content_name_block">
+                                <div class="wishlist_content_img kr">
+                                    <img src="../img/stock_samsung.png" alt="삼성 로고" />
+                                </div>
+                                <div class="wishlist_content_name">삼성전자</div>
+                            </div>
+                            <div class="wishlist_content_price_block">
+                                <div class="wishlist_content_price">45,678원</div>
+                                <div class="wishlist_content_rate down">-30.78(0.1%)</div>
+                            </div>
+                            <div class="wishlist_content_graph"></div>
+                        </div>
+                        <div class="wishlist_content_box">
+                            <div class="wishlist_content_likebtn">
+                                <img src="../img/heart.png" alt="like button image" />
+                            </div>
+                            <div class="wishlist_content_name_block">
+                                <div class="wishlist_content_img kr">
+                                    <img src="../img/stock_samsung.png" alt="삼성 로고" />
+                                </div>
+                                <div class="wishlist_content_name">삼성전자</div>
+                            </div>
+                            <div class="wishlist_content_price_block">
+                                <div class="wishlist_content_price">45,678원</div>
+                                <div class="wishlist_content_rate down">-30.78(0.1%)</div>
+                            </div>
+                            <div class="wishlist_content_graph"></div>
+                        </div>
+                        <div class="wishlist_content_box">
+                            <div class="wishlist_content_likebtn">
+                                <img src="../img/heart.png" alt="like button image" />
+                            </div>
+                            <div class="wishlist_content_name_block">
+                                <div class="wishlist_content_img kr">
+                                    <img src="../img/stock_samsung.png" alt="삼성 로고" />
+                                </div>
+                                <div class="wishlist_content_name">삼성전자</div>
+                            </div>
+                            <div class="wishlist_content_price_block">
+                                <div class="wishlist_content_price">45,678원</div>
+                                <div class="wishlist_content_rate down">-30.78(0.1%)</div>
+                            </div>
+                            <div class="wishlist_content_graph"></div>
+                        </div>
+                        <div class="wishlist_content_box">
+                            <div class="wishlist_content_likebtn">
+                                <img src="../img/heart.png" alt="like button image" />
+                            </div>
+                            <div class="wishlist_content_name_block">
+                                <div class="wishlist_content_img kr">
+                                    <img src="../img/stock_samsung.png" alt="삼성 로고" />
+                                </div>
+                                <div class="wishlist_content_name">삼성전자</div>
+                            </div>
+                            <div class="wishlist_content_price_block">
+                                <div class="wishlist_content_price">45,678원</div>
+                                <div class="wishlist_content_rate down">-30.78(0.1%)</div>
+                            </div>
+                            <div class="wishlist_content_graph"></div>
+                        </div>
+                        <div class="wishlist_content_box">
+                            <div class="wishlist_content_likebtn">
+                                <img src="../img/heart.png" alt="like button image" />
+                            </div>
+                            <div class="wishlist_content_name_block">
+                                <div class="wishlist_content_img kr">
+                                    <img src="../img/stock_samsung.png" alt="삼성 로고" />
+                                </div>
+                                <div class="wishlist_content_name">삼성전자</div>
+                            </div>
+                            <div class="wishlist_content_price_block">
+                                <div class="wishlist_content_price">45,678원</div>
+                                <div class="wishlist_content_rate down">-30.78(0.1%)</div>
+                            </div>
+                            <div class="wishlist_content_graph"></div>
+                        </div>
+                        <div class="wishlist_content_box">
+                            <div class="wishlist_content_likebtn">
+                                <img src="../img/heart.png" alt="like button image" />
+                            </div>
+                            <div class="wishlist_content_name_block">
+                                <div class="wishlist_content_img kr">
+                                    <img src="../img/stock_samsung.png" alt="삼성 로고" />
+                                </div>
+                                <div class="wishlist_content_name">삼성전자</div>
+                            </div>
+                            <div class="wishlist_content_price_block">
+                                <div class="wishlist_content_price">45,678원</div>
+                                <div class="wishlist_content_rate down">-30.78(0.1%)</div>
+                            </div>
+                            <div class="wishlist_content_graph"></div>
+                        </div>
+                        <div class="wishlist_content_box">
+                            <div class="wishlist_content_likebtn">
+                                <img src="../img/heart.png" alt="like button image" />
+                            </div>
+                            <div class="wishlist_content_name_block">
+                                <div class="wishlist_content_img kr">
+                                    <img src="../img/stock_samsung.png" alt="삼성 로고" />
+                                </div>
+                                <div class="wishlist_content_name">삼성전자</div>
+                            </div>
+                            <div class="wishlist_content_price_block">
+                                <div class="wishlist_content_price">45,678원</div>
+                                <div class="wishlist_content_rate up">+30.78(0.1%)</div>
+                            </div>
+                            <div class="wishlist_content_graph"></div>
+                        </div>
+                        <div class="wishlist_content_box">
+                            <div class="wishlist_content_likebtn">
+                                <img src="../img/heart.png" alt="like button image" />
+                            </div>
+                            <div class="wishlist_content_name_block">
+                                <div class="wishlist_content_img kr">
+                                    <img src="../img/stock_samsung.png" alt="삼성 로고" />
+                                </div>
+                                <div class="wishlist_content_name">삼성전자</div>
+                            </div>
+                            <div class="wishlist_content_price_block">
+                                <div class="wishlist_content_price">45,678원</div>
+                                <div class="wishlist_content_rate">+0(0%)</div>
+                            </div>
+                            <div class="wishlist_content_graph"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wishlist_pagination">
+                    <button id="prevPage">◀</button>
+                    <span id="pageIndicator">1 / 1</span>
+                    <button id="nextPage">▶</button>
+                </div>
+            </div>
+        </main>
+        <footer>
+            <div class="footer_logo">
+                <img src="../img/header_logo.png" alt="Footer Logo Image" />
+            </div>
+            <div class="footer_pj">
+                <div class="footer_pj_name">오올</div>
+                <div class="footer_pj_people">김용주, 김태은, 안지영, 장유석, 김예리</div>
+            </div>
+            <div class="footer_pj_link">
+                <a href="https://github.com/OOL-Project-2025/OOL_Project" target="_blank"><img src="../img/footer_github.png" alt="github logo" class="footer_pjimg" /></a>
+                <a href="http://"><img src="../img/footer_notion.png" alt="notion logo" class="footer_pjimg" /></a>
+                <a href="https://www.figma.com/design/qZRKhlqrbYXMHYN8e7us0p/%EC%A6%9D%EA%B6%8C-%EC%9B%B9?node-id=120-15448&t=olCoN2OVm52y5p2D-0" target="_blank">
+                    <img src="../img/footer_figma.png" alt="figma logo" class="footer_pjimg"
+                /></a>
+            </div>
+        </footer>
+
+        <div class="wishlist_filterset_wrap">
+            <div class="wishlist_filterset_bg"></div>
+            <div class="wishlist_filterset_popup">
+                <div class="wishlist_filterset_title">
+                    <div class="wishlist_filterset_title_txt">카테고리 관리</div>
+                    <div class="wishlist_filterset_title_close"><img src="../img/close_icon.png" alt="close" /></div>
+                </div>
+                <div class="wishlist_filterset_content">
+                    <div class="wishlist_filterset_addbtn">카테고리 추가</div>
+                    <div class="wishlist_filterset_block_wrap">
+                        <div class="wishlist_filterset_block">
+                            <div class="wishlist_filterset_catename">국내</div>
+                            <div class="wishlist_filterset_delete"><img src="../img/delete_icon.png" alt="delete" /></div>
+                        </div>
+                        <div class="wishlist_filterset_block">
+                            <div class="wishlist_filterset_catename">해외</div>
+                            <div class="wishlist_filterset_delete"><img src="../img/delete_icon.png" alt="delete" /></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wishlist_filterset_addPopup">
+                <div class="addPopup_title">카테고리 추가</div>
+                <div class="addPopup_input_wrap">
+                    <input type="text" class="addPopup_input" placeholder="추가할 카테고리 이름을 입력해 주세요." />
+                </div>
+                <div class="addPopup_btn">
+                    <div class="addPopup_btn_close">닫기</div>
+                    <div class="addPopup_btn_add">확인</div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // *** 카테고리 탭
+            const categoryWrap = document.querySelector(".wishlist_category");
+            const filterBlocks = document.querySelectorAll(".wishlist_filter_block");
+
+            categoryWrap.addEventListener("click", function (e) {
+                const categoryBlock = e.target.closest(".wishlist_category_block");
+                if (!categoryBlock) return;
+
+                document.querySelectorAll(".wishlist_category_block").forEach((el) => el.classList.remove("on"));
+                categoryBlock.classList.add("on");
+
+                const selectedValue = categoryBlock.textContent.trim();
+
+                // 1. 필터 처리
+                const allBoxes = Array.from(document.querySelectorAll(".wishlist_content_box"));
+                let filteredBoxes;
+
+                if (selectedValue === "국내") {
+                    filteredBoxes = [];
+                    document.querySelector(".wishlist_empty_box").style.display = "flex";
+                } else {
+                    filteredBoxes = allBoxes;
+                    document.querySelector(".wishlist_empty_box").style.display = "none";
+                }
+
+                // 2. 페이지 초기화
+                currentPage = 1;
+
+                // 3. 업데이트
+                updatePagination(filteredBoxes);
+            });
+
+            // *** 필터 ($ / 원) 처리
+            filterBlocks.forEach((block) => {
+                block.addEventListener("click", function () {
+                    filterBlocks.forEach((el) => el.classList.remove("on"));
+                    this.classList.add("on");
+                });
+            });
+
+            //*** 팝업
+            const wishlist_category_set = document.querySelector(".wishlist_category_set");
+            const wishlist_filterset_wrap = document.querySelector(".wishlist_filterset_wrap");
+
+            wishlist_category_set.addEventListener("click", function () {
+                wishlist_filterset_wrap.style.display = "flex";
+                document.body.style.overflow = "hidden";
+            });
+
+            function closePopup() {
+                wishlist_filterset_wrap.style.display = "none";
+                document.body.stㄴyle.overflow = "";
+            }
+
+            document.querySelector(".wishlist_filterset_title_close").addEventListener("click", closePopup);
+
+            wishlist_filterset_wrap.addEventListener("click", function (e) {
+                if (e.target === wishlist_filterset_wrap) {
+                    closePopup();
+                }
+            });
+
+            const filterset_addbtn = document.querySelector(".wishlist_filterset_addbtn");
+            const addPopup = document.querySelector(".wishlist_filterset_addPopup");
+            filterset_addbtn.addEventListener("click", function () {
+                addPopup.style.display = "flex";
+            });
+
+            const addPopup_inputEl = document.querySelector(".addPopup_input");
+            const addPopup_addBtn = document.querySelector(".addPopup_btn_add");
+            const addPopup_closeBtn = document.querySelector(".addPopup_btn_close");
+            const blockWrap = document.querySelector(".wishlist_filterset_block_wrap");
+
+            addPopup_inputEl.addEventListener("input", () => {
+                if (addPopup_inputEl.value.trim() === "") {
+                    addPopup_addBtn.classList.remove("on");
+                } else {
+                    addPopup_addBtn.classList.add("on");
+                }
+            });
+
+            addPopup_addBtn.addEventListener("click", () => {
+                const value = addPopup_inputEl.value.trim();
+
+                if (addPopup_addBtn.classList.contains("on") && value !== "") {
+                    const block = document.createElement("div");
+                    block.className = "wishlist_filterset_block";
+                    block.innerHTML = `
+                <div class="wishlist_filterset_catename">${value}</div>
+                <div class="wishlist_filterset_delete">
+                    <img src="../img/delete_icon.png" alt="delete" />
+                </div>
+            `;
+                    blockWrap.appendChild(block);
+
+                    const categorySetBtn = categoryWrap.querySelector(".wishlist_category_set");
+
+                    const newCategory = document.createElement("div");
+                    newCategory.className = "wishlist_category_block";
+                    newCategory.textContent = value;
+
+                    categoryWrap.insertBefore(newCategory, categorySetBtn);
+
+                    newCategory.addEventListener("click", function () {
+                        document.querySelectorAll(".wishlist_category_block").forEach((el) => el.classList.remove("on"));
+                        this.classList.add("on");
+
+                        if (value === "국내") {
+                            document.querySelectorAll(".wishlist_content_box").forEach((el) => (el.style.display = "none"));
+                            document.querySelector(".wishlist_empty_box").style.display = "flex";
+                        } else {
+                            document.querySelectorAll(".wishlist_content_box").forEach((el) => (el.style.display = "block"));
+                            document.querySelector(".wishlist_empty_box").style.display = "none";
+                        }
+                    });
+
+                    addPopup_inputEl.value = "";
+                    addPopup_addBtn.classList.remove("on");
+                    addPopup.style.display = "none";
+                }
+            });
+
+            document.addEventListener("click", function (e) {
+                const deleteBtn = e.target.closest(".wishlist_filterset_delete");
+                if (!deleteBtn) return;
+
+                const block = deleteBtn.closest(".wishlist_filterset_block");
+                const categoryName = block.querySelector(".wishlist_filterset_catename").textContent.trim();
+
+                const currentOn = document.querySelector(".wishlist_category_block.on");
+                const isDeletingSelected = currentOn && currentOn.textContent.trim() === categoryName;
+
+                block.remove();
+
+                document.querySelectorAll(".wishlist_category_block").forEach((el) => {
+                    if (el.textContent.trim() === categoryName) {
+                        el.remove();
+                    }
+                });
+
+                if (isDeletingSelected) {
+                    const first = document.querySelector(".wishlist_category_block");
+                    if (first) first.classList.add("on");
+                }
+            });
+
+            addPopup_closeBtn.addEventListener("click", () => {
+                addPopup.style.display = "none";
+            });
+            //*** 그래프
+            document.querySelectorAll(".wishlist_content_graph").forEach((el) => {
+                const myChart = echarts.init(el);
+
+                const data = [20423, 20429, 15000, 20423, 20329, 20290, 20325, 10000, 20408, 20358, 48000];
+                const yMin = Math.min(...data);
+                const yMax = Math.max(...data);
+                const yCenter = (yMin + yMax) / 2;
+
+                const option = {
+                    grid: { top: 0, bottom: 0, left: 0, right: 0 },
+                    xAxis: {
+                        type: "category",
+                        show: false,
+                        boundaryGap: false,
+                        data: Array(data.length).fill(""),
+                    },
+                    yAxis: {
+                        type: "value",
+                        show: false,
+                    },
+                    series: [
+                        {
+                            type: "line",
+                            symbol: "none",
+                            data,
+                            lineStyle: {
+                                color: "#FF5D5D",
+                            },
+                            itemStyle: {
+                                color: "#FF5D5D",
+                            },
+                            areaStyle: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                    { offset: 0, color: "rgba(255, 94, 94, 0.1)" },
+                                    { offset: 1, color: "rgba(255, 94, 94, 0)" },
+                                ]),
+                            },
+                            markLine: {
+                                symbol: "none",
+                                label: { show: false },
+                                lineStyle: {
+                                    type: "dashed",
+                                    color: "#FFFFFF33",
+                                    width: 1,
+                                },
+                                emphasis: {
+                                    disabled: true,
+                                },
+                                data: [{ yAxis: yCenter }],
+                            },
+                        },
+                    ],
+                };
+
+                myChart.setOption(option);
+            });
+
+            // *** Pagination
+            const boxes = Array.from(document.querySelectorAll(".wishlist_content_box"));
+            const pagination = document.querySelector(".wishlist_pagination");
+            const pageIndicator = document.getElementById("pageIndicator");
+            const prevPageBtn = document.getElementById("prevPage");
+            const nextPageBtn = document.getElementById("nextPage");
+
+            const ITEMS_PER_PAGE = 8;
+            let currentPage = 1;
+            const totalPages = Math.ceil(boxes.length / ITEMS_PER_PAGE);
+
+            function updatePagination(targetBoxes = boxes) {
+                const total = Math.ceil(targetBoxes.length / ITEMS_PER_PAGE);
+                const start = (currentPage - 1) * ITEMS_PER_PAGE;
+                const end = start + ITEMS_PER_PAGE;
+
+                boxes.forEach((box) => (box.style.display = "none")); // 전체 먼저 숨기기
+                targetBoxes.slice(start, end).forEach((box) => (box.style.display = "block"));
+
+                pageIndicator.textContent = `${currentPage} / ${Math.max(total, 1)}`;
+                prevPageBtn.disabled = currentPage === 1;
+                nextPageBtn.disabled = currentPage === total;
+            }
+
+            prevPageBtn.addEventListener("click", () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updatePagination();
+                }
+            });
+            nextPageBtn.addEventListener("click", () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updatePagination();
+                }
+            });
+
+            updatePagination();
+        </script>
+    </body>
+</html>
