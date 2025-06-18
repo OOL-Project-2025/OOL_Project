@@ -46,7 +46,7 @@ public class MainRestController {
     private final StockService stockService;
 
     @GetMapping(value = "/indices")
-    @Operation(summary = "지수 리스트 조회", description = "지수 종류에 따른 목록을 조회하는 API")
+    @Operation(summary = "지수 리스트 조회", description = "메인 페이지에서 지수 종류에 따른 목록을 조회하는 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "400", description = "fail", content = @Content(mediaType = "application/json"))
@@ -79,6 +79,7 @@ public class MainRestController {
     // TODO: getStockPage 메서드 추가
 
     @GetMapping(value = "/stocks")
+    @Operation(summary = "주식 리스트 조회", description = "메인 페이지에서 정렬기준에 따른 주식 리스트를 조회하는 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "400", description = "fail", content = @Content(mediaType = "application/json"))
