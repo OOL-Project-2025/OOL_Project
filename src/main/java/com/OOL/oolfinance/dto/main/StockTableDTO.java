@@ -1,5 +1,6 @@
 package com.OOL.oolfinance.dto.main;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,16 +19,23 @@ import java.math.BigDecimal;
 @Getter
 @Builder
 @AllArgsConstructor
+@Schema(name = "StockTableDTO", description = "주식 목록 DTO")
 public class StockTableDTO {
-    String stockSymbol;
+    @Schema(name = "stockSymbol", type = "String", description = "주식 심볼")
+    private String stockSymbol;
 
-    String stockName;
+    @Schema(name = "stockName", type = "String", description = "주식 심볼")
+    private String stockName;
 
-    BigDecimal previousClose;
+    @Schema(name = "previousClose", type = "BigDecimal", description = "이전 종가")
+    private BigDecimal previousClose;
 
-    BigDecimal currentClose;
+    @Schema(name = "currentClose", type = "BigDecimal", description = "당일 종가")
+    private BigDecimal currentClose;
 
-    BigDecimal tradingValue;
+    @Schema(name = "tradingValue", type = "BigDecimal", description = "거래대금")
+    private BigDecimal tradingValue;
 
-    long tradingVolume;
+    @Schema(name = "tradingVolume", type = "long", description = "거래량")
+    private long tradingVolume;
 }

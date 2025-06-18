@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,12 +39,19 @@ public class WishlistRestController {
     
  // ✅ 카테고리 추가
     @PostMapping
+    @Operation(summary = "찜 카테고리 추가", description = "찜 카테고리를 추가하는 API", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(
+            examples = {
+                    @ExampleObject(name = "someExample1", value = """ 
+                    { 
+                        "id" : null, 
+                        "wishlistName" : "someValue2"
+                    } 
+                """)
+            }
+    )))
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "401", description = "로그인이 필요합니다.", content = @Content(mediaType = "application/json"))
-    })
-    @Parameters(value = {
-            @Parameter(name = "id", description = "유저 id", example = "ool0000"),
     })
     public ResponseEntity<GeneralResponse> addCategory(@RequestBody WishlistDTO dto, HttpSession session) {
         String memberId = (String) session.getAttribute("loginId");
@@ -62,7 +70,7 @@ public class WishlistRestController {
     }
     
     @GetMapping
-    @Operation(summary = "위시리스트 목록 가져오기", description = "내가 가진 찜 목록을 가져오는 API")
+    @Operation(summary = "찜 카테고리 목록 가져오기", description = "내가 가진 찜 카테고리 목록을 가져오는 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "401", description = "로그인이 필요합니다.", content = @Content(mediaType = "application/json"))
