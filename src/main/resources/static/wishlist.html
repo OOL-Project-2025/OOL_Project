@@ -28,9 +28,15 @@
                     <div class="wishlist_title">찜 목록</div>
                     <div class="wishlist_filter_wrap">
                         <div class="wishlist_category">
-                            <div class="wishlist_category_block on">전체</div>
-                            <div class="wishlist_category_block">국내</div>
-                            <div class="wishlist_category_block">해외</div>
+                            <div class="wishlist_category_box">
+                                <div class="wishlist_category_block on">전체</div>
+                            </div>
+                            <div class="wishlist_category_box">
+                                <div class="wishlist_category_block">국내</div>
+                            </div>
+                            <div class="wishlist_category_box">
+                                <div class="wishlist_category_block">해외</div>
+                            </div>
                             <div class="wishlist_category_set">카테고리 설정</div>
                         </div>
                         <div class="wishlist_filter">
@@ -337,19 +343,20 @@
                     const block = document.createElement("div");
                     block.className = "wishlist_filterset_block";
                     block.innerHTML = `
-                <div class="wishlist_filterset_catename">${value}</div>
-                <div class="wishlist_filterset_delete">
-                    <img src="../img/delete_icon.png" alt="delete" />
-                </div>
-            `;
+                                        <div class="wishlist_filterset_catename">${value}</div>
+                                        <div class="wishlist_filterset_delete">
+                                            <img src="../img/delete_icon.png" alt="delete" />
+                                        </div>
+                                    `;
                     blockWrap.appendChild(block);
 
                     const categorySetBtn = categoryWrap.querySelector(".wishlist_category_set");
 
                     const newCategory = document.createElement("div");
-                    newCategory.className = "wishlist_category_block";
-                    newCategory.textContent = value;
-
+                    newCategory.className = "wishlist_category_box";
+                    newCategory.innerHTML = `
+                                        <div class="wishlist_category_block">${value}</div>
+                                    `;
                     categoryWrap.insertBefore(newCategory, categorySetBtn);
 
                     newCategory.addEventListener("click", function () {
@@ -364,6 +371,10 @@
                             document.querySelector(".wishlist_empty_box").style.display = "none";
                         }
                     });
+                    document.querySelectorAll(".wishlist_category_box").forEach((box) => {
+                        const text = box.querySelector(".wishlist_category_block")?.textContent || "";
+                        box.setAttribute("data-text", text);
+                    });
 
                     addPopup_inputEl.value = "";
                     addPopup_addBtn.classList.remove("on");
@@ -371,6 +382,10 @@
                 }
             });
 
+            document.querySelectorAll(".wishlist_category_box").forEach((box) => {
+                const text = box.querySelector(".wishlist_category_block")?.textContent || "";
+                box.setAttribute("data-text", text);
+            });
             document.addEventListener("click", function (e) {
                 const deleteBtn = e.target.closest(".wishlist_filterset_delete");
                 if (!deleteBtn) return;
@@ -383,7 +398,7 @@
 
                 block.remove();
 
-                document.querySelectorAll(".wishlist_category_block").forEach((el) => {
+                document.querySelectorAll(".wishlist_category_box").forEach((el) => {
                     if (el.textContent.trim() === categoryName) {
                         el.remove();
                     }
