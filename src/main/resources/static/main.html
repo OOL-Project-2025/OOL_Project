@@ -185,6 +185,74 @@
                 /></a>
             </div>
         </footer>
+        <div class="chat_wrap">
+            <div class="chat_btn">
+                <img src="../img/chat_icon.png" alt="채팅창 아이콘" />
+            </div>
+            <div class="chat_popup">
+                <div class="chat_popup_top">
+                    <div class="chat_popup_title">
+                        <div class="chat_popup_title_txt">채팅</div>
+                        <div class="chat_popup_closebtn"><img src="../img/close_icon.png" alt="닫기 버튼" /></div>
+                    </div>
+                    <div class="chat_popup_content">
+                        <div class="chat_talk_block">
+                            <div class="chat_talk_profile">
+                                <div class="chat_talk_profile_img"><img src="../img/profile_default.png" alt="기본 프로필 이미지" /></div>
+                            </div>
+                            <div class="chat_talk">
+                                <div class="chat_talk_profile_name">예렌버핏</div>
+                                <div class="chat_talk_bubble_wrap">
+                                    <div class="chat_talk_bubble">오 님들 오늘 코스피 좋은데요</div>
+                                    <div class="chat_talk_bubble">나스닥은 에바던데</div>
+                                    <div class="chat_talk_bubble">
+                                        내 엔비디아 ㅜ
+                                        <div class="chat_talk_time">14:32</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat_talk_block mychat">
+                            <div class="chat_talk_bubble_wrap">
+                                <div class="chat_talk_bubble">ㄱㅊ 엔비디아는 언젠간 오름</div>
+                                <div class="chat_talk_bubble">
+                                    전원주 투자법 가즈아
+                                    <div class="chat_talk_time">14:33</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat_talk_block">
+                            <div class="chat_talk_profile">
+                                <div class="chat_talk_profile_img"><img src="../img/profile_default.png" alt="기본 프로필 이미지" /></div>
+                            </div>
+                            <div class="chat_talk">
+                                <div class="chat_talk_profile_name">예렌버핏</div>
+                                <div class="chat_talk_bubble_wrap">
+                                    <div class="chat_talk_bubble">오 님들 오늘 코스피 좋은데요</div>
+                                    <div class="chat_talk_bubble">나스닥은 에바던데</div>
+                                    <div class="chat_talk_bubble">
+                                        내 엔비디아 ㅜ
+                                        <div class="chat_talk_time">14:32</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat_talk_block mychat">
+                            <div class="chat_talk_bubble_wrap">
+                                <div class="chat_talk_bubble">ㄱㅊ 엔비디아는 언젠간 오름</div>
+                                <div class="chat_talk_bubble">전원주 투자법 가즈아</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat_popup_input_wrap">
+                    <div class="chat_popup_input">
+                        <input type="text" placeholder="검색어를 입력해주세요" />
+                    </div>
+                    <button class="chat_popup_input_btn"><img src="../img/chatInput_icon.png" alt="채팅 보내기 버튼" /></button>
+                </div>
+            </div>
+        </div>
 
         <script>
             // *** 필터/솔트 기능
@@ -232,6 +300,97 @@
                     page_number.forEach((el) => el.classList.remove("on"));
                     this.classList.add("on");
                 });
+            });
+            // 채팅창
+            const chatPopup = document.querySelector(".chat_popup");
+            const chatContent = document.querySelector(".chat_popup_content");
+            const chatInput = document.querySelector(".chat_popup_input input");
+            const sendBtn = document.querySelector(".chat_popup_input_btn");
+            const chatBtn = document.querySelector(".chat_btn");
+            const chatPopupClosebtn = document.querySelector(".chat_popup_closebtn");
+
+            chatBtn.addEventListener("click", function () {
+                const isOpen = chatPopup.style.display === "block";
+                chatPopup.style.display = isOpen ? "none" : "block";
+                // 채팅창 최하단 비추기
+                chatContent.scrollTop = chatContent.scrollHeight;
+            });
+            chatPopupClosebtn.addEventListener("click", function () {
+                chatPopup.style.display = "none";
+            });
+            // 채팅창 입력창에 텍스트가 있을떄
+            chatInput.addEventListener("input", () => {
+                if (chatInput.value.trim() !== "") {
+                    sendBtn.classList.add("on");
+                } else {
+                    sendBtn.classList.remove("on");
+                }
+            });
+
+            // 메시지 전송
+            chatInput.addEventListener("input", () => {
+                sendBtn.classList.toggle("on", chatInput.value.trim() !== "");
+            });
+
+            window.addEventListener("load", () => {
+                chatContent.scrollTop = chatContent.scrollHeight;
+            });
+
+            function sendMessage() {
+                const text = chatInput.value.trim();
+                if (text === "") return;
+
+                let lastBlock = [...chatContent.querySelectorAll(".chat_talk_block.mychat")].pop();
+                let bubbleWrap;
+
+                // 조건: 마지막 블록이 없거나 4개 이상이면 새로 생성
+                if (!lastBlock || lastBlock.querySelectorAll(".chat_talk_bubble").length >= 4) {
+                    lastBlock = document.createElement("div");
+                    lastBlock.className = "chat_talk_block mychat";
+
+                    bubbleWrap = document.createElement("div");
+                    bubbleWrap.className = "chat_talk_bubble_wrap";
+
+                    lastBlock.appendChild(bubbleWrap);
+                    chatContent.appendChild(lastBlock);
+                } else {
+                    bubbleWrap = lastBlock.querySelector(".chat_talk_bubble_wrap");
+                }
+
+                // 버블 생성
+                const bubble = document.createElement("div");
+                bubble.className = "chat_talk_bubble";
+                bubble.textContent = text;
+
+                // 추가
+                bubbleWrap.appendChild(bubble);
+
+                // 초기화
+                chatInput.value = "";
+                sendBtn.classList.remove("on");
+
+                // 스크롤
+                chatContent.scrollTop = chatContent.scrollHeight;
+            }
+
+            // 버튼 클릭
+            sendBtn.addEventListener("click", sendMessage);
+
+            let isComposing = false;
+
+            chatInput.addEventListener("compositionstart", () => {
+                isComposing = true;
+            });
+
+            chatInput.addEventListener("compositionend", () => {
+                isComposing = false;
+            });
+            // 엔터키
+            chatInput.addEventListener("keydown", (e) => {
+                if (e.key === "Enter" && !isComposing) {
+                    e.preventDefault();
+                    sendMessage();
+                }
             });
         </script>
         <!-- <h2>로그인한 아이디 확인:</h2>

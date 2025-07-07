@@ -35,8 +35,6 @@ body {
 .wishlist_category_box {
     position: relative;
 }
-
-/* .wishlist_category .wishlist_category_box:hover::before { */
 .wishlist_category .wishlist_category_box:hover::before {
     content: attr(data-text);
     position: absolute;
