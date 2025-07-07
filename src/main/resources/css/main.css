@@ -53,7 +53,7 @@ header .header_search input {
     height: 100%;
     border: none;
     background: #ffffff10;
-    padding-left: 43px;
+    padding: 0 10px 0 43px;
     border-radius: 8px;
     outline: none;
     color: #fff;

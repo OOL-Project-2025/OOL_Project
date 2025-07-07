@@ -138,7 +138,7 @@ main .form .form_wrap .form_txt {
     margin-bottom: 12px;
 }
 main .form .form_wrap .form_input {
-    width: 100%;
+    width: calc(100% - 32px);
     height: 56px;
     border: none;
     background: #272b31;
@@ -146,10 +146,16 @@ main .form .form_wrap .form_input {
     outline: none;
     color: #fff;
     font-size: 16px;
-    padding-left: 16px;
+    padding: 0 16px;
 }
 main .form .form_wrap .form_input.wrong {
     border: 1px solid #ff5e5e;
+}
+
+main .form .form_wrap .form_input.password,
+main .form .form_wrap .form_input.password_confirm {
+    padding: 0 40px 0 16px;
+    width: calc(100% - 56px);
 }
 main .form .form_wrap .wrong_txt {
     display: none;
@@ -164,7 +170,7 @@ main .form .form_wrap .form_input.wrong + .wrong_txt {
 main .form .form_wrap .pw_toggle_btn {
     position: absolute;
     top: calc(50% + 3px);
-    right: 0px;
+    right: 10px;
     width: 24px;
     height: 24px;
     background-image: url(../img/pw_view_no.png);
