@@ -1,0 +1,28 @@
+package com.OOL.oolfinance.config;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestTemplate;
+
+/**
+ * @author : yongjukim
+ * @version : 1.0.0
+ * @package : oolfinance
+ * @name : AppConfig
+ * @date : 2025. 7. 8. / 오후 11:39
+ * @modifyed :
+ **/
+@Configuration
+public class AppConfig {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return new ObjectMapper();
+    }
+}
