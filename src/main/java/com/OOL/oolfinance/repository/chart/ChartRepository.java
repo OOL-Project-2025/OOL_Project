@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author : yongjukim
@@ -18,5 +19,9 @@ import java.time.LocalDateTime;
 @Repository
 public interface ChartRepository extends JpaRepository<Chart, Long>, ChartCustomRepository {
 
+    Chart findTopByStockCodeOrderByChartDateTimeDesc(String stockCode);
+
     boolean existsByStockCodeAndChartDateTime(String stockCode, LocalDateTime chartDateTime);
+
+    List<Chart> findTop2ByStockCodeOrderByChartDateTimeDesc(String stockCode);
 }
