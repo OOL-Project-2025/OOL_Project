@@ -41,7 +41,7 @@ public class StockDTO {
     BigDecimal tradingValue;
 
     @Schema(name = "tradingVolume", type = "long", description = "거래량")
-    long tradingVolume;
+    BigDecimal tradingVolume;
 
     @Schema(name = "countryStatus", type = "CountryStatus", description = "국가 코드")
     CountryStatus countryStatus;

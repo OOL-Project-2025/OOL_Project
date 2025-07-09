@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 /**
  * @author : yongjukim
@@ -66,8 +67,8 @@ public class StockDetailDTO {
     private BigDecimal netIncome;
     // 당기순이익
 
-    @Schema(name = "dividendDate", type = "LocalDate", description = "배당일자")
-    private LocalDate dividendDate;
+    @Schema(name = "dividendDate", type = "String", description = "배당일자")
+    private String dividendDate;
     // 배당일자
 
     @Schema(name = "dividendPerShare", type = "BigDecimal", description = "주식배당금")
@@ -78,7 +79,7 @@ public class StockDetailDTO {
     private BigDecimal dividendYield;
     // 배당수익률
 
-    @Schema(name = "date", type = "LocalDate", description = "데이터 기준일")
-    private LocalDate date;
+    @Schema(name = "date", type = "String", description = "데이터 기준일")
+    private String date;
     // 데이터 기준일
 }
