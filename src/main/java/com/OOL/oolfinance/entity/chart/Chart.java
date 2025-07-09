@@ -25,7 +25,6 @@ import lombok.NoArgsConstructor;
 public class Chart {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	private String chartName;
 	private Long id;
 	
 	@Column
@@ -40,23 +39,20 @@ public class Chart {
 	@Column
 	private BigDecimal chartClosingPrice; //종가
 	
-//	@Column
-//	private Long chartTimeStamp; //해당 캔들에서 마지막 틱이 저장된 시각
+	@Column
+	private BigDecimal chartTradingVolume; //해당 종목의 거래량
 	
 	@Column
-	private BigDecimal chartStockVolume; //해당 종목의 거래량
-	
-	@Column
-	private BigDecimal chartStockPrice; // 해당 종목의 거래금액
+	private BigDecimal chartTradingValue; // 해당 종목의 거래대금(백만)
 	
 	@Column
 	private LocalDateTime chartDateTime; //날짜 + 시간까지 저장
-	
-//	@ManyToOne
-//   	@JoinColumn(name = "stockCode", referencedColumnName = "stockCode")
-//	private Stock stock;
 
 	@Column
 	private String stockCode;
+
+	public void updateChartTradingValue(BigDecimal chartTradingValue) {
+		this.chartTradingValue = chartTradingValue;
+	}
 	
 }
