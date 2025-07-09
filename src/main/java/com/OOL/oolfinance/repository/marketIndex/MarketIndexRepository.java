@@ -15,4 +15,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MarketIndexRepository extends JpaRepository<MarketIndex, String>, MarketIndexCustomRepository {
+    MarketIndex findByIndexCode(String indexCode);
 }

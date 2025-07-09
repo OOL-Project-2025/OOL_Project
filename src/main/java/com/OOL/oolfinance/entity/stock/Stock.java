@@ -43,11 +43,18 @@ public class Stock {
     private BigDecimal currentClose;
 
     @Column
-    private BigDecimal tradingValue;
+    private BigDecimal tradingValue; // 단위 백만
 
     @Column
-    private long tradingVolume;
+    private BigDecimal tradingVolume;
 
     @Column
     private CountryStatus countryStatus;
+
+    public void updatePriceAndVolume(BigDecimal previousClose, BigDecimal currentClose, BigDecimal tradingValue, BigDecimal tradingVolume) {
+        this.previousClose = previousClose;
+        this.currentClose = currentClose;
+        this.tradingValue = tradingValue;
+        this.tradingVolume = tradingVolume;
+    }
 }

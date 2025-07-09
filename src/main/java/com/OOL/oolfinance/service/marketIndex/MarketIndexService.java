@@ -1,6 +1,7 @@
 package com.OOL.oolfinance.service.marketIndex;
 
 import com.OOL.oolfinance.dto.main.IndexDTO;
+import com.OOL.oolfinance.entity.stock.MarketIndex;
 import com.OOL.oolfinance.enums.IndexStatus;
 
 import java.util.List;
@@ -15,4 +16,12 @@ import java.util.List;
  **/
 public interface MarketIndexService {
     List<IndexDTO> fetchIndexList(IndexStatus requestStatus);
+
+    void setMarketIndex();
+
+    void updateDailyMarketIndexAndChart();
+
+    void updateMarketIndex(MarketIndex marketIndex);
+
+    void saveIndexChart(MarketIndex marketIndex);
 }
