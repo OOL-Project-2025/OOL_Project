@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -52,8 +53,10 @@ public class MarketIndexServiceImpl implements MarketIndexService {
     private final ObjectMapper objectMapper;
     private final IndexChartRepository indexChartRepository;
 
-    private String bondAndCommodityURI = "https://m.stock.naver.com/front-api/marketIndex/prices";
-    private String indexURI = "https://m.stock.naver.com/api/index/";
+    @Value("${custom.bond-uri}")
+    String bondAndCommodityURI;
+    @Value("${custom.index-uri}")
+    private String indexURI;
 
     @Override
     public List<IndexDTO> fetchIndexList(IndexStatus requestStatus) {
@@ -117,9 +120,6 @@ public class MarketIndexServiceImpl implements MarketIndexService {
                 Thread.currentThread().interrupt();
             }
         }
-//        MarketIndex marketIndex = marketIndexRepository.findByIndexCode("KR3YT");
-//        saveIndexChart(marketIndex);
-//        updateMarketIndex(marketIndex);
     }
 
     @Override
@@ -145,7 +145,6 @@ public class MarketIndexServiceImpl implements MarketIndexService {
 
         LocalDateTime lastSavedTime = latestChart == null ? null : latestChart.getDateTime();
 
-        // TODO bondrequests냐 indexrequests냐
         Stream<IndexChart> chartStream;
 
         if (marketIndex.getStatus().equals(IndexStatus.STOCK_INDEX)) {
