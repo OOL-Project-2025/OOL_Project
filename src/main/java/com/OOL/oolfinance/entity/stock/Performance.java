@@ -1,6 +1,8 @@
 package com.OOL.oolfinance.entity.stock;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,20 +20,25 @@ import java.time.LocalDate;
 
 @Entity
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Performance {
     @Id
     @GeneratedValue
     private Long id;
 
     @Column
-    private LocalDate earningsDate;
+    private String earningsDate;
+    // 예정 시간 X
 
     @Column
     private BigDecimal estimatedEps;
+    // 추정 배당금
 
     @Column
     private BigDecimal estimatedNetRevenue;
+    // 추정 매출액
 
     @ManyToOne
     @JoinColumn(name = "stock_code", referencedColumnName = "stockCode")
