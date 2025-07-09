@@ -70,6 +70,15 @@ dependencies {
 
 	// Jsoup
 	implementation 'org.jsoup:jsoup:1.17.2'
+
+	// Selenium Java
+	implementation 'org.seleniumhq.selenium:selenium-java:4.21.0'
+
+	// WebDriver Manager (자동 크롬드라이버 다운로드용, 선택)
+	implementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
+
+	// JSON 파싱
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
 }
 
 tasks.named('test') {
