@@ -1,6 +1,7 @@
 package com.OOL.oolfinance.service.crawl;
 
 import com.OOL.oolfinance.entity.chart.Chart;
+import com.OOL.oolfinance.entity.stock.Stock;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,9 +15,14 @@ import java.util.List;
  * @modifyed :
  **/
 public interface CrawlService {
-    void jsoupTest() throws IOException;
 
-    void crawlAndSaveCharts(String stockCode);
+    void crawlAll();
+
+    void crawlAndSaveCharts(Stock stock);
 
     List<Chart> crawlChart(String stockCode);
+
+    void crawlKoreanStocks() throws IOException;
+
+    void crawlSP500Stocks() throws IOException;
 }
