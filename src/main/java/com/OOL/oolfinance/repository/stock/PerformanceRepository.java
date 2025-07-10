@@ -15,5 +15,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PerformanceRepository extends JpaRepository<Performance, Long>, PerformanceCustomRepository {
-    boolean existsPerformanceByEarningsDate(String earningsDate);
+    boolean existsPerformanceByStockAndEarningsDate(Stock stock, String earningsDate);
 }
