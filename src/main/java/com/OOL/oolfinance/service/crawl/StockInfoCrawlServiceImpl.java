@@ -187,7 +187,7 @@ public class StockInfoCrawlServiceImpl implements StockInfoCrawlService {
                 if (!stockInfoRepository.existsStockInfoByStockAndEarningsDate(stock, stockInfo.getEarningsDate())) {
                     stockInfoRepository.save(stockInfo);
                 }
-                if (!performanceRepository.existsPerformanceByEarningsDate(performance.getEarningsDate())) {
+                if (!performanceRepository.existsPerformanceByStockAndEarningsDate(stock, performance.getEarningsDate())) {
                     performanceRepository.save(performance);
                 }
             }
