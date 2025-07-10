@@ -75,7 +75,7 @@ public class CrawlServiceImpl implements CrawlService {
 
         List<Chart> latestCharts = chartRepository.findTop2ByStockCodeOrderByChartDateTimeDesc(stock.getStockCode());
         System.out.println(latestCharts.get(0).getChartTradingValue() + " 트레이딩밸류");
-        if (latestCharts.get(0).getChartTradingValue().equals(new BigDecimal("0.00"))) {
+        if (latestCharts.get(0).getChartTradingValue().equals(BigDecimal.valueOf(0))) {
             Chart c = latestCharts.get(0);
             c.updateChartTradingValue(todayTradingValue);
             chartRepository.save(c);
