@@ -2,6 +2,7 @@ package com.OOL.oolfinance.dto;
 
 import com.OOL.oolfinance.entity.member.Member;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +12,16 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Schema(name = "MemberDTO", description = "유저 정보 DTO")
 public class MemberDTO {
-	
+
+	@Schema(name = "memberId", type = "String", description = "유저 id")
 	private String memberId;
+
+	@Schema(name = "memberPassword", type = "String", description = "유저 password")
 	private String memberPassword;
+
+	@Schema(name = "memberNickname", type = "String", description = "유저 닉네임")
 	private String memberNickname;
 	
 	public void setMemberId(String memberId) {

@@ -2,6 +2,7 @@ HELP.md
 .gradle
 build/
 
+/src/test/
 /src/main/resources/connection/
 /src/main/resources/application-config.yml
 !gradle/wrapper/gradle-wrapper.jar

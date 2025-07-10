@@ -12,5 +12,4 @@ public enum IndexStatus {
     STOCK_INDEX,
     BOND,
     COMMODITY
-
 }

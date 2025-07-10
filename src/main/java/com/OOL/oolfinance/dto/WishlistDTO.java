@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.OOL.oolfinance.entity.wishlist.Wishlist;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,9 +17,13 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Schema(name = "WishlistDTO", description = "찜 카테고리 추가 DTO")
 public class WishlistDTO {
-	
+
+	@Schema(name = "id", type = "Long", description = "찜 카테고리 id")
 	Long id;
+
+	@Schema(name = "wishlistName", type = "String", description = "찜 카테고리 명")
 	String wishlistName;
 	// int sortValue;
 	// boolean usingYn;
