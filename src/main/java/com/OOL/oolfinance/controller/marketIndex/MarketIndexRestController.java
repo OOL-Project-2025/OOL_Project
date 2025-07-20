@@ -1,4 +1,4 @@
-package com.OOL.oolfinance.controller.index;
+package com.OOL.oolfinance.controller.marketIndex;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,5 +14,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class IndexRestController {
+public class MarketIndexRestController {
 }

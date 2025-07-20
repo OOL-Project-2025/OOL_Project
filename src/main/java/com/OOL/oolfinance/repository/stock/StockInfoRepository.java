@@ -1,5 +1,6 @@
 package com.OOL.oolfinance.repository.stock;
 
+import com.OOL.oolfinance.entity.stock.Stock;
 import com.OOL.oolfinance.entity.stock.StockInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -15,4 +16,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StockInfoRepository extends JpaRepository<StockInfo, Long>, StockInfoCustomRepository {
+
+    boolean existsStockInfoByStockAndEarningsDate(Stock stock, String earningsDate);
 }

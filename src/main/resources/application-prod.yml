@@ -1,0 +1,9 @@
+server:
+  port: ${datasource.prod-server-port}
+
+spring:
+  datasource:
+    driver-class-name: ${datasource.prod-driver-class-name}
+    url: ${datasource.prod-url}
+    username: ${datasource.prod-username}
+    password: ${datasource.prod-password}

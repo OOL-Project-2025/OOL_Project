@@ -1,5 +1,10 @@
 package com.OOL.oolfinance.controller.member;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -66,12 +71,32 @@ public class MemberController {
 		
 	@GetMapping ("/member/update")
 	@ResponseBody
+	@Operation(summary = "유저 정보 가져오기", description = "유저 정보 업데이트하는 API")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "업데이트 성공", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "400", description = "fail", content = @Content(mediaType = "application/json"))
+	})
 	public MemberDTO getUpdateMember(HttpSession session) {
 	    String myId = (String) session.getAttribute("loginId");
 	    return memberService.updateForm(myId);
 	}	
 	
 	@PostMapping ("/member/update")
+	@Operation(summary = "유저 정보 수정", description = "유저 정보 업데이트하는 API", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(
+			examples = {
+					@ExampleObject(name = "someExample1", value = """ 
+                    { 
+                        "memberId" : "someValue1", 
+                        "memberPassword" : "someValue2", 
+                        "memberNickname" : "someValue3"
+                    } 
+                """)
+			}
+	)))
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "업데이트 성공", content = @Content(mediaType = "application/json")),
+			@ApiResponse(responseCode = "400", description = "fail", content = @Content(mediaType = "application/json"))
+	})
 	public ResponseEntity<String> memberUpdate(@RequestBody MemberDTO memberDTO, HttpSession session) {
 		String loginId = (String) session.getAttribute("loginId");
 	    memberDTO.setMemberId(loginId);

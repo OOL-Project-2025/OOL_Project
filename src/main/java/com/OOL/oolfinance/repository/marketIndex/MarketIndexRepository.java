@@ -1,6 +1,6 @@
-package com.OOL.oolfinance.repository.index;
+package com.OOL.oolfinance.repository.marketIndex;
 
-import com.OOL.oolfinance.entity.stock.Index;
+import com.OOL.oolfinance.entity.stock.MarketIndex;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +14,6 @@ import org.springframework.stereotype.Repository;
  **/
 
 @Repository
-public interface IndexRepository extends JpaRepository<Index, String>, IndexCustomRepository {
+public interface MarketIndexRepository extends JpaRepository<MarketIndex, String>, MarketIndexCustomRepository {
+    MarketIndex findByIndexCode(String indexCode);
 }

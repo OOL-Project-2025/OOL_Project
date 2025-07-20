@@ -1,8 +1,13 @@
 package com.OOL.oolfinance.repository.stock;
 
-import com.OOL.oolfinance.entity.stock.Stock;
+import java.util.List;
+import java.util.Optional;
+
+import com.OOL.oolfinance.enums.CountryStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.OOL.oolfinance.entity.stock.Stock;
 
 /**
  * @author : yongjukim
@@ -15,4 +20,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StockRepository extends JpaRepository<Stock, String>, StockCustomRepository {
+	
+    Optional<Stock> findByStockCode(String stockCode);
+
+    List<Stock> findAllByCountryStatus(CountryStatus countryStatus);
+
 }

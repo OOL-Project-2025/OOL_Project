@@ -1,5 +1,6 @@
 package com.OOL.oolfinance.entity.wishlist;
 
+import com.OOL.oolfinance.dto.stock.StockDTO;
 import com.OOL.oolfinance.entity.stock.Stock;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,4 +30,37 @@ public class WishlistItem {
     @ManyToOne
     @JoinColumn(name = "stockCode")
     private Stock stockInfo;
+    
+    public WishlistItem(Wishlist wishlist, Stock stockInfo) {
+        this.wishlist = wishlist;
+        this.stockInfo = stockInfo;
+    }
+    
+    public Stock getStockInfo() {
+        return stockInfo;
+    }
+
+    public StockDTO transferStockInfoToStockDTO() {
+        StockDTO data = StockDTO.builder()
+                .stockCode(stockInfo.getStockCode())
+                .stockSymbol(stockInfo.getStockSymbol())
+                .stockName(stockInfo.getStockName())
+                .previousClose(stockInfo.getPreviousClose())
+                .currentClose(stockInfo.getCurrentClose())
+                .tradingValue(stockInfo.getTradingValue())
+                .tradingVolume(stockInfo.getTradingVolume())
+                .countryStatus(stockInfo.getCountryStatus())
+                .build();
+
+        return data;
+    }
+
+    public void setWishlist(Wishlist wishlist) {
+	this.wishlist = wishlist;
+    }
+	
+    public void setStockInfo(Stock stock) {
+	this.stockInfo = stock;
+    }
+
 }

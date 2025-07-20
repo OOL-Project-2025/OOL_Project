@@ -30,8 +30,16 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	// h2
 	runtimeOnly 'com.h2database:h2'
+
+	// oracle
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+	implementation 'com.oracle.database.security:oraclepki:21.5.0.0'
+	implementation 'com.oracle.database.security:osdt_core:21.5.0.0'
+	implementation 'com.oracle.database.security:osdt_cert:21.5.0.0'
+
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// 스프링 시큐리티를 테스트하기 위한 의존성 추가
@@ -53,7 +61,25 @@ dependencies {
 
 	// JSON
 	implementation group: 'org.json', name: 'json', version: '20231013'
-	
+
+	// Swagger
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0'
+
+	// Thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	// Jsoup
+	implementation 'org.jsoup:jsoup:1.17.2'
+
+	// Selenium Java
+	implementation 'org.seleniumhq.selenium:selenium-java:4.21.0'
+
+	// WebDriver Manager (자동 크롬드라이버 다운로드용, 선택)
+	implementation 'io.github.bonigarcia:webdrivermanager:5.8.0'
+
+	// JSON 파싱
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+
 	//OAuth2
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 }
@@ -80,3 +106,4 @@ tasks.withType(JavaCompile).configureEach {
 //clean {
 //	delete file('src/main/generated')
 //}
+

@@ -1,5 +1,6 @@
 package com.OOL.oolfinance.dto.chat;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,9 +21,18 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @ToString
+@Schema(name = "ChatDTO", description = "채팅 DTO")
 public class ChatDTO {
-    String memberId;
-    String nickname;
-    String message;
-    LocalDateTime sendTime;
+
+    @Schema(name = "memberId", type = "String", description = "유저 id")
+    private String memberId;
+
+    @Schema(name = "nickname", type = "String", description = "닉네임")
+    private String nickname;
+
+    @Schema(name = "message", type = "String", description = "메시지")
+    private String message;
+
+    @Schema(name = "sendTime", type = "LocalDateTime", description = "보낸 시간")
+    private LocalDateTime sendTime;
 }

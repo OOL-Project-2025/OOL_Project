@@ -4,6 +4,8 @@ import com.OOL.oolfinance.enums.IndexStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -21,7 +23,9 @@ import java.math.BigDecimal;
 @Entity
 @Getter
 @NoArgsConstructor
-public class Index {
+@Builder
+@AllArgsConstructor
+public class MarketIndex {
 
     @Id
     private String indexCode;
@@ -40,4 +44,9 @@ public class Index {
 
     @Column
     private IndexStatus status;
+
+    public void updateDailyData(BigDecimal previousClose, BigDecimal currentClose) {
+        this.previousClose = previousClose;
+        this.currentClose = currentClose;
+    }
 }

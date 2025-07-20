@@ -80,4 +80,5 @@ public class Member {
                 .nickname(memberDTO.getMemberNickname())
                 .build();
     }
+
 }

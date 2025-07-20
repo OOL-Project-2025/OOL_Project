@@ -1,6 +1,7 @@
 package com.OOL.oolfinance.service.stock;
 
 import com.OOL.oolfinance.dto.main.StockTableDTO;
+import com.OOL.oolfinance.dto.stock.StockDTO;
 import com.OOL.oolfinance.entity.stock.Stock;
 import com.OOL.oolfinance.enums.CountryStatus;
 import com.OOL.oolfinance.enums.StockSortType;
@@ -18,4 +19,7 @@ import java.util.List;
 public interface StockService {
     List<StockTableDTO> getStockTable(int page, CountryStatus countryStatus, StockSortType sortType);
 
+    List<StockDTO> getAllStock();
+
+    StockDTO getOneStock(String stockCode);
 }
