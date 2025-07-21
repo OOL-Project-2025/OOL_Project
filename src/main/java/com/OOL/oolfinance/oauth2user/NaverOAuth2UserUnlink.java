@@ -16,10 +16,11 @@ public class NaverOAuth2UserUnlink implements OAuth2UserUnlink {
 	private static final String URL = "https://nid.naver.com/oauth2.0/token";
 
     private final RestTemplate restTemplate;
-    @Value("${spring.security.oauth2.client.registration.naver.client-id}")
-    private String clientId;
-    @Value("${spring.security.oauth2.client.registration.naver.client-secret}")
-    private String clientSecret;
+//    @Value("${spring.security.oauth2.client.registration.naver.client-id}")
+//    private String clientId;
+//    @Value("${spring.security.oauth2.client.registration.naver.client-secret}")
+//    private String clientSecret;
+    private final NaverOAuth2Properties properties;
 
     @Override
     public void unlink(String accessToken) {
@@ -28,9 +29,9 @@ public class NaverOAuth2UserUnlink implements OAuth2UserUnlink {
                 "?service_provider=NAVER" +
                 "&grant_type=delete" +
                 "&client_id=" +
-                clientId +
+                properties.getClientId() +
                 "&client_secret=" +
-                clientSecret +
+                properties.getClientSecret() +
                 "&access_token=" +
                 accessToken;
 
