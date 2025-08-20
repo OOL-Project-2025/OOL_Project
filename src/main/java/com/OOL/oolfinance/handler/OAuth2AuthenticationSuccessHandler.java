@@ -6,6 +6,14 @@ import static com.OOL.oolfinance.HttpCookieOAuth2AuthorizationRequestRepository.
 import java.io.IOException;
 import java.util.Optional;
 
+import com.OOL.oolfinance.dto.token.GeneratedToken;
+import com.OOL.oolfinance.entity.member.Member;
+import com.OOL.oolfinance.enums.MemberStatus;
+import com.OOL.oolfinance.repository.member.MemberRepository;
+import com.OOL.oolfinance.service.member.MemberService;
+import com.OOL.oolfinance.util.JwtCookieUtils;
+import com.OOL.oolfinance.util.JwtTokenUtils;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -30,6 +38,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
     private final OAuth2UserUnlinkManager oAuth2UserUnlinkManager;
+    private final MemberRepository memberRepository;
+    private final JwtTokenUtils jwtTokenUtils;
+    private final JwtCookieUtils jwtCookieUtils;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -62,6 +73,29 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             return buildErrorUrl(targetUrl, "Login failed");
         }
 
+//        Optional<Member> memberOptional = memberRepository.findByProviderAndProviderId(principal.getUserInfo().getProvider().getRegistrationId(), principal.getUserInfo().getId());
+        Member member = memberRepository.findByProviderAndProviderId(principal.getUserInfo().getProvider().getRegistrationId(), principal.getUserInfo().getId())
+                .orElseGet(() -> {
+                    // 신규 회원 등록
+                    Member newMember = Member.builder()
+                            .memberId(principal.getUserInfo().getId())
+                            .password(null)
+                            .nickname(principal.getUserInfo().getNickname())
+                            .provider(principal.getUserInfo().getProvider().getRegistrationId())
+                            .providerId(principal.getUserInfo().getId())
+                            .status(MemberStatus.ACTIVE)
+                            .oauth2AccessToken(principal.getUserInfo().getAccessToken())
+                            .build();
+                    return memberRepository.save(newMember);
+                });
+
+        if (member.getStatus().equals(MemberStatus.DEACTIVATED)) {
+            OAuth2Provider provider = principal.getUserInfo().getProvider();
+            oAuth2UserUnlinkManager.unlink(provider, principal.getUserInfo().getAccessToken());
+            log.info("login failed");
+            return buildErrorUrl(targetUrl, "Login failed");
+        }
+
         if ("login".equalsIgnoreCase(mode)) {
             log.info("email={}, name={}, nickname={}, accessToken={}",
                     principal.getUserInfo().getEmail(),
@@ -69,23 +103,15 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                     principal.getUserInfo().getNickname(),
                     principal.getUserInfo().getAccessToken());
 
-            // TODO: 실제 토큰 발급 및 저장
-            String accessToken = "test_access_token";
-            String refreshToken = "test_refresh_token";
+            GeneratedToken generatedToken = jwtTokenUtils.generatedToken(member.getProviderId(), member.getProvider());
+            member.updateRefreshToken(generatedToken.getRefreshToken());
+            member.updateOauth2AccessToken(principal.getUserInfo().getAccessToken());
+            memberRepository.save(member);
 
+            jwtCookieUtils.setJwtCookies(response, member);
             return UriComponentsBuilder.fromUriString(targetUrl)
-                    .queryParam("access_token", accessToken)
-                    .queryParam("refresh_token", refreshToken)
                     .build().toUriString();
 
-        } else if ("unlink".equalsIgnoreCase(mode)) {
-            OAuth2Provider provider = principal.getUserInfo().getProvider();
-            String accessToken = principal.getUserInfo().getAccessToken();
-
-            // TODO: 사용자 데이터 및 토큰 삭제
-            oAuth2UserUnlinkManager.unlink(provider, accessToken);
-
-            return UriComponentsBuilder.fromUriString(targetUrl).build().toUriString();
         }
 
         return buildErrorUrl(targetUrl, "Login failed");
