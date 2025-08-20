@@ -9,6 +9,10 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.OOL.oolfinance.dto.token.GeneratedToken;
+import com.OOL.oolfinance.oauth2user.OAuth2Provider;
+import com.OOL.oolfinance.oauth2user.OAuth2UserUnlinkManager;
+import com.OOL.oolfinance.util.JwtTokenUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.OOL.oolfinance.dto.MemberDTO;
 import com.OOL.oolfinance.entity.member.Member;
-import com.OOL.oolfinance.entity.wishlist.Wishlist;
 import com.OOL.oolfinance.enums.MemberStatus;
 import com.OOL.oolfinance.repository.member.MemberRepository;
 import com.OOL.oolfinance.repository.wishlist.WishlistCategoryRepository;
@@ -37,20 +40,18 @@ import net.coobird.thumbnailator.Thumbnailator;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final WishlistCategoryRepository wishlistCategoryRepository;
+    private final JwtTokenUtils jwtTokenUtils;
+    private final OAuth2UserUnlinkManager oAuth2UserUnlinkManager;
 
     @Value("${custom.path}")
     private String fileDir;
 
     @Override
-    @Transactional
-    public void setProfile(Long id, MultipartFile profilePhoto, String nickname) {
-        Member member = memberRepository.findById(id).orElseThrow(() -> {
-            return new IllegalArgumentException("찾을 수 없는 id입니다.");
-        });
+    public void setProfile(Member member, MultipartFile profilePhoto, String nickname) {
 
         String photoName = null;
 
@@ -64,6 +65,7 @@ public class MemberServiceImpl implements MemberService{
         if (nickname != member.getNickname()) {
             member.updateNickname(nickname);
         }
+        memberRepository.save(member);
     }
 
     @Override
@@ -89,7 +91,7 @@ public class MemberServiceImpl implements MemberService{
 
             String thumbnailSaveName = fileDir + File.separator + "thumb_" + imageName;
             File thumbnailFile = new File(thumbnailSaveName);
-            Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile,50, 50);
+            Thumbnailator.createThumbnail(savePath.toFile(), thumbnailFile, 50, 50);
 
 
         } catch (IOException e) {
@@ -126,64 +128,86 @@ public class MemberServiceImpl implements MemberService{
         //1. dto -> entity 변환
         //2. repository의 save 메서드 호출
         Member member = Member.builder()
-                        .memberId(memberDTO.getMemberId())
-                        .password(memberDTO.getMemberPassword())
-                        .nickname(memberDTO.getMemberNickname())
-                        .build();
+                .memberId(memberDTO.getProviderId())
+                .password(memberDTO.getMemberPassword())
+                .nickname(memberDTO.getMemberNickname())
+                .provider(memberDTO.getProvider())
+                .providerId(memberDTO.getProviderId())
+                .status(MemberStatus.ACTIVE)
+                .build();
         Member Member = memberRepository.save(member);
 
-        Wishlist defaultWishlist = new Wishlist("기본", Member);
-        wishlistCategoryRepository.save(defaultWishlist);
+//        Wishlist defaultWishlist = new Wishlist("기본", Member);
+//        wishlistCategoryRepository.save(defaultWishlist);
     }
 
     @Override
-    public MemberDTO login(MemberDTO memberDTO) {
-    	/*
-    	 * 1. 회원 아이디 DB 조회
-    	 * 2. DB 조회 비밀번호와 사용자 입력 비밀번호가 일치하는지 판단 */
+    public Member login(MemberDTO memberDTO) {
+        /*
+         * 1. 회원 아이디 DB 조회
+         * 2. DB 조회 비밀번호와 사용자 입력 비밀번호가 일치하는지 판단 */
 
-    	Optional<Member> byMemberId = memberRepository.findByMemberId(memberDTO.getMemberId());
-    	if(byMemberId.isPresent()) {
-    		//조회 결과 존재
-    		Member member = byMemberId.get();
+        Optional<Member> byMemberId = memberRepository.findByProviderAndProviderId(memberDTO.getProvider(), memberDTO.getProviderId());
+        if (byMemberId.isPresent()) {
+            //조회 결과 존재
+            Member member = byMemberId.get();
 
-    		if (member.getPassword().equals(memberDTO.getMemberPassword())) {
-    			//비밀번호 일치
-    			//entity -> dto 변환 후 리턴
-    			MemberDTO memDTO = MemberDTO.toMemberDTO(member);
-    			return memDTO;
+            if (member.getStatus().equals(MemberStatus.DEACTIVATED)) {
+                return null;
+            }
 
-    		}
-    	} else {
-    		//조회 결과 없음.
-    		return null;
-    	}
-		return null;
+            if (member.getProvider().equals("form") && member.getPassword().equals(memberDTO.getMemberPassword())) {
+                //비밀번호 일치
+                GeneratedToken generatedToken = jwtTokenUtils.generatedToken(member.getProviderId(), member.getProvider());
+                member.updateAccessToken(generatedToken.getAccessToken());
+                member.updateRefreshToken(generatedToken.getRefreshToken());
+                //entity -> dto 변환 후 리턴
+                memberRepository.save(member);
+                MemberDTO memDTO = MemberDTO.toMemberDTO(member);
+                return member;
+            }
+        } else {
+            //조회 결과 없음.
+            return null;
+        }
+        return null;
     }
 
     public MemberDTO updateForm(String myId) {
-    	Optional<Member> optionalMemberEntity = memberRepository.findByMemberId(myId);
-    	if(optionalMemberEntity.isPresent()) {
-    		return MemberDTO.toMemberDTO(optionalMemberEntity.get());
-    	} else {
-    		return null;
-    	}
+        Optional<Member> optionalMemberEntity = memberRepository.findByMemberId(myId);
+        if (optionalMemberEntity.isPresent()) {
+            return MemberDTO.toMemberDTO(optionalMemberEntity.get());
+        } else {
+            return null;
+        }
     }
 
     @Transactional
     public void memberUpdate(MemberDTO memberDTO) {
-        Member member = memberRepository.findByMemberId(memberDTO.getMemberId())
-            .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+        Member member = memberRepository.findByMemberId(memberDTO.getProviderId())
+                .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
 
         member.updatePassword(memberDTO.getMemberPassword());
         member.updateNickname(memberDTO.getMemberNickname());
     }
 
     @Transactional
-    public void deleteMember(String memberId) {
-        Member member = memberRepository.findByMemberId(memberId)
-            .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
+    public void deleteMember(Member member) {
+        member.updateMemberStatus(MemberStatus.DEACTIVATED);
 
-        memberRepository.delete(member);
+        if (!member.getProvider().equals("form")) {
+            OAuth2Provider provider = OAuth2Provider.valueOf(member.getProvider().toUpperCase());
+            log.info(String.valueOf(provider));
+            oAuth2UserUnlinkManager.unlink(provider, member.getOauth2AccessToken());
+        }
+
+        memberRepository.save(member);
     }
+
+    @Override
+    public void updateAccessToken(Member member) {
+        member.updateAccessToken(null);
+        memberRepository.save(member);
+    }
+
 }

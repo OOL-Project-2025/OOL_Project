@@ -1,11 +1,19 @@
 package com.OOL.oolfinance.controller.member;
 
+import com.OOL.oolfinance.entity.member.Member;
+import com.OOL.oolfinance.util.CookieUtils;
+import com.OOL.oolfinance.util.JwtCookieUtils;
+import com.OOL.oolfinance.util.MemberDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,17 +30,20 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
 	
 	//생성자 주입
 	private final MemberService memberService;
-	
+	private final JwtCookieUtils jwtCookieUtils;
+
+
 	//회원가입 페이지 출력 요청
 	@GetMapping("/member/save")
 	public String saveForm() {
-		return "/save.html";
+		return "redirect:/save.html";
 	}
 	
 	 @PostMapping("/member/save")
@@ -41,7 +52,7 @@ public class MemberController {
 	        String pw = request.getParameter("memberPassword");
 	        String nickname = request.getParameter("memberNickname");
 
-	        MemberDTO memberDTO = new MemberDTO(id, pw, nickname);
+	        MemberDTO memberDTO = new MemberDTO(id, pw, nickname, "form");
 	        System.out.println("memberDTO = " + memberDTO);
 	        memberService.signup(memberDTO);
 	        return "redirect:/member/login";
@@ -53,14 +64,14 @@ public class MemberController {
 	}
 	
 	@PostMapping("/member/login")
-	public String login(@RequestParam("memberId") String memberId, @RequestParam("memberPassword") String memberPassword, HttpSession session ) {
+	public String login(@RequestParam("memberId") String memberId, @RequestParam("memberPassword") String memberPassword, HttpServletResponse response) {
 		
-		MemberDTO memberDTO = new MemberDTO(memberId, memberPassword, null);
-		MemberDTO loginResult = memberService.login(memberDTO);
-		if(loginResult != null) {
+		MemberDTO memberDTO = new MemberDTO(memberId, memberPassword, null, "form");
+		Member member = memberService.login(memberDTO);
+		if(member != null) {
 			//login 성공
-			session.setAttribute("loginId", loginResult.getMemberId());
-			 System.out.println("로그인 성공! loginId = " + loginResult.getMemberId());
+			jwtCookieUtils.setJwtCookies(response, member);
+			System.out.println("로그인 성공! loginId = " + member.getProviderId());
 			return "redirect:/main.html";
 		} else {
 			// login 실패
@@ -104,16 +115,28 @@ public class MemberController {
 	    return ResponseEntity.ok("업데이트 성공");
 	}
 	
-	@PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpSession session) {
-        session.invalidate(); // 세션 삭제
+	@PostMapping("member/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+		Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (principal instanceof Member) {
+			Member member = (Member) principal;
+			log.info("kk");
+			log.info(member.getProviderId());
+			log.info(member.getProvider());
+			log.info(member.getNickname());
+			memberService.updateAccessToken(member);
+		}
+
+		SecurityContextHolder.clearContext();
+        jwtCookieUtils.deleteJwtCookies(request, response);
         return ResponseEntity.ok().build();
     }
 	
-	@DeleteMapping("/member/delete/{memberId}")
-	public ResponseEntity<?> deleteMember(@PathVariable("memberId") String memberId) {
-	    memberService.deleteMember(memberId);
-	    return ResponseEntity.ok().build();
-	}
+//	@DeleteMapping("/member/delete/{memberId}")
+//	public ResponseEntity<?> deleteMember(@PathVariable("memberId") String memberId) {
+//	    memberService.deleteMember(memberId);
+//	    return ResponseEntity.ok().build();
+//	}
 }
 

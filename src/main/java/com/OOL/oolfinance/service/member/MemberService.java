@@ -1,6 +1,7 @@
 package com.OOL.oolfinance.service.member;
 
 import com.OOL.oolfinance.dto.MemberDTO;
+import com.OOL.oolfinance.entity.member.Member;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface MemberService {
 
     @Transactional
-    void setProfile(Long id, MultipartFile profilePhoto, String nickname);
+    void setProfile(Member member, MultipartFile profilePhoto, String nickname);
 
     boolean validateDuplicateUserNickname(String nickname);
 
@@ -28,13 +29,15 @@ public interface MemberService {
 
     void signup(MemberDTO memberDTO);
 
-	MemberDTO login(MemberDTO memberDTO);
+	Member login(MemberDTO memberDTO);
 
 	MemberDTO updateForm(String myId);
 
 	void memberUpdate(MemberDTO memberDTO);
 
-	void deleteMember(String memberId);
+	void deleteMember(Member member);
 
 
+    @Transactional
+    void updateAccessToken(Member member);
 }
