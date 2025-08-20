@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>OAuth2 테스트 로그인</title>
+</head>
+<body>
+<h2>OAuth2 테스트</h2>
+
+<button onclick="startGoogleLogin()">구글 로그인</button>
+<button onclick="startKakaoLogin()">카카오 로그인</button>
+<button onclick="startNaverLogin()">네이버 로그인</button>
+
+<script>
+    function setCookie(name, value, minutes) {
+        const expires = new Date(Date.now() + minutes * 60 * 1000).toUTCString();
+        document.cookie = `${name}=${value}; path=/; expires=${expires}`;
+    }
+
+    function startGoogleLogin() {
+        // 쿠키 설정: mode=login, redirect_uri=루트
+        setCookie("mode", "login", 5); // 5분 동안 유지
+        setCookie("redirect_uri", "http://localhost/main.html", 5);
+
+        // Google OAuth2 로그인 시작
+        window.location.href = "http://localhost:80/oauth2/authorization/google";
+    }
+
+    function startKakaoLogin() {
+        // 쿠키 설정: mode=login, redirect_uri=루트
+        setCookie("mode", "login", 5); // 5분 동안 유지
+        setCookie("redirect_uri", "http://localhost/main.html", 5);
+
+        // Google OAuth2 로그인 시작
+        window.location.href = "http://localhost:80/oauth2/authorization/kakao";
+    }
+
+    function startNaverLogin() {
+        // 쿠키 설정: mode=login, redirect_uri=루트
+        setCookie("mode", "login", 5); // 5분 동안 유지
+        setCookie("redirect_uri", "http://localhost/main.html", 5);
+
+        // Google OAuth2 로그인 시작
+        window.location.href = "http://localhost/oauth2/authorization/naver";
+    }
+
+</script>
+</body>
+</html>
