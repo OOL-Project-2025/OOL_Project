@@ -36,9 +36,13 @@ public class CookieUtils {
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals(name)) {
-                    cookie.setValue("");
+                    System.out.println(name);
+                    System.out.println(cookie.getName() + " " + cookie.getValue());
+                    cookie.setValue(null);
                     cookie.setPath("/");
+                    cookie.setHttpOnly(true);
                     cookie.setMaxAge(0);
+                    System.out.println(cookie.getName() + " " + cookie.getValue());
                     response.addCookie(cookie);
                 }
             }
