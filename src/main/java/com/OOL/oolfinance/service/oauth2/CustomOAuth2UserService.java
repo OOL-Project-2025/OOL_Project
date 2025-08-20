@@ -1,5 +1,6 @@
 package com.OOL.oolfinance.service.oauth2;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -15,6 +16,7 @@ import com.OOL.oolfinance.oauth2user.OAuth2UserInfoFactory;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
@@ -39,14 +41,15 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
                 .getRegistrationId();
 
         String accessToken = userRequest.getAccessToken().getTokenValue();
-
         OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(registrationId,
                 accessToken,
                 oAuth2User.getAttributes());
 
         // OAuth2UserInfo field value validation
         if (!StringUtils.hasText(oAuth2UserInfo.getEmail())) {
-            throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
+            if (!registrationId.equals("kakao")) {
+                throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
+            }
         }
 
         return new OAuth2UserPrincipal(oAuth2UserInfo);
