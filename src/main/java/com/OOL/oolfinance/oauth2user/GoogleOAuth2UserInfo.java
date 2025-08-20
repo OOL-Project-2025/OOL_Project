@@ -21,7 +21,7 @@ public class GoogleOAuth2UserInfo implements OAuth2UserInfo {
         this.name = (String) attributes.get("name");
         this.firstName = (String) attributes.get("given_name");
         this.lastName = (String) attributes.get("family_name");
-        this.nickName = null;
+        this.nickName = (String) attributes.get("name");
         this.profileImageUrl = (String) attributes.get("picture");
     }
 

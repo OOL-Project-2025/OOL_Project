@@ -1,5 +1,7 @@
 package com.OOL.oolfinance.oauth2user;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -46,7 +48,7 @@ public class NaverOAuth2UserUnlink implements OAuth2UserUnlink {
     @RequiredArgsConstructor
     public static class UnlinkResponse {
         @JsonProperty("access_token")
-        private final String accessToken;
-        private final String result;
+        private String accessToken;
+        private String result;
     }
 }
