@@ -46,9 +46,10 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/**", "/signup", "/oauth2/**", "/", "/index.html", "/login").permitAll()
+                        .requestMatchers("/member/login", "/signup", "/oauth2/**", "/", "/index.html", "/login", "/login.html", "/main.html").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout((logout) -> logout
@@ -57,7 +58,9 @@ public class SecurityConfig {
                         .invalidateHttpSession(true)
                 )
                 .oauth2Login(configure ->
-                        configure.authorizationEndpoint(config -> config.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
+                        configure
+                                .loginPage("/login.html")
+                                .authorizationEndpoint(config -> config.authorizationRequestRepository(httpCookieOAuth2AuthorizationRequestRepository))
                                 .userInfoEndpoint(config -> config.userService(customOAuth2UserService))
                                 .successHandler(oAuth2AuthenticationSuccessHandler)
                                 .failureHandler(oAuth2AuthenticationFailureHandler)
