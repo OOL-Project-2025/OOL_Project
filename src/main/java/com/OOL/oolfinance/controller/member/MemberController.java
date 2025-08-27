@@ -1,5 +1,6 @@
 package com.OOL.oolfinance.controller.member;
 
+import com.OOL.oolfinance.dto.MyPageDTO;
 import com.OOL.oolfinance.entity.member.Member;
 import com.OOL.oolfinance.util.CookieUtils;
 import com.OOL.oolfinance.util.JwtCookieUtils;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -87,9 +89,8 @@ public class MemberController {
 			@ApiResponse(responseCode = "200", description = "업데이트 성공", content = @Content(mediaType = "application/json")),
 			@ApiResponse(responseCode = "400", description = "fail", content = @Content(mediaType = "application/json"))
 	})
-	public MemberDTO getUpdateMember(HttpSession session) {
-	    String myId = (String) session.getAttribute("loginId");
-	    return memberService.updateForm(myId);
+	public MyPageDTO getUpdateMember(@AuthenticationPrincipal Member member) {
+	    return memberService.updateForm(member);
 	}	
 	
 	@PostMapping ("/member/update")
@@ -108,10 +109,8 @@ public class MemberController {
 			@ApiResponse(responseCode = "200", description = "업데이트 성공", content = @Content(mediaType = "application/json")),
 			@ApiResponse(responseCode = "400", description = "fail", content = @Content(mediaType = "application/json"))
 	})
-	public ResponseEntity<String> memberUpdate(@RequestBody MemberDTO memberDTO, HttpSession session) {
-		String loginId = (String) session.getAttribute("loginId");
-	    memberDTO.setMemberId(loginId);
-	    memberService.memberUpdate(memberDTO);
+	public ResponseEntity<String> memberUpdate(@RequestBody MemberDTO memberDTO, @AuthenticationPrincipal Member member) {
+	    memberService.memberUpdate(memberDTO, member);
 	    return ResponseEntity.ok("업데이트 성공");
 	}
 	
@@ -132,11 +131,5 @@ public class MemberController {
         jwtCookieUtils.deleteJwtCookies(request, response);
         return ResponseEntity.ok().build();
     }
-	
-//	@DeleteMapping("/member/delete/{memberId}")
-//	public ResponseEntity<?> deleteMember(@PathVariable("memberId") String memberId) {
-//	    memberService.deleteMember(memberId);
-//	    return ResponseEntity.ok().build();
-//	}
 }
 

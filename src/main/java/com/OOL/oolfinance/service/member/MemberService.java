@@ -1,6 +1,7 @@
 package com.OOL.oolfinance.service.member;
 
 import com.OOL.oolfinance.dto.MemberDTO;
+import com.OOL.oolfinance.dto.MyPageDTO;
 import com.OOL.oolfinance.entity.member.Member;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,9 +32,9 @@ public interface MemberService {
 
 	Member login(MemberDTO memberDTO);
 
-	MemberDTO updateForm(String myId);
+	MyPageDTO updateForm(Member member);
 
-	void memberUpdate(MemberDTO memberDTO);
+	void memberUpdate(MemberDTO memberDTO, Member member);
 
 	void deleteMember(Member member);
 

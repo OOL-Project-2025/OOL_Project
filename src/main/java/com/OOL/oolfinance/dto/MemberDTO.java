@@ -13,7 +13,7 @@ import lombok.*;
 @Schema(name = "MemberDTO", description = "유저 정보 DTO")
 public class MemberDTO {
 
-    @Schema(name = "memberId", type = "String", description = "유저 id")
+    @Schema(name = "providerId", type = "String", description = "유저 id")
     private String providerId;
 
     @Schema(name = "memberPassword", type = "String", description = "유저 password")
@@ -22,18 +22,11 @@ public class MemberDTO {
     @Schema(name = "memberNickname", type = "String", description = "유저 닉네임")
     private String memberNickname;
 
+    @Schema(name = "provider", type = "String", description = "플랫폼")
     private String provider;
 
     public void setMemberId(String memberId) {
         this.providerId = memberId;
-    }
-
-    public void setMemberPassword(String memberPassword) {
-        this.memberPassword = memberPassword;
-    }
-
-    public void setMemberNickname(String memberNickname) {
-        this.memberNickname = memberNickname;
     }
 
     public static MemberDTO toMemberDTO(Member member) {
@@ -44,13 +37,4 @@ public class MemberDTO {
                 member.getProvider()
         );
     }
-
-    public Member toEntity() {
-        return Member.builder()
-                .memberId(this.providerId)
-                .password(this.memberPassword)
-                .nickname(this.memberNickname)
-                .build();
-    }
-
 }

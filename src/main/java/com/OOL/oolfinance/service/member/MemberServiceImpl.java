@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.OOL.oolfinance.dto.MyPageDTO;
 import com.OOL.oolfinance.dto.token.GeneratedToken;
 import com.OOL.oolfinance.oauth2user.OAuth2Provider;
 import com.OOL.oolfinance.oauth2user.OAuth2UserUnlinkManager;
@@ -173,22 +174,27 @@ public class MemberServiceImpl implements MemberService {
         return null;
     }
 
-    public MemberDTO updateForm(String myId) {
-        Optional<Member> optionalMemberEntity = memberRepository.findByMemberId(myId);
-        if (optionalMemberEntity.isPresent()) {
-            return MemberDTO.toMemberDTO(optionalMemberEntity.get());
+    public MyPageDTO updateForm(Member member) {
+        if (member != null) {
+            String imageUrl = "/images/" + member.getProfileImage();
+
+            return MyPageDTO.builder()
+                    .memberNickname(member.getNickname())
+                    .providerId(member.getProviderId())
+                    .memberPassword(member.getPassword())
+                    .provider(member.getProvider())
+                    .image(imageUrl)
+                    .build();
         } else {
             return null;
         }
     }
 
     @Transactional
-    public void memberUpdate(MemberDTO memberDTO) {
-        Member member = memberRepository.findByMemberId(memberDTO.getProviderId())
-                .orElseThrow(() -> new IllegalArgumentException("회원이 존재하지 않습니다."));
-
+    public void memberUpdate(MemberDTO memberDTO, Member member) {
         member.updatePassword(memberDTO.getMemberPassword());
         member.updateNickname(memberDTO.getMemberNickname());
+        memberRepository.save(member);
     }
 
     @Transactional
