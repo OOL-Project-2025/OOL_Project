@@ -3,6 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>정보 수정</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    .profile-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .profile-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #333;
+    }
+    .nickname {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
   <h2>회원 정보 수정</h2>
@@ -11,20 +33,25 @@
     아이디 : <input type="text" id="memberId" name="memberId" readonly><br>
     비밀번호 : <input type="text" id="memberPassword" name="memberPassword"><br>
     닉네임 : <input type="text" id="memberNickname" name="memberNickname"><br>
+    <img id="profile-img" class="profile-img" src="" alt="프로필 이미지">
     <button type="submit">정보수정</button>
   </form>
 
   <script>
     // 페이지 로딩 시 사용자 정보 조회
     window.addEventListener('DOMContentLoaded', () => {
-      fetch('/member/update') // REST API 호출
+      fetch('/member/update', {
+        method: "GET",
+        credentials: "include" // 쿠키 포함
+      }) // REST API 호출
         .then(response => response.json())
         .then(data => {
           console.log("받아온 데이터:", data);
           //document.getElementById('id').value = data.id;
-          document.getElementById('memberId').value = data.memberId;
+          document.getElementById('memberId').value = data.providerId;
           document.getElementById('memberPassword').value = data.memberPassword;
           document.getElementById('memberNickname').value = data.memberNickname;
+          document.getElementById('profile-img').src = data.image;
         })
         .catch(error => {
           console.error('회원 정보를 불러오지 못했습니다.', error);
@@ -36,7 +63,7 @@
       e.preventDefault();
 
       const formData = {
-        memberId: document.getElementById('memberId').value,
+        providerId: document.getElementById('memberId').value,
         memberPassword: document.getElementById('memberPassword').value,
         memberNickname: document.getElementById('memberNickname').value
       };
