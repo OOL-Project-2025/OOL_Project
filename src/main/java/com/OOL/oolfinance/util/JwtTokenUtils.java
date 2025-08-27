@@ -2,6 +2,7 @@ package com.OOL.oolfinance.util;
 
 import com.OOL.oolfinance.dto.token.GeneratedToken;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
@@ -72,9 +73,14 @@ public class JwtTokenUtils {
     }
 
     private Claims getClaim(String token) {
-        return Jwts.parser()
-                .setSigningKey(secretKey)
-                .parseClaimsJws(token)
-                .getBody();
+        try {
+            return Jwts.parser()
+                    .setSigningKey(secretKey)
+                    .parseClaimsJws(token)
+                    .getBody(); // 정상 토큰일 경우
+        } catch (ExpiredJwtException e) {
+            // 만료된 토큰이어도 클레임 꺼낼 수 있음
+            return e.getClaims();
+        }
     }
 }
