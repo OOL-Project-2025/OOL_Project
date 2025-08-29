@@ -1,5 +1,6 @@
 package com.OOL.oolfinance.dto.chart;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,6 +27,7 @@ public class IndexChartDTO {
     private String indexCode;
 
     @Schema(name = "chartDateTime", type = "LocalDateTime", description = "차트 포인트 날짜")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime chartDateTime;
 
     @Schema(name = "chartClosingPrice", type = "BigDecimal", description = "차트 포인트 종가")
