@@ -1,5 +1,10 @@
 package com.OOL.oolfinance.dto.chart;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,6 +32,9 @@ public class ChartDTO {
     private String stockCode;
 
     @Schema(name = "chartDateTime", type = "LocalDateTime", description = "차트 봉의 날짜")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime chartDateTime;
 
     @Schema(name = "chartOpeningPrice", type = "BigDecimal", description = "시가")
