@@ -39,13 +39,13 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 40, nullable = false, unique = true)
+    @Column
     private String memberId;
 
-    @Column(length = 40, nullable = false)
+    @Column(length = 40)
     private String password;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20)
     private String nickname;
 
     @Column
@@ -54,8 +54,25 @@ public class Member {
     @Column
     private MemberStatus status;
 
+    @Column
+    private String provider;
+
+    @Column
+    private String providerId;
+
+    @Column(name = "oauth2_access_token", columnDefinition = "CLOB")
+    private String oauth2AccessToken;
+
+    @Column
+    private String accessToken;
+
+    @Column
+    private String refreshToken;
+
     @OneToMany(mappedBy = "member", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Wishlist> category = new ArrayList<>();
+
+    public void updateOauth2AccessToken(String oauth2AccessToken) { this.oauth2AccessToken = oauth2AccessToken;}
 
     public void updateNickname(String nickname) {
         this.nickname = nickname;
@@ -72,10 +89,16 @@ public class Member {
     public void updateMemberStatus(MemberStatus status) {
         this.status = status;
     }
+
+    public void updateAccessToken(String accessToken) { this.accessToken = accessToken; }
+
+    public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
+
+    public void updateStatus(MemberStatus status) {this.status = status; }
     
     public static Member toUpdateMemberEntity(MemberDTO memberDTO) {
         return Member.builder()
-                .memberId(memberDTO.getMemberId())
+                .memberId(memberDTO.getProviderId())
                 .password(memberDTO.getMemberPassword())
                 .nickname(memberDTO.getMemberNickname())
                 .build();
