@@ -36,6 +36,6 @@ public class StockTableDTO {
     @Schema(name = "tradingValue", type = "BigDecimal", description = "거래대금")
     private BigDecimal tradingValue;
 
-    @Schema(name = "tradingVolume", type = "long", description = "거래량")
-    private long tradingVolume;
+    @Schema(name = "tradingVolume", type = "BigDecimal", description = "거래량")
+    private BigDecimal tradingVolume;
 }
