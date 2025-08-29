@@ -35,6 +35,7 @@ public class SecurityConfig {
     public WebSecurityCustomizer configure() {
         return (web -> web.ignoring()
                 .requestMatchers("/h2-console/**")
+                .requestMatchers("/api/**")
         );
     }
 
@@ -48,8 +49,8 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/member/login", "/signup", "/oauth2/**", "/", "/index.html", "/login", "/login.html", "/main.html").permitAll()
+                        .requestMatchers("/h2-console/**", "/api/**").permitAll()
+                        .requestMatchers("/member/login", "/signup", "/oauth2/**", "/", "/index.html", "/login", "/login.html", "/main.html", "/api-docs", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .logout((logout) -> logout
@@ -64,6 +65,7 @@ public class SecurityConfig {
                                 .userInfoEndpoint(config -> config.userService(customOAuth2UserService))
                                 .successHandler(oAuth2AuthenticationSuccessHandler)
                                 .failureHandler(oAuth2AuthenticationFailureHandler)
+                                .loginProcessingUrl("/oauth2/**")
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
