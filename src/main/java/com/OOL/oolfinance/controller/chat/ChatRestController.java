@@ -41,6 +41,8 @@ public class ChatRestController {
 
     private final ChatService chatService;
 
+    // TODO chatDTO 변경
+
     @MessageMapping("/chat")
     @SendTo("/api/sub/chat")
     public ChatDTO sendMessage(ChatDTO request) {
