@@ -28,9 +28,11 @@ import java.time.LocalDateTime;
 @ToString
 @Schema(name = "ChatDTO", description = "채팅 DTO")
 public class ChatDTO {
+    @Schema(name = "provider", type = "String", description = "유저 플랫폼")
+    private String provider;
 
-    @Schema(name = "memberId", type = "String", description = "유저 id")
-    private String memberId;
+    @Schema(name = "providerId", type = "String", description = "유저 id")
+    private String providerId;
 
     @Schema(name = "nickname", type = "String", description = "닉네임")
     private String nickname;

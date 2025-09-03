@@ -49,7 +49,7 @@ public class ChatRestController {
 
         chatService.chatSave(request);
 
-        return new ChatDTO(request.getMemberId(), request.getNickname(), request.getMessage(), request.getSendTime());
+        return new ChatDTO(request.getProvider(), request.getProviderId(), request.getNickname(), request.getMessage(), request.getSendTime());
     }
 
     @GetMapping("/api/chat")

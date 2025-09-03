@@ -31,7 +31,8 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public void chatSave(ChatDTO chatDTO) {
         Chat chat = Chat.builder()
-                .memberId(chatDTO.getMemberId())
+                .provider(chatDTO.getProvider())
+                .providerId(chatDTO.getProviderId())
                 .nickname(chatDTO.getNickname())
                 .message(chatDTO.getMessage())
                 .time(chatDTO.getSendTime())

@@ -28,7 +28,10 @@ public class Chat {
     private Long id;
 
     @Column
-    private String memberId;
+    private String provider;
+
+    @Column
+    private String providerId;
 
     @Column
     private String nickname;
