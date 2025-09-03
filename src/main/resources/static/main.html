@@ -24,7 +24,7 @@
 
     // 페이지 로드 시 로그인 아이디 가져오기
     window.addEventListener('DOMContentLoaded', () => {
-        fetch('/api/session/login-id', {
+        fetch('/api/login-id', {
             method: 'GET',
             credentials: 'include'
         })
@@ -60,7 +60,7 @@
     });
 
     function logout() {
-        fetch('/member/logout', {
+        fetch('/api/logout', {
             method: 'POST',
             credentials: 'include' // 쿠키 포함
         })
