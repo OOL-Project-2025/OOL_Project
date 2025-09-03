@@ -24,15 +24,14 @@ public class WishlistItemService {
     private final WishlistCategoryRepository wishlistRepository;
     private final WishlistItemRepository wishlistItemRepository;
     private final StockRepository stockRepository;
-    private final MemberRepository memberRepository; // 추가된 부분
-    
+
     // 회원의 위시리스트에 포함된 모든 주식 반환
-    public List<Stock> getStocksInUserWishlist(String memberId) {
-        if (memberId == null) {
+    public List<Stock> getStocksInUserWishlist(Member member) {
+        if (member == null) {
             throw new RuntimeException("로그인이 필요합니다.");
         }
 
-        List<WishlistItem> items = wishlistItemRepository.findByWishlist_Member_MemberId(memberId);
+        List<WishlistItem> items = wishlistItemRepository.findByWishlist_Member(member);
 
         return items.stream()
                 .map(WishlistItem::getStockInfo)
@@ -40,12 +39,12 @@ public class WishlistItemService {
                 .collect(Collectors.toList());
     }
 
-    public List<StockDTO> getStockDTOsInUserWishlist(String memberId) {
-        if (memberId == null) {
+    public List<StockDTO> getStockDTOsInUserWishlist(Member member) {
+        if (member == null) {
             throw new RuntimeException("로그인이 필요합니다.");
         }
 
-        List<WishlistItem> items = wishlistItemRepository.findByWishlist_Member_MemberId(memberId);
+        List<WishlistItem> items = wishlistItemRepository.findByWishlist_Member(member);
 
         return items.stream()
                 .map(WishlistItem::transferStockInfoToStockDTO)
@@ -54,13 +53,9 @@ public class WishlistItemService {
     }
 
     // 위시리스트에 주식 추가
-    public void addStockToWishlist(String memberId, Long wishlistId, String stockCode) {
-        // 해당 회원을 DB에서 조회
-        Member member = memberRepository.findByMemberId(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("회원 정보를 찾을 수 없습니다."));
-
+    public void addStockToWishlist(Member member, Long wishlistId, String stockCode) {
         // 해당 회원의 위시리스트를 조회
-        List<Wishlist> wishlists = wishlistRepository.findByMember_MemberId(memberId);
+        List<Wishlist> wishlists = wishlistRepository.findByMember(member);
 
         if (wishlists.isEmpty()) {
             // 위시리스트가 없으면 새로운 위시리스트를 생성
@@ -78,7 +73,7 @@ public class WishlistItemService {
         }
 
         // 선택한 위시리스트를 DB에서 조회
-        Wishlist wishlist = wishlistRepository.findByIdAndMember_MemberId(wishlistId, memberId)
+        Wishlist wishlist = wishlistRepository.findByIdAndMember(wishlistId, member)
                 .orElseThrow(() -> new IllegalArgumentException("위시리스트를 찾을 수 없습니다."));
 
         // 해당 주식 코드로 주식 찾기

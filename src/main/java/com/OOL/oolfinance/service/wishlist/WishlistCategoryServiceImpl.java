@@ -40,14 +40,14 @@ public class WishlistCategoryServiceImpl implements WishlistCategoryService {
 	}
 	
 	@Override
-	public boolean wishlistDelete(Long id, String memberId) {
+	public boolean wishlistDelete(Long id, Member member) {
 	    Optional<Wishlist> optionalWishlist = wishlistCategoryRepository.findById(id);
 
 	    if (optionalWishlist.isPresent()) {
 	        Wishlist wishlist = optionalWishlist.get();
 
 	        // 본인의 카테고리인지 확인
-	        if (wishlist.getMember() != null && wishlist.getMember().getMemberId().equals(memberId)) {
+	        if (wishlist.getMember() != null && wishlist.getMember().getProvider().equals(member.getProvider()) && wishlist.getMember().getProviderId().equals(member.getProviderId())) {
 	            wishlistCategoryRepository.deleteById(id);
 	            return true;
 	        }
@@ -58,13 +58,11 @@ public class WishlistCategoryServiceImpl implements WishlistCategoryService {
 
 
 	@Override
-	public boolean categoryAdd(String memberId, String categoryName) {
-	    Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
-	    if (optionalMember.isEmpty()) {
+	public boolean categoryAdd(Member member, String categoryName) {
+	    if (member == null) {
 	        return false;
 	    }
 
-	    Member member = optionalMember.get();
 	    Wishlist wishlist = new Wishlist(categoryName);
 	    wishlist.setMember(member);
 
@@ -73,13 +71,10 @@ public class WishlistCategoryServiceImpl implements WishlistCategoryService {
 	}
 	
 	@Override
-	public List<WishlistDTO> listByMemberId(String memberId) {
-        Optional<Member> optionalMember = memberRepository.findByMemberId(memberId);
-        if (optionalMember.isEmpty()) {
+	public List<WishlistDTO> listByMember(Member member) {
+        if (member == null) {
             return List.of(); // 로그인 안 된 경우 빈 목록
         }
-
-        Member member = optionalMember.get();
         List<Wishlist> wishlists = wishlistCategoryRepository.findByMember(member);
         return WishlistDTO.of(wishlists);
     }

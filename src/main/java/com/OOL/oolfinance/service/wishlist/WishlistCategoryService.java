@@ -3,6 +3,7 @@ package com.OOL.oolfinance.service.wishlist;
 import java.util.List;
 
 import com.OOL.oolfinance.dto.WishlistDTO;
+import com.OOL.oolfinance.entity.member.Member;
 
 
 public interface WishlistCategoryService {
@@ -14,11 +15,11 @@ public interface WishlistCategoryService {
 	boolean wishlistUpdate(WishlistDTO parameter);
 	
 	//카테고리 삭제
-	boolean wishlistDelete(Long id, String memberId);
+	boolean wishlistDelete(Long id, Member member);
 
 	List<WishlistDTO> Categorylist();
 
-	boolean categoryAdd(String memberId, String categoryName);
+	boolean categoryAdd(Member member, String categoryName);
 	
-	List<WishlistDTO> listByMemberId(String memberId);
+	List<WishlistDTO> listByMember(Member member);
 }
