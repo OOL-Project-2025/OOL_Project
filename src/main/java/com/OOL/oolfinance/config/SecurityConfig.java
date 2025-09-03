@@ -53,11 +53,11 @@ public class SecurityConfig {
                         .requestMatchers("/member/login", "/signup", "/oauth2/**", "/", "/index.html", "/login", "/login.html", "/main.html", "/api-docs", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .logout((logout) -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login")
-                        .invalidateHttpSession(true)
-                )
+//                .logout((logout) -> logout
+//                        .logoutUrl("/logout")
+//                        .logoutSuccessUrl("/login")
+//                        .invalidateHttpSession(true)
+//                )
                 .oauth2Login(configure ->
                         configure
                                 .loginPage("/login.html")
