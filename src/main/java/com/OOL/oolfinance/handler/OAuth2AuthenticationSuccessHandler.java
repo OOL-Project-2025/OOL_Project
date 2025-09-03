@@ -78,7 +78,6 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .orElseGet(() -> {
                     // 신규 회원 등록
                     Member newMember = Member.builder()
-                            .memberId(principal.getUserInfo().getId())
                             .password(null)
                             .nickname(principal.getUserInfo().getNickname())
                             .provider(principal.getUserInfo().getProvider().getRegistrationId())

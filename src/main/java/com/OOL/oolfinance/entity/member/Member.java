@@ -39,9 +39,6 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String memberId;
-
     @Column(length = 40)
     private String password;
 
@@ -95,13 +92,4 @@ public class Member {
     public void updateRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
 
     public void updateStatus(MemberStatus status) {this.status = status; }
-    
-    public static Member toUpdateMemberEntity(MemberDTO memberDTO) {
-        return Member.builder()
-                .memberId(memberDTO.getProviderId())
-                .password(memberDTO.getMemberPassword())
-                .nickname(memberDTO.getMemberNickname())
-                .build();
-    }
-
 }

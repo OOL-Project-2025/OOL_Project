@@ -20,8 +20,6 @@ import com.OOL.oolfinance.entity.member.Member;
 public interface MemberRepository extends JpaRepository<Member, Long>, MemberCustomRepository {
 
     boolean existsByNickname(String nickname);
-    
-    Optional<Member> findByMemberId(String memberId);
 
     Optional<Member> findByProviderAndProviderId(String provider, String providerId);
 }
