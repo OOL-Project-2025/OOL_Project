@@ -22,4 +22,6 @@ public interface StockService {
     List<StockDTO> getAllStock();
 
     StockDTO getOneStock(String stockCode);
+
+    long getTotalPagesByCountry(CountryStatus country);
 }

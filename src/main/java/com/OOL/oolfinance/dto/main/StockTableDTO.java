@@ -21,6 +21,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Schema(name = "StockTableDTO", description = "주식 목록 DTO")
 public class StockTableDTO {
+    @Schema(name = "stockCode", type = "String", description = "주식 코드")
+    private String stockCode;
+
     @Schema(name = "stockSymbol", type = "String", description = "주식 심볼")
     private String stockSymbol;
 

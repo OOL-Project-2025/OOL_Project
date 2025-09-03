@@ -59,6 +59,7 @@ public class StockCustomRepositoryImpl implements StockCustomRepository{
         }
 
         return jpaQueryFactory.select(Projections.constructor(StockTableDTO.class,
+                        stock.stockCode,
                         stock.stockSymbol,
                         stock.stockName,
                         stock.previousClose,

@@ -24,6 +24,9 @@ import java.math.BigDecimal;
 @Schema(name = "IndexDTO", description = "지수 조회 DTO")
 public class IndexDTO {
 
+    @Schema(name = "indexCode", type = "String", description = "지수 코드")
+    private String indexCode;
+
     @Schema(name = "indexSymbol", type = "String", description = "지수 심볼")
     private String indexSymbol;
 
