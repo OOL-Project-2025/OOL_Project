@@ -43,14 +43,14 @@ public class MemberController {
 
 
     //회원가입 페이지 출력 요청
-    @GetMapping("/save")
+    @GetMapping("/signup")
     public String saveForm() {
         return "redirect:/save.html";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/signup")
     public String save(HttpServletRequest request) {
-        String id = request.getParameter("memberId");
+        String id = request.getParameter("providerId");
         String pw = request.getParameter("memberPassword");
         String nickname = request.getParameter("memberNickname");
 
@@ -65,10 +65,10 @@ public class MemberController {
         return "redirect:/login.html";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam("memberId") String memberId, @RequestParam("memberPassword") String memberPassword, HttpServletResponse response) {
+    @PostMapping("/api/login")
+    public String login(@RequestParam("providerId") String providerId, @RequestParam("password") String password, HttpServletResponse response) {
 
-        MemberDTO memberDTO = new MemberDTO(memberId, memberPassword, null, "form");
+        MemberDTO memberDTO = new MemberDTO(providerId, password, null, "form");
         Member member = memberService.login(memberDTO);
         if (member != null) {
             //login 성공
