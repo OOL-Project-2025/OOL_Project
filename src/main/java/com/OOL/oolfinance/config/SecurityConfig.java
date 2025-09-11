@@ -49,15 +49,10 @@ public class SecurityConfig {
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/h2-console/**", "/api/**").permitAll()
-                        .requestMatchers("/member/login", "/signup", "/oauth2/**", "/", "/index.html", "/login", "/login.html", "/main.html", "/api-docs", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/h2-console/**", "/api/**", "/ws/**").permitAll()
+                        .requestMatchers("/member/login", "/oauth2/**", "/", "/index.html", "/login", "/login.html", "/main.html", "/api-docs", "/swagger-ui/**", "/v3/api-docs/**", "/signup", "/save.html").permitAll()
                         .anyRequest().authenticated()
                 )
-//                .logout((logout) -> logout
-//                        .logoutUrl("/logout")
-//                        .logoutSuccessUrl("/login")
-//                        .invalidateHttpSession(true)
-//                )
                 .oauth2Login(configure ->
                         configure
                                 .loginPage("/login.html")
