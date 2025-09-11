@@ -39,7 +39,7 @@ public class Chat {
     @Column
     private String message;
 
-    @Column
+    @Column(name = "time", columnDefinition = "TIMESTAMP")
     private LocalDateTime time;
 }
 
