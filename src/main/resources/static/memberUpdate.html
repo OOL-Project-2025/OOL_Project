@@ -40,7 +40,7 @@
   <script>
     // 페이지 로딩 시 사용자 정보 조회
     window.addEventListener('DOMContentLoaded', () => {
-      fetch('/member/update', {
+      fetch('/api/mypage/profile', {
         method: "GET",
         credentials: "include" // 쿠키 포함
       }) // REST API 호출
@@ -68,7 +68,7 @@
         memberNickname: document.getElementById('memberNickname').value
       };
 
-      fetch('/member/update', {
+      fetch('/api/mypage/profile/info', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

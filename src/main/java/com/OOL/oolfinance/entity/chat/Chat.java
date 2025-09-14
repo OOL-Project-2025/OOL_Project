@@ -28,7 +28,10 @@ public class Chat {
     private Long id;
 
     @Column
-    private String memberId;
+    private String provider;
+
+    @Column
+    private String providerId;
 
     @Column
     private String nickname;
@@ -36,7 +39,7 @@ public class Chat {
     @Column
     private String message;
 
-    @Column
+    @Column(name = "time", columnDefinition = "TIMESTAMP")
     private LocalDateTime time;
 }
 

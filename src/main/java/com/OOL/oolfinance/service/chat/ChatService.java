@@ -2,7 +2,9 @@ package com.OOL.oolfinance.service.chat;
 
 import com.OOL.oolfinance.dto.chat.ChatDTO;
 import com.OOL.oolfinance.dto.chat.ChatHistoryDTO;
+import com.OOL.oolfinance.entity.chat.Chat;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -14,7 +16,7 @@ import java.util.List;
  * @modifyed :
  **/
 public interface ChatService {
-    void chatSave(ChatDTO chatDTO);
+    Chat chatSave(ChatDTO chatDTO, Principal principal);
 
     List<ChatHistoryDTO> getPreviousChat(long chatId);
 }

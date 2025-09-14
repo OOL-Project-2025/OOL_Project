@@ -24,17 +24,4 @@ public class MemberDTO {
 
     @Schema(name = "provider", type = "String", description = "플랫폼")
     private String provider;
-
-    public void setMemberId(String memberId) {
-        this.providerId = memberId;
-    }
-
-    public static MemberDTO toMemberDTO(Member member) {
-        return new MemberDTO(
-                member.getMemberId(),
-                member.getPassword(),
-                member.getNickname(),
-                member.getProvider()
-        );
-    }
 }

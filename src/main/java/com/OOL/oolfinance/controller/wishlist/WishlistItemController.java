@@ -5,9 +5,11 @@ import java.util.List;
 import com.OOL.oolfinance.dto.general.GeneralResponse;
 import com.OOL.oolfinance.dto.stock.StockDTO;
 import com.OOL.oolfinance.dto.stock.StockResponse;
+import com.OOL.oolfinance.entity.member.Member;
 import com.OOL.oolfinance.enums.StatusEnum;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,11 +32,9 @@ public class WishlistItemController {
 
     @PostMapping("/add")
     public ResponseEntity<GeneralResponse> addStockToWishlist(@RequestBody StockRequestDTO request,
-                                                                      HttpSession session) {
+                                                              @AuthenticationPrincipal Member member) {
         // 세션에서 로그인된 사용자 ID 추출
-        String memberId = (String) session.getAttribute("loginId");
-
-        if (memberId == null) {
+        if (member == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(GeneralResponse.<String>builder()
                     .status(StatusEnum.UNAUTHORIZED)
                     .message("로그인이 필요합니다.")
@@ -43,7 +43,7 @@ public class WishlistItemController {
 
         GeneralResponse<String> response;
         try {
-            wishlistItemService.addStockToWishlist(memberId, request.getWishlistId(), request.getStockCode());
+            wishlistItemService.addStockToWishlist(member, request.getWishlistId(), request.getStockCode());
             return ResponseEntity.ok(GeneralResponse.<String>builder()
                     .status(StatusEnum.OK)
                     .message("찜 목록에 추가되었습니다.")
@@ -62,10 +62,16 @@ public class WishlistItemController {
     }
 
     @GetMapping
-    public ResponseEntity<StockResponse> getUserWishlistStocks(HttpSession session) {
-        String loginId = (String) session.getAttribute("loginId");
+    public ResponseEntity<StockResponse> getUserWishlistStocks(@AuthenticationPrincipal Member member) {
+        if (member == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(StockResponse.builder()
+                            .status(StatusEnum.UNAUTHORIZED)
+                            .message("로그인이 필요합니다.")
+                            .data(null)
+                    .build());
+        }
 
-        List<StockDTO> data = wishlistItemService.getStockDTOsInUserWishlist(loginId);
+        List<StockDTO> data = wishlistItemService.getStockDTOsInUserWishlist(member);
         return ResponseEntity.ok(StockResponse.builder()
                 .status(StatusEnum.OK)
                 .message("success")

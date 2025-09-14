@@ -1,5 +1,6 @@
 package com.OOL.oolfinance.controller.main;
 
+import com.OOL.oolfinance.dto.general.GeneralResponse;
 import com.OOL.oolfinance.dto.main.IndexDTO;
 import com.OOL.oolfinance.dto.main.IndexResponse;
 import com.OOL.oolfinance.dto.main.StockTableDTO;
@@ -76,7 +77,16 @@ public class MainRestController {
         return ResponseEntity.ok(response);
     }
 
-    // TODO: getStockPage 메서드 추가
+    @GetMapping(value = "/stockPage")
+    @Operation(summary = "주식 리스트 총 페이지 조회", description = "메인 페이지에서 주식 리스트 페이지를 조회하는 API")
+    public ResponseEntity<GeneralResponse<Long>> getTotalPages(@RequestParam(value = "country") CountryStatus status) {
+        long count = stockService.getTotalPagesByCountry(status);
+        return ResponseEntity.ok(GeneralResponse.<Long>builder()
+                        .status(StatusEnum.OK)
+                        .message("success")
+                        .data(count)
+                .build());
+    }
 
     @GetMapping(value = "/stocks")
     @Operation(summary = "주식 리스트 조회", description = "메인 페이지에서 정렬기준에 따른 주식 리스트를 조회하는 API")

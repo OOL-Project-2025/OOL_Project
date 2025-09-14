@@ -129,7 +129,6 @@ public class MemberServiceImpl implements MemberService {
         //1. dto -> entity 변환
         //2. repository의 save 메서드 호출
         Member member = Member.builder()
-                .memberId(memberDTO.getProviderId())
                 .password(memberDTO.getMemberPassword())
                 .nickname(memberDTO.getMemberNickname())
                 .provider(memberDTO.getProvider())
@@ -164,7 +163,6 @@ public class MemberServiceImpl implements MemberService {
                 member.updateRefreshToken(generatedToken.getRefreshToken());
                 //entity -> dto 변환 후 리턴
                 memberRepository.save(member);
-                MemberDTO memDTO = MemberDTO.toMemberDTO(member);
                 return member;
             }
         } else {

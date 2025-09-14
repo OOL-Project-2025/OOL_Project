@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Test</title>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+</head>
+<body>
+<h1>STOMP Chat Test</h1>
+
+<label>Access Token: <input type="text" id="tokenInput" placeholder="여기에 access_token 입력"></label><br><br>
+<button onclick="connect()">Connect</button>
+<button onclick="disconnect()">Disconnect</button>
+<br><br>
+
+<div id="status">Not connected</div>
+<hr>
+
+<div>
+  <input type="text" id="messageInput" placeholder="메시지 입력">
+  <button onclick="sendMessage()">Send</button>
+</div>
+
+<h3>Messages:</h3>
+<pre id="messages"></pre>
+
+<script>
+  let stompClient = null;
+
+  function formatLocalDateTime(date) {
+    const pad = (num) => num.toString().padStart(2, "0");
+    return `${date.getFullYear()}-${pad(date.getMonth()+1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+  }
+
+  function connect() {
+    const token = document.getElementById("tokenInput").value.trim();
+    if (!token) {
+      alert("Access Token을 입력하세요!");
+      return;
+    }
+
+    // WebSocket 연결
+    const socket = new SockJS("/ws");  // 서버 SockJS 엔드포인트 맞게 수정
+    stompClient = Stomp.over(socket);
+
+    // connect 시 헤더에 Authorization 대신 Cookie 형식으로 넣기
+    stompClient.connect(
+            { Cookie: `access_token=${token}` }, // 서버 쪽 HandshakeInterceptor에서 꺼낼 수 있음
+            (frame) => {
+              document.getElementById("status").innerText = "Connected: " + frame;
+              // 구독
+              stompClient.subscribe("/api/sub/chat", (msg) => {
+                showMessage(msg.body);
+              });
+            },
+            (error) => {
+              document.getElementById("status").innerText = "Error: " + error;
+            }
+    );
+  }
+
+  function disconnect() {
+    if (stompClient !== null) {
+      stompClient.disconnect(() => {
+        document.getElementById("status").innerText = "Disconnected";
+      });
+    }
+  }
+
+  function sendMessage() {
+    if (!stompClient || !stompClient.connected) {
+      alert("먼저 연결하세요!");
+      return;
+    }
+    const msg = document.getElementById("messageInput").value;
+    const sendTime = formatLocalDateTime(new Date()); // yyyy-MM-dd'T'HH:mm:ss 형식
+    stompClient.send("/api/pub/chat", {}, JSON.stringify({
+      // provider: "form",
+      // providerId: "p",
+      // nickname: "테스터",
+      message: msg,
+      sendTime: sendTime
+    }));
+  }
+
+  function showMessage(message) {
+    const messagesEl = document.getElementById("messages");
+    messagesEl.textContent += message + "\n";
+  }
+</script>
+</body>
+</html>

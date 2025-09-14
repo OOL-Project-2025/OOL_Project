@@ -30,6 +30,7 @@ public class MarketIndexCustomRepositoryImpl implements MarketIndexCustomReposit
 
         List<IndexDTO> indexDTOList = jpaQueryFactory
                 .select(Projections.constructor(IndexDTO.class,
+                        marketIndex.indexCode,
                         marketIndex.indexSymbol,
                         marketIndex.indexName,
                         marketIndex.previousClose,

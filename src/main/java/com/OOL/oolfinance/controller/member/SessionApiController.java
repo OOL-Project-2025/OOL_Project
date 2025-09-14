@@ -18,8 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class SessionApiController {
 
-	@GetMapping("/api/session/login-id")
+    @GetMapping("/api/login-id")
     public ResponseEntity<GeneralResponse<MemberDTO>> getLoginId(@AuthenticationPrincipal Member member) {
+        if (member == null) {
+            return ResponseEntity.ok(GeneralResponse.<MemberDTO>builder()
+                    .status(StatusEnum.UNAUTHORIZED)
+                    .message("null")
+                    .data(MemberDTO.builder()
+                            .providerId("로그인 상태 아님.")
+                            .build())
+                    .build());
+        }
+
         String loginId = member.getProviderId();
         String nickname = member.getNickname();
         String password = member.getPassword();
@@ -31,28 +41,17 @@ public class SessionApiController {
         log.info(platform);
 
         MemberDTO memberDTO = MemberDTO.builder()
-                .providerId("NO_SESSION")
+                .memberNickname(nickname)
+                .memberPassword(password)
+                .provider(platform)
+                .providerId(loginId)
                 .build();
 
-        if (loginId != null) {
-            memberDTO = MemberDTO.builder()
-                    .memberNickname(nickname)
-                    .memberPassword(password)
-                    .provider(platform)
-                    .providerId(loginId)
-                    .build();
+        return ResponseEntity.ok(GeneralResponse.<MemberDTO>builder()
+                .status(StatusEnum.OK)
+                .message("success")
+                .data(memberDTO)
+                .build());
 
-            return ResponseEntity.ok(GeneralResponse.<MemberDTO>builder()
-                            .status(StatusEnum.OK)
-                            .message("success")
-                            .data(memberDTO)
-                    .build());
-        } else {
-            return ResponseEntity.ok(GeneralResponse.<MemberDTO>builder()
-                    .status(StatusEnum.UNAUTHORIZED)
-                    .message("null")
-                    .data(memberDTO)
-                    .build());
-        }
     }
 }
