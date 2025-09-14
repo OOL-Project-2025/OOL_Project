@@ -19,6 +19,6 @@ public class CorsConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedMethods("*")
-                .allowedOriginPatterns("http://localhost", "http://oolfinance.kro.kr");
+                .allowedOriginPatterns("http://localhost:*", "http://oolfinance.kro.kr");
     }
 }
