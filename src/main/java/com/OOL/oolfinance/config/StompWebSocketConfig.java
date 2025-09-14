@@ -35,11 +35,11 @@ public class StompWebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")
                 .addInterceptors(jwtHandshakeInterceptor)
-                .setAllowedOrigins("*");
+                .setAllowedOriginPatterns("http://localhost", "http://oolfinance.kro.kr");
 
         registry.addEndpoint("/ws")
                 .addInterceptors(jwtHandshakeInterceptor)
-                .setAllowedOriginPatterns("*")
+                .setAllowedOriginPatterns("http://localhost", "http://oolfinance.kro.kr")
                 .withSockJS();
     }
 
