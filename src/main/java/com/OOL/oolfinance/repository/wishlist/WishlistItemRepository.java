@@ -1,5 +1,6 @@
 package com.OOL.oolfinance.repository.wishlist;
 
+import com.OOL.oolfinance.entity.member.Member;
 import com.OOL.oolfinance.entity.stock.Stock;
 import com.OOL.oolfinance.entity.wishlist.Wishlist;
 import com.OOL.oolfinance.entity.wishlist.WishlistItem;
@@ -12,7 +13,7 @@ import java.util.List;
 public interface WishlistItemRepository extends JpaRepository<WishlistItem, Long> {
     
     // 회원의 memberId로 WishlistItem을 찾는 메소드
-    public List<WishlistItem> findByWishlist_Member_MemberId(String memberId);
+    List<WishlistItem> findByWishlist_Member(Member member);
 
 	public boolean existsByWishlistAndStockInfo(Wishlist wishlist, Stock stock);
 }

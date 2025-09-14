@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.OOL.oolfinance.dto.WishlistResponse;
 import com.OOL.oolfinance.dto.general.GeneralResponse;
+import com.OOL.oolfinance.entity.member.Member;
 import com.OOL.oolfinance.enums.StatusEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,16 +55,15 @@ public class WishlistRestController {
             @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "401", description = "로그인이 필요합니다.", content = @Content(mediaType = "application/json"))
     })
-    public ResponseEntity<GeneralResponse> addCategory(@RequestBody WishlistDTO dto, HttpSession session) {
-        String memberId = (String) session.getAttribute("loginId");
-        if (memberId == null) {
+    public ResponseEntity<GeneralResponse> addCategory(@RequestBody WishlistDTO dto, @AuthenticationPrincipal Member member) {
+        if (member == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(GeneralResponse.builder()
                             .status(StatusEnum.UNAUTHORIZED)
                             .message("로그인이 필요합니다.")
                     .build());
         }
 
-        wishlistCategoryService.categoryAdd(memberId, dto.getWishlistName());
+        wishlistCategoryService.categoryAdd(member, dto.getWishlistName());
         return ResponseEntity.ok(GeneralResponse.builder()
                         .status(StatusEnum.OK)
                         .message("success")
@@ -75,16 +76,15 @@ public class WishlistRestController {
             @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = "application/json")),
             @ApiResponse(responseCode = "401", description = "로그인이 필요합니다.", content = @Content(mediaType = "application/json"))
     })
-    public ResponseEntity<WishlistResponse> getWishlist(HttpSession session) {
-        String memberId = (String) session.getAttribute("loginId");
-        if (memberId == null) {
+    public ResponseEntity<WishlistResponse> getWishlist(@AuthenticationPrincipal Member member) {
+        if (member == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(WishlistResponse.builder()
                             .status(StatusEnum.UNAUTHORIZED)
                             .message("로그인이 필요합니다.")
                     .build());
         }
 
-        List<WishlistDTO> data = wishlistCategoryService.listByMemberId(memberId);
+        List<WishlistDTO> data = wishlistCategoryService.listByMember(member);
 
 
         return ResponseEntity.ok(WishlistResponse.builder()
@@ -104,16 +104,15 @@ public class WishlistRestController {
     @Parameters(value = {
             @Parameter(name = "wishlistId", description = "찜 카테고리 id", example = "1")
     })
-    public ResponseEntity<GeneralResponse> deleteWishlist(@PathVariable("wishlistId") Long wishlistId, HttpSession session) {
-    	String memberId = (String) session.getAttribute("loginId");
-        if (memberId == null) {
+    public ResponseEntity<GeneralResponse> deleteWishlist(@PathVariable("wishlistId") Long wishlistId, @AuthenticationPrincipal Member member) {
+        if (member == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(GeneralResponse.builder()
                             .status(StatusEnum.UNAUTHORIZED)
                             .message("로그인이 필요합니다.")
                     .build());
         }
 
-        boolean result = wishlistCategoryService.wishlistDelete(wishlistId, memberId);
+        boolean result = wishlistCategoryService.wishlistDelete(wishlistId, member);
         if (result) {
             return ResponseEntity.ok(GeneralResponse.builder()
                             .status(StatusEnum.OK)

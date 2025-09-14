@@ -32,7 +32,8 @@ public class ChatCustomRepositoryImpl implements ChatCustomRepository {
 
         return jpaQueryFactory.select(Projections.constructor(ChatHistoryDTO.class,
                 chat.id,
-                chat.memberId,
+                chat.provider,
+                chat.providerId,
                 chat.nickname,
                 chat.message,
                 chat.time))

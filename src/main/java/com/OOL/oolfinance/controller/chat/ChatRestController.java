@@ -3,6 +3,8 @@ package com.OOL.oolfinance.controller.chat;
 import com.OOL.oolfinance.dto.chat.ChatDTO;
 import com.OOL.oolfinance.dto.chat.ChatHistoryDTO;
 import com.OOL.oolfinance.dto.chat.ChatHistoryResponse;
+import com.OOL.oolfinance.entity.chat.Chat;
+import com.OOL.oolfinance.entity.member.CustomUserDetails;
 import com.OOL.oolfinance.enums.StatusEnum;
 import com.OOL.oolfinance.service.chat.ChatService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,12 +18,16 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.security.core.parameters.P;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 /**
@@ -41,15 +47,12 @@ public class ChatRestController {
 
     private final ChatService chatService;
 
-    // TODO chatDTO 변경
-
     @MessageMapping("/chat")
     @SendTo("/api/sub/chat")
-    public ChatDTO sendMessage(ChatDTO request) {
+    public ChatDTO sendMessage(ChatDTO request, Principal principal) {
+        Chat chat = chatService.chatSave(request, principal);
 
-        chatService.chatSave(request);
-
-        return new ChatDTO(request.getMemberId(), request.getNickname(), request.getMessage(), request.getSendTime());
+        return new ChatDTO(chat.getProvider(), chat.getProviderId(), chat.getNickname(), chat.getMessage(), chat.getTime());
     }
 
     @GetMapping("/api/chat")
@@ -62,7 +65,7 @@ public class ChatRestController {
             @Parameter(name = "chatId", description = "마지막 채팅 Id", example = "1")
     })
     public ResponseEntity<ChatHistoryResponse> getPreviousChat(@RequestParam(required = false, defaultValue = "-1", value = "chatId") long chatId) {
-        log.info((chatId == -1 ? "최근 기록" : Long.toString(chatId)+"번 채팅") + " 이전 채팅 내용 조회");
+        log.info((chatId == -1 ? "최근 기록" : Long.toString(chatId) + "번 채팅") + " 이전 채팅 내용 조회");
         List<ChatHistoryDTO> data = chatService.getPreviousChat(chatId);
         ChatHistoryResponse response;
         if (data.isEmpty()) {

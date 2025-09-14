@@ -1,5 +1,7 @@
 package com.OOL.oolfinance.controller.member;
 
+import com.OOL.oolfinance.dto.MemberDTO;
+import com.OOL.oolfinance.dto.MyPageDTO;
 import com.OOL.oolfinance.dto.general.GeneralResponse;
 import com.OOL.oolfinance.entity.member.Member;
 import com.OOL.oolfinance.enums.StatusEnum;
@@ -10,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -42,7 +45,18 @@ public class MemberRestController {
     private final MemberService memberService;
     private final JwtCookieUtils jwtCookieUtils;
 
-    @PostMapping(value = "/profile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @GetMapping("/profile")
+    @ResponseBody
+    @Operation(summary = "유저 정보 가져오기", description = "유저 정보 업데이트하는 API")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "업데이트 성공", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "fail", content = @Content(mediaType = "application/json"))
+    })
+    public MyPageDTO getUpdateMember(@AuthenticationPrincipal Member member) {
+        return memberService.updateForm(member);
+    }
+
+    @PostMapping(value = "/profile/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "유저 설정 변경", description = "닉네임, 프로필 사진을 변경하는 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = "application/json")),
@@ -58,6 +72,27 @@ public class MemberRestController {
                 .build();
 
         return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/profile/info")
+    @Operation(summary = "유저 정보 수정", description = "유저 정보 업데이트하는 API", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(
+            examples = {
+                    @ExampleObject(name = "someExample1", value = """ 
+                                { 
+                                    "memberId" : "someValue1", 
+                                    "memberPassword" : "someValue2", 
+                                    "memberNickname" : "someValue3"
+                                } 
+                            """)
+            }
+    )))
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "업데이트 성공", content = @Content(mediaType = "application/json")),
+            @ApiResponse(responseCode = "400", description = "fail", content = @Content(mediaType = "application/json"))
+    })
+    public ResponseEntity<String> memberUpdate(@RequestBody MemberDTO memberDTO, @AuthenticationPrincipal Member member) {
+        memberService.memberUpdate(memberDTO, member);
+        return ResponseEntity.ok("업데이트 성공");
     }
 
     @DeleteMapping(value = "/delete")

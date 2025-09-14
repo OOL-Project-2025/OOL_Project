@@ -38,27 +38,25 @@ public class StockCustomRepositoryImpl implements StockCustomRepository{
         // 정렬 기준 선택
         switch (sortType) {
             case TRADING_VOLUME:
-                orderSpecifier = new OrderSpecifier<>(Order.DESC, stock.tradingVolume);
+                orderSpecifier = new OrderSpecifier<>(Order.DESC, stock.tradingVolume, OrderSpecifier.NullHandling.NullsLast);
                 break;
             case TRADING_VALUE:
-                orderSpecifier = new OrderSpecifier<>(Order.DESC, stock.tradingValue);
+                orderSpecifier = new OrderSpecifier<>(Order.DESC, stock.tradingValue, OrderSpecifier.NullHandling.NullsLast);
                 break;
             case BIGGEST_GAINERS: // (현재가 - 이전가) 상승폭이 큰 종목
                 NumberExpression<BigDecimal> gainers = stock.currentClose.subtract(stock.previousClose);
-                orderSpecifier = new OrderSpecifier<>(Order.DESC, gainers);
+                orderSpecifier = new OrderSpecifier<>(Order.DESC, gainers, OrderSpecifier.NullHandling.NullsLast);
                 break;
             case BIGGEST_LOSERS: // (이전가 - 현재가) 하락폭이 큰 종목
                 NumberExpression<BigDecimal> losers = stock.previousClose.subtract(stock.currentClose);
-                orderSpecifier = new OrderSpecifier<>(Order.DESC, losers);
+                orderSpecifier = new OrderSpecifier<>(Order.DESC, losers, OrderSpecifier.NullHandling.NullsLast);
                 break;
-//            case MOST_POPULAR: // 거래량과 조회수(예: views) 합산 기준으로 정렬
-
-//                break;
             default:
                 throw new IllegalArgumentException("Invalid sort type");
         }
 
         return jpaQueryFactory.select(Projections.constructor(StockTableDTO.class,
+                        stock.stockCode,
                         stock.stockSymbol,
                         stock.stockName,
                         stock.previousClose,

@@ -40,7 +40,7 @@ import java.util.List;
 public class DetailRestController {
     private final StockInfoService stockInfoService;
 
-    @GetMapping(value = "/{code}")
+    @GetMapping(value = "/{stockCode}")
     @Operation(summary = "주식 상세 정보 조회", description = "특정 주식의 상세 정보를 조회하는 API")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "success", content = @Content(mediaType = "application/json")),
@@ -49,7 +49,7 @@ public class DetailRestController {
     @Parameters(value = {
             @Parameter(name = "code", description = "종목 코드", example = "11111")
     })
-    public ResponseEntity<StockDetailResponse> getStockDetail(@PathVariable(value = "code") String code) {
+    public ResponseEntity<StockDetailResponse> getStockDetail(@PathVariable(value = "stockCode") String code) {
         log.info(code + "코드 상세 내용 조회");
         List<StockDetailDTO> data = stockInfoService.getStockDetails(code);
         StockDetailResponse response;

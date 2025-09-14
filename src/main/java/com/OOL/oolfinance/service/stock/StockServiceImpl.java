@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * @author : yongjukim
@@ -57,6 +56,12 @@ public class StockServiceImpl implements StockService{
                 .tradingVolume(stock.getTradingVolume())
                 .countryStatus(stock.getCountryStatus())
                 .build();
+    }
+
+    @Override
+    public long getTotalPagesByCountry(CountryStatus country) {
+        long totalCount = stockRepository.countByCountryStatus(country);
+        return (totalCount + 9) / 10;
     }
 
 }

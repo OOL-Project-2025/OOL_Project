@@ -10,6 +10,5 @@ import com.OOL.oolfinance.entity.wishlist.Wishlist;
 
 public interface WishlistCategoryRepository extends JpaRepository<Wishlist, Long> {
 	List<Wishlist> findByMember(Member member);
-	Optional<Wishlist> findByIdAndMember_MemberId(Long id, String memberId);
-	List<Wishlist> findByMember_MemberId(String memberId);
+	Optional<Wishlist> findByIdAndMember(Long id, Member member);
 }
