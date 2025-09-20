@@ -131,37 +131,11 @@
                                 <th>거래량</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="list_down">
-                                <td>1</td>
-                                <td>
-                                    <div class="stock_img us"><img src="../img/stock_tesla.png" alt="테슬라 로고 이미지" /></div>
-                                    <div class="stock_name">테슬라</div>
-                                </td>
-                                <td>$298.26</td>
-                                <td>-13.44 (-4.72%)</td>
-                                <td>9,071억원</td>
-                                <td>131,000,000주</td>
-                            </tr>
-                            <tr class="list_up">
-                                <td>2</td>
-                                <td>
-                                    <div class="stock_img kr"><img src="../img/stock_samsung.png" alt="삼성전자 로고 이미지" /></div>
-                                    <div class="stock_name">삼성전자</div>
-                                </td>
-                                <td>$298.26</td>
-                                <td>+13.44 (+4.72%)</td>
-                                <td>9,071억원</td>
-                                <td>131,000,000주</td>
-                            </tr>
-                        </tbody>
+                        <tbody id="stock_tableBody"></tbody>
                     </table>
                 </div>
                 <div class="main_list_pagenation">
                     <div class="page_prev"><i class="fa-solid fa-chevron-left"></i></div>
-                    <div class="page_number on">1</div>
-                    <div class="page_number">2</div>
-                    <div class="page_number">3</div>
                     <div class="page_next">
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
@@ -255,6 +229,117 @@
         </div>
 
         <script>
+            // 주식 데이터불러오기
+            const API_BASE = "http://oolfinance.kro.kr";
+            let globalDataList = [];
+            let currentPage = 1;
+            const pageSize = 10;
+
+            async function fetchIndices() {
+                try {
+                    const res = await fetch(`${API_BASE}/api/stocks`);
+                    const data = await res.json();
+                    const dataList = data.data;
+                    const usedata = [];
+                    dataList.forEach((element) => {
+                        if (["005490", "005930", "259960"].includes(element.stockCode)) {
+                            usedata.push(element);
+                        }
+                    });
+                    return usedata;
+                } catch (err) {
+                    console.error("Error fetching indices:", err);
+                    return [];
+                }
+            }
+
+            fetchIndices().then((dataList) => {
+                console.log(dataList);
+                globalDataList = dataList;
+                currentPage = 1;
+                renderTable();
+                renderPagination();
+            });
+
+            function renderTable() {
+                const tbody = document.getElementById("stock_tableBody");
+                tbody.innerHTML = "";
+
+                // 현재 페이지 범위 계산
+                const start = (currentPage - 1) * pageSize;
+                const end = start + pageSize;
+                const pageItems = globalDataList.slice(start, end);
+
+                pageItems.forEach((item, index) => {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `
+                        <td>${start + index + 1}</td>
+                        <td>
+                            <div class="stock_img us">
+                            <img src="../img/stock_tesla.png" alt="${item.stockName} 로고 이미지" />
+                            </div>
+                            <div class="stock_name">${item.stockName}</div>
+                        </td>
+                        <td>$${item.currentClose ?? "-"}</td>
+                        <td>${item.previousClose ?? "-"}</td>
+                        <td>${item.tradingValue ?? "-"} 억원</td>
+                        <td>${item.tradingVolume ?? "-"} 주</td>
+                        `;
+
+                    tr.addEventListener("click", () => {
+                        window.location.href = `http://127.0.0.1:5500/src/main/resources/static/stock_detail.html?code=${item.stockCode}`;
+                    });
+                    tbody.appendChild(tr);
+                });
+            }
+            function renderPagination() {
+                const pagination = document.querySelector(".main_list_pagenation");
+                pagination.innerHTML = `
+                <div class="page_prev"><i class="fa-solid fa-chevron-left"></i></div>
+                <div class="page_next"><i class="fa-solid fa-chevron-right"></i></div>
+                `;
+
+                const totalPages = Math.ceil(globalDataList.length / pageSize);
+                const prevBtn = pagination.querySelector(".page_prev");
+                const nextBtn = pagination.querySelector(".page_next");
+
+                // 페이지 번호 동적으로 생성
+                for (let i = 1; i <= totalPages; i++) {
+                    const btn = document.createElement("div");
+                    btn.className = "page_number" + (i === currentPage ? " on" : "");
+                    btn.textContent = i;
+
+                    btn.addEventListener("click", () => {
+                        currentPage = i;
+                        renderTable();
+                        renderPagination(); // 버튼 다시 그리기
+                    });
+
+                    pagination.insertBefore(btn, nextBtn); // next 버튼 앞에 삽입
+                }
+
+                // 이전 버튼
+                prevBtn.addEventListener("click", () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        renderTable();
+                        renderPagination();
+                    }
+                });
+
+                // 다음 버튼
+                nextBtn.addEventListener("click", () => {
+                    if (currentPage < totalPages) {
+                        currentPage++;
+                        renderTable();
+                        renderPagination();
+                    }
+                });
+            }
+
+            // 실행
+            fetchIndices();
+
             // *** 필터/솔트 기능
             const top_block = document.querySelectorAll(".main_top_tap");
             const filter_block = document.querySelectorAll(".main_list_filter_block");
